@@ -1,6 +1,6 @@
 /*
   TODO
-  url parameters - slider, shading, tanaka
+  url parameters - shading, tanaka
   test interpolate ?
   add legend circles ?
   */
@@ -16,7 +16,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
 const urlParams = new URLSearchParams(window.location.search);
 
 // checkboxes and radio options
-for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag"]) {
+for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0

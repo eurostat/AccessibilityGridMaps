@@ -51,7 +51,7 @@ const updateURL = (map) => {
     p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
 
     // handle checkboxes
-    for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag"])
+    for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"])
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
