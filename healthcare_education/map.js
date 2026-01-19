@@ -1,5 +1,6 @@
 /*
   TODO
+  na handling: style
   url parameters
   interpolate ?
   add legend circles ?
@@ -165,7 +166,7 @@ function update() {
             const classifier = gridviz.classifier(breaks)
             defaultChangeStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
             defaultChangeStyle.cellsNb = -1
-            defaultChangeStyle.filter = sop ? c => +c.POP_2021 > 0 && c[field] != undefined && Math.abs(c[field]) >= thr : c => c[field] != undefined && Math.abs(c[field]) >= thr
+            defaultChangeStyle.filter = c => (!sop || +c.POP_2021 > 0) && c[field] != undefined && Math.abs(c[field]) >= thr
             style = defaultChangeStyle
             if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
             if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
@@ -248,9 +249,9 @@ function update() {
         else
             topLayer.cellInfoHTML = (c) =>
                 (style.filter && !style.filter(c)) ? undefined :
-                    c[field] == undefined ? undefined :
-                        sop && !c.POP_2021 ? undefined :
-                            (c[field] / 60).toFixed(1) + " min<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                    //c[field] == undefined ? undefined :
+                    sop && !c.POP_2021 ? undefined :
+                        (c[field] == undefined ? "Not available" : (c[field] / 60).toFixed(1) + " min") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
     }
 
     //add top layers
