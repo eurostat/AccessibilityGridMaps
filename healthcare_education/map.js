@@ -14,7 +14,14 @@ const map = new gridviz.Map(document.getElementById('map'), {
 
 
 
+//set selected layer from URL param
+const urlParams = new URLSearchParams(window.location.search);
 
+for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sizeByPop", "showOnlyPopulated", "cityNames", "background", "boundaries", "accessibilityGrid"]) {
+    const sel = urlParams.get(cb);
+    if (sel == undefined) continue;
+    document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
+}
 
 
 
