@@ -1,6 +1,5 @@
 /*
   TODO
-  add na legend
   url parameters
   interpolate ?
   add legend circles ?
@@ -11,7 +10,15 @@ const map = new gridviz.Map(document.getElementById('map'), {
     x: DEFAULTMAPOSITION.x,
     y: DEFAULTMAPOSITION.y,
     z: DEFAULTMAPOSITION.z,
-}).addZoomButtons()
+}).addZoomButtons().setViewFromURL()
+
+
+
+
+
+
+
+
 
 // compute changes
 const preprocess = (c) => {
@@ -265,7 +272,10 @@ function update() {
     map.layers = layers
 
     map.redraw()
+    updateURL(map)
 }
+
+
 
 
 // INTERFACE EVENT LISTENERS
@@ -273,7 +283,6 @@ addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
     ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'cityNames', 'boundaries', 'accessibilityGrid', 'background', 'shading', 'contours', 'sizeByPop', 'showOnlyPopulated'].forEach((id) => {
-
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
