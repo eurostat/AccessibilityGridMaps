@@ -1,5 +1,7 @@
 /*
   TODO
+  url parameters
+  interpolate ?
   add legend circles ?
   */
 
