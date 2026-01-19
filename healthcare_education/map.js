@@ -13,17 +13,16 @@ const map = new gridviz.Map(document.getElementById('map'), {
 
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
-let r_ = undefined
 
 // service selection
-r_ = urlParams.get("s")
-if (r_ != undefined) document.getElementById(r_ == "h" ? "healthcare" : "education").checked = true
+document.getElementById(urlParams.get("s") == "e" ? "education" : "healthcare").checked = true
+
 // time selection
-r_ = urlParams.get("t")
-if (r_ != undefined) document.getElementById(r_).checked = true
+let r_ = urlParams.get("t")
+if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
 // nb services selection
 r_ = urlParams.get("nb")
-if (r_ != undefined) document.getElementById().checked = true
+if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
 
 // checkboxes
 for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"]) {
