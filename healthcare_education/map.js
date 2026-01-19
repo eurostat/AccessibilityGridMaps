@@ -15,6 +15,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
+// checkboxes and radio options
 for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
@@ -23,6 +24,16 @@ for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "
 
 // toggle options panel collapse from URL param
 //if (urlParams.get("collapsed")) document.getElementById("expand-toggle-button").click();
+
+// sliders
+const minh = urlParams.get("minh") || 5, maxh = urlParams.get("maxh") || 26
+const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 9
+
+//initialise sliders
+noUiSlider.create(document.getElementById('sliderisoc_healthcare'),
+    { start: [minh, maxh], range: { 'min': 0, 'max': 60 }, margin: 1, step: 1, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 5, density: 10 } });
+noUiSlider.create(document.getElementById('sliderisoc_education'),
+    { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
 // compute changes
@@ -87,13 +98,6 @@ const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Drivi
 defaultStyle.legends = [legend, naLegend]
 defaultStyleSize.legends = [legend, naLegend]
 defaultChangeStyle.legends = [legend]
-
-//initialise sliders
-noUiSlider.create(document.getElementById('sliderisoc_healthcare'),
-    { start: [5, 26], range: { 'min': 0, 'max': 60 }, margin: 1, step: 1, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 5, density: 10 } });
-noUiSlider.create(document.getElementById('sliderisoc_education'),
-    { start: [2, 9], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
-
 
 let service = document.querySelector('input[name="service"]:checked').value;
 let indic = document.querySelector('input[name="nearest"]:checked').value;
