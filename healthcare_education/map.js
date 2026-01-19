@@ -56,45 +56,13 @@ const backgroundLayer2 = new gridviz.BackgroundLayer(
 )
 
 //define boundaries layer
-const boundariesLayer = new gridviz.GeoJSONLayer(gridviz_eurostat.getEurostatBoundariesLayer( { baseURL: nuts2jsonURL, nutsYear: 2024 } ))
+const boundariesLayer = new gridviz.GeoJSONLayer(gridviz_eurostat.getEurostatBoundariesLayer({ baseURL: nuts2jsonURL, nutsYear: 2024 }))
 //make labels layer
-const labelLayer = new gridviz.LabelLayer(gridviz_eurostat.getEuronymeLabelLayer('EUR', '20', { baseURL: euronymURL,
-          ccIn: [
-            "AT",
-            "BE",
-            "BG",
-            "CY",
-            "CZ",
-            "DE",
-            "DK",
-            "EE",
-            "ES",
-            "FI",
-            "FR",
-            "GR",
-            "HR",
-            "HU",
-            "IE",
-            "IT",
-            "LT",
-            "LU",
-            "LV",
-            "PL",
-            "PT",
-            "MT",
-            "NL",
-            "RO",
-            "SE",
-            "SK",
-            "SI",
-            "CH",
-            "NO",
-            "LI", "AL",
-          ],
-
- }))
+const labelLayer = new gridviz.LabelLayer(gridviz_eurostat.getEuronymeLabelLayer('EUR', '20', { baseURL: euronymURL, ccIn: ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "PL", "PT", "MT", "NL", "RO", "SE", "SK", "SI", "CH", "NO", "LI", "AL",], }))
 
 const strokeStyle = new gridviz.StrokeStyle({ visible: (z) => z < 4 })
+
+const naColor = "#666"
 
 // styles
 const nbClasses = 9
@@ -102,14 +70,17 @@ const colorRamp = []; for (let i = 0; i <= nbClasses - 1; i++) colorRamp.push(d3
 // d3.interpolateTurbo(1 - t) //t=> d3.interpolateCubehelixDefault(1-t) //d3.interpolateYlOrRd  interpolateSpectral
 const colorRampChange = []; for (let i = 0; i <= nbClasses - 1; i++) colorRampChange.push(d3.interpolateSpectral(1 - i / (nbClasses - 1)))
 colorRampChange[4] = "white"
-const blendOperation = (z) => 'multiply' //(z < 200 ? 'multiply' : 'source-over')
+const blendOperation = () => 'multiply' //(z < 200 ? 'multiply' : 'source-over')
 
+const cols_ = { ...colorRamp }; cols_.na = naColor
 const defaultStyle = new gridviz.SquareColorCategoryWebGLStyle({
-    color: { ...colorRamp},
+    color: cols_,
     blendOperation: blendOperation,
 })
+
+const chColors = { ...colorRampChange }; chColors.na = naColor
 const defaultChangeStyle = new gridviz.SquareColorCategoryWebGLStyle({
-    color: { ...colorRampChange},
+    color: chColors,
     blendOperation: blendOperation,
 })
 const defaultStyleSize = new gridviz.ShapeColorSizeStyle({
@@ -124,7 +95,7 @@ let reliefDirection = 1
 let resFactor = 1
 
 //define legend
-const legendWidth = Math.min(window.innerWidth -40, 400)
+const legendWidth = Math.min(window.innerWidth - 40, 400)
 const legend = new gridviz.ColorDiscreteLegend({
     width: legendWidth,
     labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min." : "")
@@ -171,12 +142,12 @@ function update() {
     //document.getElementById("contours_").style.display = !sbp ? 'inline' : 'none'
     //document.getElementById("shading_").style.display = !sbp ? 'inline' : 'none'
 
-	//show/hide copyrights
-	const egCopyright = document.getElementById('eurogeographics-copyright');
-	if (egCopyright) egCopyright.style.display = bn ? 'inline-block' : 'none';
-	const tomtomCopyright = document.getElementById('tomtom-copyright');
-	if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
-	
+    //show/hide copyrights
+    const egCopyright = document.getElementById('eurogeographics-copyright');
+    if (egCopyright) egCopyright.style.display = bn ? 'inline-block' : 'none';
+    const tomtomCopyright = document.getElementById('tomtom-copyright');
+    if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
+
 
     //
     slider = document.getElementById('sliderisoc_' + service)
@@ -193,21 +164,17 @@ function update() {
         if (!sbp) {
             // default style
             const classifier = gridviz.classifier(breaks)
-            defaultStyle.code = (c) => classifier(+c[field] / 60)
-            defaultStyle.cellsNb=-1
-            defaultStyle.filter = sop ? c => +c.POP_2021 > 0 && c[field] != undefined /*&& +c[field] <= max_*/ : c => c[field] != undefined //&& +c[field] <= max_
+            defaultStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
+            defaultStyle.cellsNb = -1
+            defaultStyle.filter = sop ? c => +c.POP_2021 > 0 : undefined
             style = defaultStyle
-            if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale:gridviz.exponentialScale(shadingCoeff), revert:true })
-            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({classifier: (()=> c => nbClasses - 1 - classifier(c[field]/60)), revert:false, limit:'steep' })
+            if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
+            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
         } else {
             // default style, sized by population
             const classifier = gridviz.colorClassifier(breaks, colorRamp)
-            defaultStyleSize.color = (c) => {
-                let v = c[field]
-                if (v == undefined) return "grey"
-                return classifier(v / 60)
-            }
-            defaultStyleSize.filter = c => +c.POP_2021 > 0 && c[field] != undefined //&& +c[field] <= max_
+            defaultStyleSize.color = (c) => (c[field] == undefined) ? naColor : classifier(c[field] / 60)
+            defaultStyleSize.filter = c => +c.POP_2021 > 0 && c[field] != undefined
             style = defaultStyleSize
         }
 
@@ -228,12 +195,12 @@ function update() {
         if (!sbp) {
             // style for change
             const classifier = gridviz.classifier(breaks)
-            defaultChangeStyle.code = (c) => classifier(+c[field] / 60)
-            defaultChangeStyle.cellsNb=-1
+            defaultChangeStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
+            defaultChangeStyle.cellsNb = -1
             defaultChangeStyle.filter = sop ? c => +c.POP_2021 > 0 && c[field] != undefined && Math.abs(c[field]) >= thr : c => c[field] != undefined && Math.abs(c[field]) >= thr
             style = defaultChangeStyle
-            if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale:gridviz.exponentialScale(shadingCoeff), revert:true })
-            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({classifier: (()=> c => nbClasses - 1 - classifier(c[field]/60)), revert:false, limit:'steep' })
+            if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
+            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
         }
         else {
             // style for change, sized by population
@@ -312,7 +279,7 @@ function update() {
                             Math.abs(c[field] / 60).toFixed(1) + " min " + (c[field] > 0 ? "slower" : "faster") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
         else
             topLayer.cellInfoHTML = (c) =>
-                (!style.filter(c)) ? undefined :
+                (style.filter && !style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
                         sop && !c.POP_2021 ? undefined :
                             (c[field] / 60).toFixed(1) + " min<br>Population in 2021: " + formatPopulation(+c.POP_2021)
@@ -333,9 +300,9 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare','education','change','2020','2023','1','3','cityNames','boundaries','accessibilityGrid','background','shading','contours','sizeByPop','showOnlyPopulated'].forEach((id)=>{
-        
-        document.getElementById(id).addEventListener("click", (event)=> {
+    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'cityNames', 'boundaries', 'accessibilityGrid', 'background', 'shading', 'contours', 'sizeByPop', 'showOnlyPopulated'].forEach((id) => {
+
+        document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
         })
