@@ -50,8 +50,14 @@ const updateURL = (map) => {
     const v = map.getView();
     p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
 
+    // handle selection
+    const service = document.querySelector('input[name="service"]:checked').value;
+        p.set("s", service=="healthcare"?"h":"e");
+    p.set("t", document.querySelector('input[name="year"]:checked').value);
+    p.set("nb", document.querySelector('input[name="nearest"]:checked').value);
+
     // handle checkboxes
-    for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"])
+    for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"])
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders

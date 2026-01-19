@@ -14,8 +14,15 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
-// checkboxes and radio options
-for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"]) {
+// service selection
+document.getElementById(urlParams.get("s") == "h" ? "healthcare" : "education").checked = true
+// time selection
+document.getElementById(urlParams.get("t")).checked = true
+// nb services selection
+document.getElementById(urlParams.get("nb")).checked = true
+
+// checkboxes
+for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
