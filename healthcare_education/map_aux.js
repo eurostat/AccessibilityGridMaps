@@ -55,7 +55,10 @@ const updateURL = (map) => {
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
-    
+    let [min, max] = document.getElementById('sliderisoc_healthcare').noUiSlider.get(true);
+    p.set("minh", Math.round(min)); p.set("maxh", Math.round(max));
+    [min, max] = document.getElementById('sliderisoc_education').noUiSlider.get(true);
+    p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
 
     //interpolate
     //p.set("interpolate", interpolate ? "1" : "");

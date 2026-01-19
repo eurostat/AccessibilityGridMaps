@@ -12,8 +12,6 @@ const map = new gridviz.Map(document.getElementById('map'), {
     z: DEFAULTMAPOSITION.z,
 }).addZoomButtons().setViewFromURL()
 
-
-
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -25,8 +23,6 @@ for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "
 
 // toggle options panel collapse from URL param
 //if (urlParams.get("collapsed")) document.getElementById("expand-toggle-button").click();
-
-
 
 
 // compute changes
