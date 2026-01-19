@@ -135,7 +135,7 @@ function update() {
             const classifier = gridviz.classifier(breaks)
             defaultStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
             defaultStyle.cellsNb = -1
-            defaultStyle.filter = sop ? c => +c.POP_2021 > 0 : undefined
+            defaultStyle.filter = c => (!sop || +c.POP_2021 > 0) && (c[field] != undefined || +c.POP_2021 > 0)
             style = defaultStyle
             if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
             if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
@@ -143,7 +143,7 @@ function update() {
             // default style, sized by population
             const classifier = gridviz.colorClassifier(breaks, colorRamp)
             defaultStyleSize.color = (c) => (c[field] == undefined) ? naColor : classifier(c[field] / 60)
-            defaultStyleSize.filter = c => +c.POP_2021 > 0 && c[field] != undefined
+            defaultStyleSize.filter = c => +c.POP_2021 > 0
             style = defaultStyleSize
         }
 

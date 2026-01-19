@@ -36,4 +36,4 @@ const labelLayer = new gridviz.LabelLayer(gridviz_eurostat.getEuronymeLabelLayer
 
 const strokeStyle = new gridviz.StrokeStyle({ visible: (z) => z < 4 })
 
-const naColor = "#666"
+const naColor = "#ccc"
