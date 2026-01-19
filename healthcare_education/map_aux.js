@@ -50,15 +50,9 @@ const updateURL = (map) => {
     const v = map.getView();
     p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
 
-    // handle dropdowns selection
-    //p.set("map", document.getElementById("map_select").value);
-
     // handle checkboxes
-    //for (let cb of ["sbtp", "label", "boundary", "background"])
-    //    p.set(cb, document.getElementById(cb).checked ? "1" : "");
-
-    // handle background theme selection
-    //p.set("bt", document.querySelector('input[name="background_theme"]:checked').value);
+    for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sizeByPop", "showOnlyPopulated", "cityNames", "background", "boundaries", "accessibilityGrid"])
+        p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     //interpolate
     //p.set("interpolate", interpolate ? "1" : "");
