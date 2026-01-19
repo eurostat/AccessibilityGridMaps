@@ -1,7 +1,7 @@
 /*
   TODO
-  url parameters
-  interpolate ?
+  url parameters - slider, shading, tanaka
+  test interpolate ?
   add legend circles ?
   */
 
@@ -135,7 +135,6 @@ function update() {
     if (egCopyright) egCopyright.style.display = bn ? 'inline-block' : 'none';
     const tomtomCopyright = document.getElementById('tomtom-copyright');
     if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
-
 
     //
     slider = document.getElementById('sliderisoc_' + service)

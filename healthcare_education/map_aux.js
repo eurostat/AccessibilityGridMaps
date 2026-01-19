@@ -54,6 +54,9 @@ const updateURL = (map) => {
     for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag"])
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
+    // sliders
+    
+
     //interpolate
     //p.set("interpolate", interpolate ? "1" : "");
 
