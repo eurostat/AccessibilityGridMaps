@@ -1,0 +1,355 @@
+body {
+    margin: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.ecl-help-block, .custom-select, .custom-select-wrapper, .ecl-radio__label,
+.ecl-checkbox__label, .ecl-select, #gridviz-legend>div>div, #gridviz-tooltip, .noUi-value-horizontal, span.ecl-checkbox__text {
+ font-size: 1rem !important;
+}
+
+.ecl-help-block {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+.first-block {
+margin-top: 2px !important;
+}
+
+.wt-globan--invalid-domain {
+ display: none !important;
+}
+
+@media (max-width: 800px) {
+
+    .footer-links,
+    #globan,
+    .globan {
+        display: none !important;
+    }
+
+    .wrapper {
+        height: 100vh !important;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    #gridviz-legend{
+        bottom: 65px !important;
+        left: 0px!important;
+    }
+
+	#gridviz-legend>div>div {
+      font-size: 0.9rem !important
+	}
+	div#gridviz-zoom-buttons-map  {
+   	    right: 40px !important;
+	}
+div#home-button {
+right: 38px !important;
+}
+}
+
+main {
+    max-height: 100vh;
+    height: calc(100vh - 110px);
+    flex: 1;
+}
+
+.ecl-form-label {
+    white-space: normal;
+}
+
+.dark-theme,
+.dark-theme * {
+    background: #404040 !important;
+    color: white !important;
+}
+
+.dark-mode-target {
+    background: black !important;
+    color: white !important;
+}
+
+.source-container {
+    font-size: 14px;
+}
+
+.footer-links {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.footer-links a {
+    color: #3860ed;
+    text-decoration: underline;
+}
+
+.footer-links a:hover {
+    color: #0f2fa2;
+}
+
+.footer-links a:visited {
+    color: purple;
+}
+
+.wrapper {
+    height: calc(100vh - 27px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#full-version-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 999;
+}
+
+.gridviz-interface {
+    width: 292px;
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px grey;
+}
+
+#gridviz-legend {
+   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)) !important;
+   box-shadow: unset !important;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px 0;
+}
+
+.custom-select {
+    position: relative;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+    height: 44px;
+    align-content: center;
+}
+
+.select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.custom-options {
+    display: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+}
+
+.custom-options.open {
+    display: block;
+}
+
+.custom-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-option:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-option.selected {
+    background-color: #0e47cb;
+    color: white;
+}
+
+.custom-select-wrapper::after {
+    content: "â–¼";
+    color: white;
+    background-color: #0e47cb;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 4px 4px 0;
+    pointer-events: none;
+}
+
+#expand-toggle {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+#expand-toggle-button {
+    background: white;
+    border-color: var(--c-p);
+    border-width: 1px;
+}
+
+#expandable-content {
+    margin-top: 4px;
+}
+
+/* Zoom buttons */
+#gridviz-zoom-buttons-map {
+    right: 13px !important;
+    top: 60px !important;
+	background-color: unset !important;
+}
+
+/* When NOT embedded = full version */
+body.not-embedded #gridviz-zoom-buttons-map {
+  top: 10px !important;
+}
+
+body.not-embedded #home-button {
+  top: 90px !important;
+}
+
+#zoom-in {
+    border-top-left-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+}
+
+#zoom-out {
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
+#zoom-in,
+#zoom-out,
+#home-button {
+    background-color: #fff !important;
+    border: 1px solid var(--c-p) !important;
+    color: var(--c-p) !important;
+    height: 27px;
+    width: 27px;
+}
+
+#home-button {
+    border-radius: 4px;
+    position: absolute;
+    top: 145px;
+    right: 11px;
+    background-color: white;
+    cursor: pointer;
+    padding: 4px;
+	width: 27.5px;
+}
+
+#home-button:hover .svg-home-icon {
+    fill: white;
+}
+
+#zoom-in:hover,
+#zoom-out:hover,
+#home-button:hover {
+    background-color: var(--c-p-80) !important;
+    border-color: var(--c-p-80) !important;
+    color: #fff !important;
+    padding: 5px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+#zoom-in {
+    border-bottom: 0 !important;
+}
+
+hr {
+    border: 0.5px solid #e1e1e1;
+}
+
+/* ECL overrides */
+.ecl-radio {
+    margin-bottom: 2px !important;
+}
+
+.ecl-radio__label,
+.ecl-checkbox__label {
+    padding: unset !important;
+    line-height: unset !important;
+    align-items: center !important;
+    cursor: pointer
+}
+
+.ecl-select {
+    padding: 2px !important;
+    height: 35px !important;
+}
+
+.ecl-select__container {
+    height: 35px !important;
+}
+
+span.ecl-checkbox__box,
+span.ecl-radio__box {
+    height: 1.2rem !important;
+    width: 1.2rem !important;
+}
+
+.ecl-checkbox {
+    margin-top: 4px;
+}
+
+span.ecl-checkbox__text {
+    align-self: end;
+}
+
+.globan-invalid-domain {
+    display: none !important;
+}
+
+#gridviz-tooltip{
+    z-index: 999999;
+    border-radius: 3px !important;
+}
+
+.sliisoc {
+    top: 3px;
+    height: 8px;
+}
+
+.sliisoc .noUi-handle {
+    height: 12px;
+    width: 12px;
+    top: -3px;
+    right: -6px;
+    border-radius: 6px;
+}
