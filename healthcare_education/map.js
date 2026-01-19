@@ -1,6 +1,5 @@
 /*
   TODO
-  url parameters - shading, tanaka
   test interpolate ?
   add legend circles ?
   */
