@@ -70,7 +70,7 @@ const legend = new gridviz.ColorDiscreteLegend({
     labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min." : "")
 })
 //define not available legend
-const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Data not available"]], shape: "square", });
+const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Driving time not available"]], shape: "square", });
 
 defaultStyle.legends = [legend, naLegend]
 defaultStyleSize.legends = [legend, naLegend]
