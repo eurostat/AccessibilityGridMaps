@@ -17,7 +17,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
-for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "background", "bnd", "ag"]) {
+for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "road", "bnd", "ag"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
@@ -120,7 +120,7 @@ function update() {
     const cn = document.getElementById('label').checked;
     const bn = document.getElementById('bnd').checked;
     const ag = document.getElementById('ag').checked;
-    const bk = document.getElementById('background').checked;
+    const bk = document.getElementById('road').checked;
 
     // show/hide slider
     document.getElementById("sliH").style.display = service == "healthcare" && year != "change" ? 'inline' : 'none'
@@ -291,7 +291,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'background', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
