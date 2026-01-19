@@ -23,6 +23,8 @@ for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
 }
 
+// toggle options panel collapse from URL param
+//if (urlParams.get("collapsed")) document.getElementById("expand-toggle-button").click();
 
 
 
