@@ -17,7 +17,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
-for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sizeByPop", "showOnlyPopulated", "cityNames", "background", "boundaries", "accessibilityGrid"]) {
+for (let cb of ["healthcare", "education", "2020", "2023", "change", "1", "3", "sbp", "sop", "label", "background", "bnd", "ag"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
@@ -113,13 +113,13 @@ function update() {
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
 
-    const sop = document.getElementById('showOnlyPopulated').checked;
-    const sbp = document.getElementById('sizeByPop').checked;
+    const sop = document.getElementById('sop').checked;
+    const sbp = document.getElementById('sbp').checked;
     const contours = document.getElementById('contours').checked;
     const shading = document.getElementById('shading').checked;
-    const cn = document.getElementById('cityNames').checked;
-    const bn = document.getElementById('boundaries').checked;
-    const ag = document.getElementById('accessibilityGrid').checked;
+    const cn = document.getElementById('label').checked;
+    const bn = document.getElementById('bnd').checked;
+    const ag = document.getElementById('ag').checked;
     const bk = document.getElementById('background').checked;
 
     // show/hide slider
@@ -291,7 +291,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'cityNames', 'boundaries', 'accessibilityGrid', 'background', 'shading', 'contours', 'sizeByPop', 'showOnlyPopulated'].forEach((id) => {
+    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'background', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
