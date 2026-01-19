@@ -1,6 +1,6 @@
 /*
   TODO
-  na handling: style
+  add na legend
   url parameters
   interpolate ?
   add legend circles ?
@@ -69,8 +69,11 @@ const legend = new gridviz.ColorDiscreteLegend({
     width: legendWidth,
     labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min." : "")
 })
-defaultStyle.legends = [legend]
-defaultStyleSize.legends = [legend]
+//define not available legend
+const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Data not available"]], shape: "square", });
+
+defaultStyle.legends = [legend, naLegend]
+defaultStyleSize.legends = [legend, naLegend]
 defaultChangeStyle.legends = [legend]
 
 //initialise sliders
