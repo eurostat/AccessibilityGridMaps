@@ -1,7 +1,8 @@
 /*
   TODO
-  test interpolate ?
+  update x,y on mouse move
   add legend circles ?
+  test interpolate ? bof
   */
 
 const DEFAULTMAPOSITION = { x: 4030000, y: 2950000, z: 1500 };
@@ -32,11 +33,11 @@ for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours
 }
 
 // interpolator
-const interpolate = urlParams.get("itrp")
+//const interpolate = urlParams.get("itrp")
 
 
 //define interpolator
-const interpFun = interpolate ? (styles, field) => {
+const interpFun = /*interpolate ? (styles, field) => {
     const interp = new gridviz.Interpolator({
         value: (c) => c[field],
         interpolatedProperty: field,
@@ -44,7 +45,7 @@ const interpFun = interpolate ? (styles, field) => {
     })
     interp.styles = styles
     return [interp]
-} : (styles, field) => styles
+} :*/ (styles, field) => styles
 
 
 // toggle options panel collapse from URL param
@@ -256,7 +257,7 @@ function update() {
         )
 
         //apply interpolator
-        if (!sbp && interpolate) glayer.styles = interpFun(glayer.styles, field)
+        //if (!sbp && interpolate) glayer.styles = interpFun(glayer.styles, field)
 
         layers.push(glayer)
     }
@@ -272,7 +273,7 @@ function update() {
         )
 
         //apply interpolator
-        if (!sbp && interpolate) glayerShading.styles = interpFun(glayerShading.styles, field)
+        //if (!sbp && interpolate) glayerShading.styles = interpFun(glayerShading.styles, field)
 
         layers.push(glayerShading)
     }
@@ -287,7 +288,7 @@ function update() {
         )
 
         //apply interpolator
-        if (!sbp && interpolate) glayerTanaka.styles = interpFun(glayerTanaka.styles, field)
+        //if (!sbp && interpolate) glayerTanaka.styles = interpFun(glayerTanaka.styles, field)
 
         layers.push(glayerTanaka)
     }
