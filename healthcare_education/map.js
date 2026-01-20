@@ -36,15 +36,15 @@ const interpolate = urlParams.get("itrp")
 
 
 //define interpolator
-const interpFun = interpolate ? styles => {
+const interpFun = interpolate ? (styles, field) => {
     const interp = new gridviz.Interpolator({
-        value: (c) => c.v,
-        interpolatedProperty: 'v',
+        value: (c) => c[field],
+        interpolatedProperty: field,
         targetResolution: (r, z) => Math.min(Math.floor(z * r) / r, r),
     })
     interp.styles = styles
     return [interp]
-} : styles => styles
+} : (styles, field) => styles
 
 
 // toggle options panel collapse from URL param
@@ -254,6 +254,10 @@ function update() {
             sbp || contours || shading ? [style] : [style, strokeStyle],
             { minPixelsPerCell: (sbp ? 6 : 1.6) * resFactor }
         )
+
+        //apply interpolator
+        if(!sbp && interpolate) glayer.styles = interpFun(glayer.styles)
+
         layers.push(glayer)
     }
 
