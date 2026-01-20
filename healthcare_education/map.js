@@ -1,6 +1,5 @@
 /*
   TODO
-  update x,y on mouse move
   add legend circles ?
   test interpolate ? bof
   */
@@ -10,6 +9,10 @@ const map = new gridviz.Map(document.getElementById('map'), {
     x: DEFAULTMAPOSITION.x,
     y: DEFAULTMAPOSITION.y,
     z: DEFAULTMAPOSITION.z,
+    onZoomFun: (event) => {
+        //console.log('zoom', event)
+        updateURL(map)
+    },
 }).addZoomButtons().setViewFromURL()
 
 //set selected layer from URL param
