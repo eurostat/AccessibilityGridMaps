@@ -9,10 +9,8 @@ const map = new gridviz.Map(document.getElementById('map'), {
     x: DEFAULTMAPOSITION.x,
     y: DEFAULTMAPOSITION.y,
     z: DEFAULTMAPOSITION.z,
-    onZoomFun: (event) => {
-        //console.log('zoom', event)
-        updateURL(map)
-    },
+    zoomExtent: [1, 10000],
+    onZoomFun: (e) => { updateURL(map) },
 }).addZoomButtons().setViewFromURL()
 
 //set selected layer from URL param

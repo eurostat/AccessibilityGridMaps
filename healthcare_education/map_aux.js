@@ -12,7 +12,6 @@ const formatPopulation = (number) => number.toString().replace(/\B(?=(\d{3})+(?!
 //define background layers
 const backgroundLayer1 = new gridviz.BackgroundLayer({
     url: urlBackground1,
-    //resolutions: Array.from({ length: 12 }, (_, i) => 0.5 * 28.00132289714475 * Math.pow(2, 10 - i)),
     resolutions: Array.from({ length: 15 }, (_, i) => 114688 / Math.pow(2, i)),
     origin: [0, 6000000],
     nbPix: 512, //512 256
@@ -22,10 +21,9 @@ const backgroundLayer1 = new gridviz.BackgroundLayer({
 })
 
 const backgroundLayer2 = new gridviz.BackgroundLayer(
-    //OSMPositronCompositeEN OSMPositronBackground
     gridviz_eurostat.giscoBackgroundLayer('OSMPositronCompositeEN', 19, 'EPSG3035', {
         visible: (z) => z <= 4,
-        pixelationCoefficient: 0.55,
+        pixelationCoefficient: 1,
     })
 )
 
