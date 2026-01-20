@@ -31,6 +31,22 @@ for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
 }
 
+// interpolator
+const interpolate = urlParams.get("itrp")
+
+
+//define interpolator
+const interpFun = interpolate ? styles => {
+    const interp = new gridviz.Interpolator({
+        value: (c) => c.v,
+        interpolatedProperty: 'v',
+        targetResolution: (r, z) => Math.min(Math.floor(z * r) / r, r),
+    })
+    interp.styles = styles
+    return [interp]
+} : styles => styles
+
+
 // toggle options panel collapse from URL param
 //if (urlParams.get("collapsed")) document.getElementById("expand-toggle-button").click();
 

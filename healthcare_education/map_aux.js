@@ -67,7 +67,7 @@ const updateURL = (map) => {
     p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
 
     //interpolate
-    //p.set("interpolate", interpolate ? "1" : "");
+    p.set("itrp", interpolate ? "1" : "");
 
     //set URL with map parameters
     const newURL = `${window.location.pathname}?${p.toString()}`;
