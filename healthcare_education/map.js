@@ -256,7 +256,7 @@ function update() {
         )
 
         //apply interpolator
-        if(!sbp && interpolate) glayer.styles = interpFun(glayer.styles)
+        if (!sbp && interpolate) glayer.styles = interpFun(glayer.styles, field)
 
         layers.push(glayer)
     }
@@ -270,6 +270,10 @@ function update() {
         const glayerShading = new gridviz.GridLayer(
             dataset[service], [shadingStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
+
+        //apply interpolator
+        if (!sbp && interpolate) glayerShading.styles = interpFun(glayerShading.styles, field)
+
         layers.push(glayerShading)
     }
 
@@ -281,7 +285,11 @@ function update() {
         const glayerTanaka = new gridviz.GridLayer(
             dataset[service], [tanakaStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
-        if (glayerTanaka) layers.push(glayerTanaka)
+
+        //apply interpolator
+        if (!sbp && interpolate) glayerTanaka.styles = interpFun(glayerTanaka.styles, field)
+
+        layers.push(glayerTanaka)
     }
 
     //set tooltip on top layer
