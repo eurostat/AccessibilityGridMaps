@@ -1,8 +1,8 @@
 
 
-//const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
-const urlTiles = "http://127.0.0.1:5500/tmp/"
-const versionTag = "v2026_01"
+const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
+//const urlTiles = "http://127.0.0.1:5500/tmp/"
+//const versionTag = "v2026_01"
 const urlBackground1 = 'https://ec.europa.eu/eurostat/cache/GISCO/mbkg/road/'
 const nuts2jsonURL = "https://ec.europa.eu/assets/estat/E/E4/gisco/pub/nuts2json/v2/";
 const euronymURL = "https://ec.europa.eu/assets/estat/E/E4/gisco/pub/euronym/v3/UTF_LATIN/";

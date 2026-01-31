@@ -258,7 +258,7 @@ function update() {
         )
 
         //apply interpolator
-        //if (!sbp && interpolate) glayer.styles = interpFun(glayer.styles, field)
+        if (!sbp && interpolate) glayer.styles = interpFun(glayer.styles, field)
 
         layers.push(glayer)
     }
@@ -274,7 +274,7 @@ function update() {
         )
 
         //apply interpolator
-        //if (!sbp && interpolate) glayerShading.styles = interpFun(glayerShading.styles, field)
+        if (!sbp && interpolate) glayerShading.styles = interpFun(glayerShading.styles, field)
 
         layers.push(glayerShading)
     }
@@ -289,7 +289,7 @@ function update() {
         )
 
         //apply interpolator
-        //if (!sbp && interpolate) glayerTanaka.styles = interpFun(glayerTanaka.styles, field)
+        if (!sbp && interpolate) glayerTanaka.styles = interpFun(glayerTanaka.styles, field)
 
         layers.push(glayerTanaka)
     }
