@@ -34,11 +34,11 @@ for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours
 }
 
 // interpolator
-//const interpolate = urlParams.get("itrp")
+const interpolate = urlParams.get("itrp")
 
 
 //define interpolator
-const interpFun = /*interpolate ? (styles, field) => {
+const interpFun = interpolate ? (styles, field) => {
     const interp = new gridviz.Interpolator({
         value: (c) => c[field],
         interpolatedProperty: field,
@@ -46,7 +46,7 @@ const interpFun = /*interpolate ? (styles, field) => {
     })
     interp.styles = styles
     return [interp]
-} :*/ (styles, field) => styles
+} : (styles, field) => styles
 
 
 // toggle options panel collapse from URL param
@@ -72,12 +72,12 @@ const preprocess = (c) => {
 const dataset = {
     education: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "education_2025_11/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_"+versionTag+"/" + r + "/"),
         { preprocess: preprocess }
     ),
     healthcare: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "healthcare_2025_11/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_healthcare_"+versionTag+"/" + r + "/"),
         { preprocess: preprocess }
     ),
 }
