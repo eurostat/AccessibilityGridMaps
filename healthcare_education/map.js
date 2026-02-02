@@ -34,7 +34,7 @@ for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours
 }
 
 // interpolator
-const interpolate = urlParams.get("itrp")
+const interpolate = urlParams.get("i")
 
 
 //define interpolator
