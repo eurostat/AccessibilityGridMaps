@@ -41,7 +41,6 @@ const naColor = "#d6bad5" //"#ccc"
 
 
 // update URL with map parameters
-//TODO should be trigerred also on map move end event
 const updateURL = (map) => {
     //get parameters
     const p = new URLSearchParams(window.location.search);
