@@ -50,8 +50,6 @@ const updateURL = (map) => {
     p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
 
     // handle selection
-    const service = document.querySelector('input[name="service"]:checked').value;
-        p.set("s", service=="healthcare"?"h":"e");
     p.set("t", document.querySelector('input[name="year"]:checked').value);
     p.set("nb", document.querySelector('input[name="nearest"]:checked').value);
 

@@ -16,9 +16,6 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
-// service selection
-document.getElementById(urlParams.get("s") == "e" ? "education" : "healthcare").checked = true
-
 // time selection
 let r_ = urlParams.get("t")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
@@ -126,16 +123,15 @@ defaultStyle.legends = [legend, naLegend]
 defaultStyleSize.legends = [legend, naLegend]
 defaultChangeStyle.legends = [legend]
 
-let service = document.querySelector('input[name="service"]:checked').value;
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
-let slider = document.getElementById('sliderisoc_' + service)
+let slider = document.getElementById('sliderisoc_education')
 
 function update() {
 
     // read GUI information
-    service = document.querySelector('input[name="service"]:checked').value;
+    service = "education";
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
@@ -329,7 +325,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
