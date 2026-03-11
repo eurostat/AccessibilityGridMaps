@@ -218,7 +218,7 @@ function update() {
         if (indic == "1")
             legend.title = "Change in driving distance to nearest EV charging stations from 2023 to 2025"
         else
-            legend.title = "Change in average driving distance to 3 nearest EV charging stations from 2023 to 2025"
+            legend.title = "Change in average driving distance to 5 nearest EV charging stations from 2023 to 2025"
 
     }
 
