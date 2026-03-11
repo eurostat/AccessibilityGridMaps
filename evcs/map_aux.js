@@ -58,7 +58,7 @@ const updateURL = (map) => {
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
-    [min, max] = document.getElementById('sliderisoc_education').noUiSlider.get(true);
+    [min, max] = document.getElementById('sliderisoc_evcs').noUiSlider.get(true);
     p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
 
     //interpolate

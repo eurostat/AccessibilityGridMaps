@@ -54,7 +54,7 @@ const minh = urlParams.get("minh") || 5, maxh = urlParams.get("maxh") || 26
 const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 9
 
 //initialise sliders
-noUiSlider.create(document.getElementById('sliderisoc_education'),
+noUiSlider.create(document.getElementById('sliderisoc_evcs'),
     { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
@@ -119,7 +119,7 @@ defaultChangeStyle.legends = [legend]
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
-let slider = document.getElementById('sliderisoc_education')
+let slider = document.getElementById('sliderisoc_evcs')
 
 function update() {
 
@@ -139,7 +139,7 @@ function update() {
     const bk = document.getElementById('road').checked;
 
     // show/hide slider
-    document.getElementById("sliE").style.display = service == "education" && year != "change" ? 'inline' : 'none'
+    document.getElementById("sliE").style.display = year != "change" ? 'inline' : 'none'
 
     // show/hide options
     //document.getElementById("contours_").style.display = !sbp ? 'inline' : 'none'
@@ -190,7 +190,7 @@ function update() {
 
     } else {
         //define breaks by hand
-        const breaks = service == "education" ? [-8, -4, -2, -1, 1, 2, 4, 8] : [-15, -8, -4, -2, 2, 4, 8, 15]
+        const breaks = service == [-8, -4, -2, -1, 1, 2, 4, 8]
         //central class to hide
         const thr = breaks[4] * 60
 
@@ -326,7 +326,7 @@ function addInterfaceEventListeners() {
     })
 
     //slider
-    document.getElementById('sliderisoc_education').noUiSlider.on("update", update);
+    document.getElementById('sliderisoc_evcs').noUiSlider.on("update", update);
 
     //home button
     document.getElementById("home-button").addEventListener("click", (event) => {
@@ -348,13 +348,13 @@ window.addEventListener('keypress', e => {
     if (e.key == "r") { reliefDirection *= -1; update() }
     if (e.key == "d") { shadingCoeff -= 3; console.log(shadingCoeff); update() }
     if (e.key == "f") { shadingCoeff += 3; console.log(shadingCoeff); update() }
-    if (e.key == "1") { const [min, max] = slider.noUiSlider.get(true); const step = service == "education" ? 0.5 : 1; slider.noUiSlider.set([min - step, max - step]) }
-    if (e.key == "2") { const [min, max] = slider.noUiSlider.get(true); const step = service == "education" ? 0.5 : 1; slider.noUiSlider.set([min + step, max + step]) }
+    if (e.key == "1") { const [min, max] = slider.noUiSlider.get(true); const step = 0.5; slider.noUiSlider.set([min - step, max - step]) }
+    if (e.key == "2") { const [min, max] = slider.noUiSlider.get(true); const step = 0.5; slider.noUiSlider.set([min + step, max + step]) }
     if (e.key == "+") { resFactor /= 1.2; console.log(resFactor); update() }
     if (e.key == "-") { resFactor *= 1.2; console.log(resFactor); update() }
     if (e.key == "z") {
         //restart animation to 0
-        slider.noUiSlider.set([0, service == "education" ? 3 : 6])
+        slider.noUiSlider.set([0, 3])
     }
     if (e.key == "a") {
         //stop animation
@@ -364,8 +364,8 @@ window.addEventListener('keypress', e => {
             return
         }
 
-        const max = service == "education" ? 30 : 60
-        const amp = service == "education" ? 3 : 6
+        const max = 30
+        const amp = 3
         let step = amp / 10
 
         //start animation
