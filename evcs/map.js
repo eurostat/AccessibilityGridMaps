@@ -61,7 +61,7 @@ noUiSlider.create(document.getElementById('sliderisoc_evcs'),
 // compute changes
 const preprocess = (c) => {
     c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2025 == undefined ? undefined : c.dt_1_2025 - c.dt_1_2023
-    c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2025 == undefined ? undefined : c.dt_a3_2025 - c.dt_a3_2023
+    c.dt_a5_change = c.dt_a5_2023 == undefined || c.dt_a5_2025 == undefined ? undefined : c.dt_a5_2025 - c.dt_a5_2023
 }
 
 const dataset = new gridviz.MultiResolutionDataset(
@@ -314,7 +314,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['change', '2025', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['change', '2025', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
