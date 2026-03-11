@@ -60,16 +60,15 @@ noUiSlider.create(document.getElementById('sliderisoc_evcs'),
 
 // compute changes
 const preprocess = (c) => {
-    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2020 == undefined ? undefined : c.dt_1_2023 - c.dt_1_2020
-    c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2020 == undefined ? undefined : c.dt_a3_2023 - c.dt_a3_2020
+    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2025 == undefined ? undefined : c.dt_1_2025 - c.dt_1_2023
+    c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2025 == undefined ? undefined : c.dt_a3_2025 - c.dt_a3_2023
 }
 
 const dataset = new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_" + versionTag + "/" + r + "/"),
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_evcs_" + versionTag + "/" + r + "/"),
     { preprocess: preprocess }
 )
-
 
 
 // styles
@@ -218,9 +217,9 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Change in driving time to nearest " + service + " service from 2020 to 2023"
+            legend.title = "Change in driving distance to nearest charging stations from 2023 to 2025"
         else
-            legend.title = "Change in average driving time to 3 nearest " + service + " service from 2020 to 2023"
+            legend.title = "Change in average driving distance to 3 nearest charging stations from 2023 to 2025"
 
     }
 
@@ -315,7 +314,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['change', '2025', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
