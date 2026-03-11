@@ -124,7 +124,6 @@ let slider = document.getElementById('sliderisoc_evcs')
 function update() {
 
     // read GUI information
-    service = "education";
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
@@ -152,7 +151,7 @@ function update() {
     if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
 
     //
-    slider = document.getElementById('sliderisoc_' + service)
+    slider = document.getElementById('sliderisoc_evcs')
 
     // the grid style
     let style = undefined
