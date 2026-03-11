@@ -64,13 +64,12 @@ const preprocess = (c) => {
     c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2020 == undefined ? undefined : c.dt_a3_2023 - c.dt_a3_2020
 }
 
-const dataset = {
-    education: new gridviz.MultiResolutionDataset(
-        [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_"+versionTag+"/" + r + "/"),
-        { preprocess: preprocess }
-    )
-}
+const dataset = new gridviz.MultiResolutionDataset(
+    [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_" + versionTag + "/" + r + "/"),
+    { preprocess: preprocess }
+)
+
 
 
 // styles
@@ -183,9 +182,9 @@ function update() {
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Driving time to nearest " + service + " service, in " + year
+            legend.title = "Driving distance to nearest charging station, in " + year
         else
-            legend.title = "Average driving time to 3 nearest " + service + " services, in " + year
+            legend.title = "Average driving distance to 3 nearest charging stations, in " + year
 
     } else {
         //define breaks by hand
@@ -239,7 +238,7 @@ function update() {
 
         // make grid layer
         const glayer = new gridviz.GridLayer(
-            dataset[service],
+            dataset,
             sbp || contours || shading ? [style] : [style, strokeStyle],
             { minPixelsPerCell: (sbp ? 6 : 1.6) * resFactor }
         )
