@@ -287,13 +287,13 @@ function update() {
                 (!style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
                         sop && !c.POP_2021 ? undefined :
-                            Math.abs(c[field]).toFixed(0) + " m " + (c[field] > 0 ? "further" : "closer") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            Math.abs(c[field]/1000).toFixed(1) + " km " + (c[field] > 0 ? "further" : "closer") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
         else
             topLayer.cellInfoHTML = (c) =>
                 (style.filter && !style.filter(c)) ? undefined :
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
-                        (c[field] == undefined ? "Not available" : (c[field]).toFixed(0) + " m") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                        (c[field] == undefined ? "Not available" : (c[field]/1000).toFixed(1) + " km") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
     }
 
     //add top layers
