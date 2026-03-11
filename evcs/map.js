@@ -108,7 +108,7 @@ const legend = new gridviz.ColorDiscreteLegend({
     labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min." : "")
 })
 //define not available legend
-const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Driving time not available"]], shape: "square", });
+const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Driving distance not available"]], shape: "square", });
 
 defaultStyle.legends = [legend, naLegend]
 defaultStyleSize.legends = [legend, naLegend]
@@ -158,21 +158,21 @@ function update() {
 
     if (year != "change") {
         let [min, max] = slider.noUiSlider.get(true);
-        const breaks = [...Array(nbClasses - 1).keys()].map(i => (60 * (min + (max - min) * i / (nbClasses - 2)) / 60).toFixed(2))
+        const breaks = [...Array(nbClasses - 1).keys()].map(i => (1000 * (min + (max - min) * i / (nbClasses - 2)) / 1000).toFixed(1))
 
         if (!sbp) {
             // default style
             const classifier = gridviz.classifier(breaks)
-            defaultStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
+            defaultStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 1000)
             defaultStyle.cellsNb = -1
             defaultStyle.filter = c => (!sop || +c.POP_2021 > 0) && (c[field] != undefined || +c.POP_2021 > 0)
             style = defaultStyle
             if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
-            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
+            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 1000)), revert: false, limit: 'steep' })
         } else {
             // default style, sized by population
             const classifier = gridviz.colorClassifier(breaks, colorRamp)
-            defaultStyleSize.color = (c) => (c[field] == undefined) ? naColor : classifier(c[field] / 60)
+            defaultStyleSize.color = (c) => (c[field] == undefined) ? naColor : classifier(c[field] / 1000)
             defaultStyleSize.filter = c => +c.POP_2021 > 0
             style = defaultStyleSize
         }
@@ -189,17 +189,17 @@ function update() {
         //define breaks by hand
         const breaks = [-8, -4, -2, -1, 1, 2, 4, 8]
         //central class to hide
-        const thr = breaks[4] * 60
+        const thr = breaks[4] * 1000
 
         if (!sbp) {
             // style for change
             const classifier = gridviz.classifier(breaks)
-            defaultChangeStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 60)
+            defaultChangeStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 1000)
             defaultChangeStyle.cellsNb = -1
             defaultChangeStyle.filter = c => (!sop || +c.POP_2021 > 0) && c[field] != undefined && Math.abs(c[field]) >= thr
             style = defaultChangeStyle
             if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
-            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 60)), revert: false, limit: 'steep' })
+            if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 1000)), revert: false, limit: 'steep' })
         }
         else {
             // style for change, sized by population
@@ -207,7 +207,7 @@ function update() {
             defaultStyleSize.color = (c) => {
                 let v = c[field]
                 if (v == undefined || isNaN(v)) return "grey"
-                return classifier(v / 60)
+                return classifier(v / 1000)
             }
             defaultStyleSize.filter = c => +c.POP_2021 > 0 && Math.abs(c[field]) >= thr
             style = defaultStyleSize
