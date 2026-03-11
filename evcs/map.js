@@ -186,7 +186,7 @@ function update() {
 
     } else {
         //define breaks by hand
-        const breaks = [-8, -4, -2, -1, 1, 2, 4, 8]
+        const breaks = [-10, -5, -2, -1, 1, 2, 5, 10]
         //central class to hide
         const thr = breaks[4] * 1000
 
