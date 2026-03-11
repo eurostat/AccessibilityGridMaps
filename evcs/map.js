@@ -50,8 +50,7 @@ const interpFun = interpolate ? (styles, field) => {
 //if (urlParams.get("collapsed")) document.getElementById("expand-toggle-button").click();
 
 // sliders
-const minh = urlParams.get("minh") || 5, maxh = urlParams.get("maxh") || 26
-const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 9
+const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 10
 
 //initialise sliders
 noUiSlider.create(document.getElementById('sliderisoc_evcs'),
