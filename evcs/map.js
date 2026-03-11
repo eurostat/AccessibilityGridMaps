@@ -54,8 +54,6 @@ const minh = urlParams.get("minh") || 5, maxh = urlParams.get("maxh") || 26
 const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 9
 
 //initialise sliders
-noUiSlider.create(document.getElementById('sliderisoc_healthcare'),
-    { start: [minh, maxh], range: { 'min': 0, 'max': 60 }, margin: 1, step: 1, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 5, density: 10 } });
 noUiSlider.create(document.getElementById('sliderisoc_education'),
     { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
@@ -71,12 +69,7 @@ const dataset = {
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
         r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_"+versionTag+"/" + r + "/"),
         { preprocess: preprocess }
-    ),
-    healthcare: new gridviz.MultiResolutionDataset(
-        [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_healthcare_"+versionTag+"/" + r + "/"),
-        { preprocess: preprocess }
-    ),
+    )
 }
 
 
@@ -146,7 +139,6 @@ function update() {
     const bk = document.getElementById('road').checked;
 
     // show/hide slider
-    document.getElementById("sliH").style.display = service == "healthcare" && year != "change" ? 'inline' : 'none'
     document.getElementById("sliE").style.display = service == "education" && year != "change" ? 'inline' : 'none'
 
     // show/hide options
@@ -334,7 +326,6 @@ function addInterfaceEventListeners() {
     })
 
     //slider
-    document.getElementById('sliderisoc_healthcare').noUiSlider.on("update", update);
     document.getElementById('sliderisoc_education').noUiSlider.on("update", update);
 
     //home button
