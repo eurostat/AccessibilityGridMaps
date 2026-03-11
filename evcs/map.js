@@ -180,9 +180,9 @@ function update() {
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Driving distance to nearest charging station, in " + year
+            legend.title = "Driving distance to nearest EV charging station, in " + year
         else
-            legend.title = "Average driving distance to 3 nearest charging stations, in " + year
+            legend.title = "Average driving distance to 3 nearest EV charging stations, in " + year
 
     } else {
         //define breaks by hand
