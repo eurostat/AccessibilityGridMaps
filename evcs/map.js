@@ -16,6 +16,9 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
+// service selection
+document.getElementById(urlParams.get("s") == "e" ? "education" : "healthcare").checked = true
+
 // time selection
 let r_ = urlParams.get("t")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
