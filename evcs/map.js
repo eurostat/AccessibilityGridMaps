@@ -19,7 +19,7 @@ const urlParams = new URLSearchParams(window.location.search);
 // time selection
 let r_ = urlParams.get("t")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
-// nb services selection
+// nb stations selection
 r_ = urlParams.get("nb")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
 
@@ -187,7 +187,7 @@ function update() {
 
     } else {
         //define breaks by hand
-        const breaks = service == [-8, -4, -2, -1, 1, 2, 4, 8]
+        const breaks = [-8, -4, -2, -1, 1, 2, 4, 8]
         //central class to hide
         const thr = breaks[4] * 60
 
@@ -255,7 +255,7 @@ function update() {
 
         // make shading layer
         const glayerShading = new gridviz.GridLayer(
-            dataset[service], [shadingStyle], { minPixelsPerCell: 1.6 * resFactor }
+            dataset, [shadingStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
 
         //apply interpolator
@@ -270,7 +270,7 @@ function update() {
         tanakaStyle.filter = style.filter
         // make tanaka layer
         const glayerTanaka = new gridviz.GridLayer(
-            dataset[service], [tanakaStyle], { minPixelsPerCell: 1.6 * resFactor }
+            dataset, [tanakaStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
 
         //apply interpolator
