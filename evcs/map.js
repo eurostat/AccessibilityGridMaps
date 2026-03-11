@@ -105,7 +105,7 @@ let resFactor = 1
 const legendWidth = Math.min(window.innerWidth - 40, 400)
 const legend = new gridviz.ColorDiscreteLegend({
     width: legendWidth,
-    labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min." : "")
+    labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " km" : "")
 })
 //define not available legend
 const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Driving distance not available"]], shape: "square", });
