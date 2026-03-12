@@ -1,5 +1,6 @@
 /*
   TODO
+  stations to points
   add legend circles ?
   test interpolate ? bof
   */
