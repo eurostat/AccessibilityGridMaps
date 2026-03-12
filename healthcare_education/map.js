@@ -13,6 +13,8 @@ const map = new gridviz.Map(document.getElementById('map'), {
     onZoomFun: (e) => { updateURL(map) },
 }).addZoomButtons().setViewFromURL()
 
+
+
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -35,6 +37,41 @@ for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours
 
 // interpolator
 const interpolate = urlParams.get("i")
+
+
+// update URL with map parameters
+const updateURL = (map) => {
+    //get parameters
+    const p = new URLSearchParams(window.location.search);
+
+    // map viewport
+    const v = map.getView();
+    p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
+
+    // handle selection
+    const service = document.querySelector('input[name="service"]:checked').value;
+        p.set("s", service=="healthcare"?"h":"e");
+    p.set("t", document.querySelector('input[name="year"]:checked').value);
+    p.set("nb", document.querySelector('input[name="nearest"]:checked').value);
+
+    // handle checkboxes
+    for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"])
+        p.set(cb, document.getElementById(cb).checked ? "1" : "");
+
+    // sliders
+    let [min, max] = document.getElementById('sliderisoc_healthcare').noUiSlider.get(true);
+    p.set("minh", Math.round(min)); p.set("maxh", Math.round(max));
+    [min, max] = document.getElementById('sliderisoc_education').noUiSlider.get(true);
+    p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
+
+    //interpolate
+    //p.set("itrp", interpolate ? "1" : "");
+
+    //set URL with map parameters
+    const newURL = `${window.location.pathname}?${p.toString()}`;
+    window.history.replaceState({}, '', newURL);
+};
+
 
 
 //define interpolator
@@ -68,6 +105,11 @@ const preprocess = (c) => {
     c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2020 == undefined ? undefined : c.dt_1_2023 - c.dt_1_2020
     c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2020 == undefined ? undefined : c.dt_a3_2023 - c.dt_a3_2020
 }
+
+
+const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
+const versionTag = "v2026_01"
+//const urlTiles = "http://127.0.0.1:5500/tmp/"
 
 const dataset = {
     education: new gridviz.MultiResolutionDataset(
