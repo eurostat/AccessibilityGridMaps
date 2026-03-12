@@ -1,6 +1,5 @@
 /*
   TODO
-  ecvs ecvp
   add legend circles ?
   test interpolate ? bof
   */
