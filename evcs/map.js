@@ -1,6 +1,5 @@
 /*
   TODO
-  stations to points
   add legend circles ?
   test interpolate ? bof
   */
@@ -20,7 +19,7 @@ const urlParams = new URLSearchParams(window.location.search);
 // time selection
 let r_ = urlParams.get("t")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
-// nb stations selection
+// nb points selection
 r_ = urlParams.get("nb")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
 
@@ -181,9 +180,9 @@ function update() {
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Driving distance to nearest EV charging station, in " + year
+            legend.title = "Driving distance to nearest EV charging point, in " + year
         else
-            legend.title = "Average driving distance to 5 nearest EV charging stations, in " + year
+            legend.title = "Average driving distance to 5 nearest EV charging points, in " + year
 
     } else {
         //define breaks by hand
@@ -217,9 +216,9 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Change in driving distance to nearest EV charging stations from 2023 to 2025"
+            legend.title = "Change in driving distance to nearest EV charging points from 2023 to 2025"
         else
-            legend.title = "Change in average driving distance to 5 nearest EV charging stations from 2023 to 2025"
+            legend.title = "Change in average driving distance to 5 nearest EV charging points from 2023 to 2025"
 
     }
 
