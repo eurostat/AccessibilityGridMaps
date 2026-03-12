@@ -63,9 +63,13 @@ const preprocess = (c) => {
     c.dt_a5_change = c.dt_a5_2023 == undefined || c.dt_a5_2025 == undefined ? undefined : c.dt_a5_2025 - c.dt_a5_2023
 }
 
+
+const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/evcp/tiles/tiles_evcp_v2026_03/"
+//const urlTiles = "http://127.0.0.1:5500/tmp/"
+
 const dataset = new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_evcp_" + versionTag + "/" + r + "/"),
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + r + "/"),
     { preprocess: preprocess }
 )
 

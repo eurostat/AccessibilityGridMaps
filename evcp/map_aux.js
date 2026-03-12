@@ -1,6 +1,3 @@
-const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/evcp/tiles/"
-//const urlTiles = "http://127.0.0.1:5500/tmp/"
-const versionTag = "v2026_03" // "" // v2026_01 v2025_11
 
 
 
