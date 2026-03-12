@@ -69,50 +69,6 @@ const dataset = new gridviz.MultiResolutionDataset(
     { preprocess: preprocess }
 )
 
-
-// styles
-const nbClasses = 9
-const colorRamp = []; for (let i = 0; i <= nbClasses - 1; i++) colorRamp.push(d3.interpolateViridis(1 - i / (nbClasses - 1) * 0.6))
-// d3.interpolateTurbo(1 - t) //t=> d3.interpolateCubehelixDefault(1-t) //d3.interpolateYlOrRd  interpolateSpectral
-const colorRampChange = []; for (let i = 0; i <= nbClasses - 1; i++) colorRampChange.push(d3.interpolateSpectral(1 - i / (nbClasses - 1)))
-colorRampChange[4] = "white"
-const blendOperation = () => 'multiply' //(z < 200 ? 'multiply' : 'source-over')
-
-const cols_ = { ...colorRamp }; cols_.na = naColor
-const defaultStyle = new gridviz.SquareColorCategoryWebGLStyle({
-    color: cols_,
-    blendOperation: blendOperation,
-})
-
-const chColors = { ...colorRampChange }; chColors.na = naColor
-const defaultChangeStyle = new gridviz.SquareColorCategoryWebGLStyle({
-    color: chColors,
-    blendOperation: blendOperation,
-})
-const defaultStyleSize = new gridviz.ShapeColorSizeStyle({
-    size: (c, r, z, vs) => 1.41 * vs(c.POP_2021),
-    viewScale: gridviz.viewScale({ valueFunction: (c) => +c.POP_2021, stretching: gridviz.logarithmicScale(-7) }),
-    shape: () => "circle",
-    blendOperation: blendOperation,
-});
-
-let shadingCoeff = -7
-let reliefDirection = 1
-let resFactor = 1
-
-//define legend
-const legendWidth = Math.min(window.innerWidth - 40, 400)
-const legend = new gridviz.ColorDiscreteLegend({
-    width: legendWidth,
-    labelFormat: (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " km" : "")
-})
-//define not available legend
-const naLegend = new gridviz.ColorCategoryLegend({ colorLabel: [[naColor, "Driving distance not available"]], shape: "square", });
-
-defaultStyle.legends = [legend, naLegend]
-defaultStyleSize.legends = [legend, naLegend]
-defaultChangeStyle.legends = [legend]
-
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
@@ -312,13 +268,11 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-
     ['change', '2025', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
         })
-
     })
 
     //slider
