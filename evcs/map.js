@@ -1,5 +1,6 @@
 /*
   TODO
+  ecvs ecvp
   add legend circles ?
   test interpolate ? bof
   */
@@ -53,7 +54,7 @@ const interpFun = interpolate ? (styles, field) => {
 const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 10
 
 //initialise sliders
-noUiSlider.create(document.getElementById('sliderisoc_evcs'),
+noUiSlider.create(document.getElementById('sliderisoc_evcp'),
     { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
@@ -65,7 +66,7 @@ const preprocess = (c) => {
 
 const dataset = new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_evcs_" + versionTag + "/" + r + "/"),
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_evcp_" + versionTag + "/" + r + "/"),
     { preprocess: preprocess }
 )
 
@@ -116,7 +117,7 @@ defaultChangeStyle.legends = [legend]
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
-let slider = document.getElementById('sliderisoc_evcs')
+let slider = document.getElementById('sliderisoc_evcp')
 
 function update() {
 
@@ -148,7 +149,7 @@ function update() {
     if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
 
     //
-    slider = document.getElementById('sliderisoc_evcs')
+    slider = document.getElementById('sliderisoc_evcp')
 
     // the grid style
     let style = undefined
@@ -322,7 +323,7 @@ function addInterfaceEventListeners() {
     })
 
     //slider
-    document.getElementById('sliderisoc_evcs').noUiSlider.on("update", update);
+    document.getElementById('sliderisoc_evcp').noUiSlider.on("update", update);
 
     //home button
     document.getElementById("home-button").addEventListener("click", (event) => {

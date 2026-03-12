@@ -1,4 +1,4 @@
-const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/evcs/tiles/"
+const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/evcp/tiles/"
 //const urlTiles = "http://127.0.0.1:5500/tmp/"
 const versionTag = "v2026_03" // "" // v2026_01 v2025_11
 const urlBackground1 = 'https://ec.europa.eu/eurostat/cache/GISCO/mbkg/road/'
@@ -55,7 +55,7 @@ const updateURL = (map) => {
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
-    [min, max] = document.getElementById('sliderisoc_evcs').noUiSlider.get(true);
+    [min, max] = document.getElementById('sliderisoc_evcp').noUiSlider.get(true);
     p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
 
     //interpolate
