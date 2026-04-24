@@ -107,8 +107,10 @@ const preprocess = (c) => {
 }
 
 
-const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
-const versionTag = "v2026_01"
+const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/"
+const versionTag = "v2026_04"
+//const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
+//const versionTag = "v2026_01"
 //const urlTiles = "http://127.0.0.1:5500/tmp/"
 
 const dataset = {
@@ -193,10 +195,12 @@ function update() {
         //legend
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
+	    legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
         if (indic == "1")
             legend.title = "Driving time to nearest " + service + " service, in " + year
         else
             legend.title = "Average driving time to 3 nearest " + service + " services, in " + year
+
 
     } else {
         //define breaks by hand
@@ -229,6 +233,7 @@ function update() {
         //legend
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
+	    legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
         if (indic == "1")
             legend.title = "Change in driving time to nearest " + service + " service from 2020 to 2023"
         else
