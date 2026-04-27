@@ -144,6 +144,7 @@ const poisStyle = new gridviz.ShapeColorSizeStyle({
     color: 'red',
 })
 const poisLayer = new gridviz.GridLayer(dataset_pois.healthcare[2023], [poisStyle])
+poisLayer.cellInfoHTML = undefined
 
 
 
