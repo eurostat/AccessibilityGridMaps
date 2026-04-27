@@ -31,7 +31,7 @@ r_ = urlParams.get("nb")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
 
 // checkboxes
-for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"]) {
+for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours", "serv"]) {
     const sel = urlParams.get(cb);
     if (sel == undefined) continue;
     document.getElementById(cb).checked = sel != "" && sel != "false" && +sel != 0
@@ -52,12 +52,12 @@ const updateURL = (map) => {
 
     // handle selection
     const service = document.querySelector('input[name="service"]:checked').value;
-        p.set("s", service=="healthcare"?"h":"e");
+    p.set("s", service == "healthcare" ? "h" : "e");
     p.set("t", document.querySelector('input[name="year"]:checked').value);
     p.set("nb", document.querySelector('input[name="nearest"]:checked').value);
 
     // handle checkboxes
-    for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours"])
+    for (let cb of ["sbp", "sop", "label", "road", "bnd", "ag", "shading", "contours", "serv"])
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
@@ -118,34 +118,34 @@ const versionTag = "v2026_04"
 const dataset = {
     education: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_"+versionTag+"/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_" + versionTag + "/" + r + "/"),
         { preprocess: preprocess }
     ),
     healthcare: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_healthcare_"+versionTag+"/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_healthcare_" + versionTag + "/" + r + "/"),
         { preprocess: preprocess }
     ),
 }
 
 // define pois datasets
-const dataset_pois = {"healthcare":{}, "education":{}}
+const dataset_pois = { "healthcare": {}, "education": {} }
 for (let service of ["healthcare", "education"])
     for (let year of ["2020", "2023"]) {
-    dataset_pois[service][year] = new gridviz.MultiResolutionDataset(
-        [200, 500, 1000, 2000, 5000, 10000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_"+service+"_"+year+"/" + r + "/"),
-        //{ preprocess: preprocess }
-    )
+        dataset_pois[service][year] = new gridviz.MultiResolutionDataset(
+            [200, 500, 1000, 2000, 5000, 10000],
+            r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_" + service + "_" + year + "/" + r + "/"),
+            //{ preprocess: preprocess }
+        )
     }
 
 //define pois layer
 const poisStyle = new gridviz.ShapeColorSizeStyle({
-    size: (c, r, z) => z<50? Math.max(z*10, 100) : 4*z,
-    shape: (c, r, z) => z<50? 'diamond' : 'circle',
-    color: 'red',
+    size: (c, r, z) => z > 200 ? 0 : z < 40 ? Math.max(z * 12, 150) : 4.5 * z,
+    shape: (c, r, z) => z < 50 ? 'diamond' : 'circle',
+    color: 'purple',
 })
-const poisLayer = new gridviz.GridLayer(dataset_pois.healthcare[2023], [poisStyle])
+const poisLayer = new gridviz.GridLayer(dataset_pois.healthcare[2023], [poisStyle], { minPixelsPerCell: 1.5 })
 poisLayer.cellInfoHTML = undefined
 
 
@@ -172,6 +172,7 @@ function update() {
     const bn = document.getElementById('bnd').checked;
     const ag = document.getElementById('ag').checked;
     const bk = document.getElementById('road').checked;
+    const serv = document.getElementById('serv').checked;
 
     // show/hide slider
     document.getElementById("sliH").style.display = service == "healthcare" && year != "change" ? 'inline' : 'none'
@@ -219,7 +220,7 @@ function update() {
         //legend
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
-	    legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
+        legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
         if (indic == "1")
             legend.title = "Driving time to nearest " + service + " service, in " + year
         else
@@ -257,7 +258,7 @@ function update() {
         //legend
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
-	    legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
+        legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
         if (indic == "1")
             legend.title = "Change in driving time to nearest " + service + " service from 2020 to 2023"
         else
@@ -339,7 +340,9 @@ function update() {
     }
 
     //add pois layer
-    layers.push(poisLayer)
+    if (serv) {
+        layers.push(poisLayer)
+    }
 
     //add top layers
     if (bn) layers.push(boundariesLayer)
@@ -359,7 +362,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
