@@ -139,14 +139,18 @@ for (let service of ["healthcare", "education"])
         )
     }
 
-//define pois layer
-const poisStyle = new gridviz.ShapeColorSizeStyle({
+
+//define services layer
+const servStyle = new gridviz.ShapeColorSizeStyle({
     size: (c, r, z) => z > 200 ? 0 : z < 35 ? Math.max(z * 12, 150) : 4.5 * z,
     shape: (c, r, z) => z < 50 ? 'diamond' : 'circle',
     color: 'purple',
 })
-const poisLayer = new gridviz.GridLayer(dataset_pois.healthcare[2023], [poisStyle], { minPixelsPerCell: 1.5 })
-poisLayer.cellInfoHTML = undefined
+const servLayer = new gridviz.GridLayer(
+    dataset_pois.healthcare[2023],
+    [servStyle],
+    { minPixelsPerCell: 1.5 })
+servLayer.cellInfoHTML = undefined
 
 
 
@@ -341,7 +345,7 @@ function update() {
 
     //add pois layer
     if (serv) {
-        layers.push(poisLayer)
+        layers.push(servLayer)
     }
 
     //add top layers
