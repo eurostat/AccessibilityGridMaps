@@ -1,7 +1,7 @@
 /*
   TODO
-add services
-remove DE services
+  add services
+  publish pois version without DE services
   add legend circles ?
   test interpolate ? bof
   */
