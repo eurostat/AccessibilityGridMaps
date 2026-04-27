@@ -128,14 +128,13 @@ const dataset = {
     ),
 }
 
-// define pois datasets
-const dataset_pois = { "healthcare": {}, "education": {} }
+// define services datasets
+const datasetServices = { "healthcare": {}, "education": {} }
 for (let service of ["healthcare", "education"])
     for (let year of ["2020", "2023"]) {
-        dataset_pois[service][year] = new gridviz.MultiResolutionDataset(
+        datasetServices[service][year] = new gridviz.MultiResolutionDataset(
             [200, 500, 1000, 2000, 5000, 10000],
             r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_" + service + "_" + year + "/" + r + "/"),
-            //{ preprocess: preprocess }
         )
     }
 
@@ -147,7 +146,7 @@ const servStyle = new gridviz.ShapeColorSizeStyle({
     color: 'purple',
 })
 const servLayer = new gridviz.GridLayer(
-    dataset_pois.healthcare[2023],
+    undefined,
     [servStyle],
     { minPixelsPerCell: 1.5 })
 servLayer.cellInfoHTML = undefined
@@ -345,6 +344,7 @@ function update() {
 
     //add pois layer
     if (serv) {
+        servLayer.dataset = datasetServices[service][year]
         layers.push(servLayer)
     }
 
