@@ -139,7 +139,7 @@ for (let service of ["healthcare", "education"])
 
 //define pois layer
 const poisStyle = new gridviz.ShapeColorSizeStyle({
-    size: (c, r, z) => 2*r,
+    size: (c, r, z) => Math.max(z*10, 100), //10 pixels
     shape: 'diamond',
     color: 'red',
 })
