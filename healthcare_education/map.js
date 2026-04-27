@@ -1,7 +1,11 @@
 /*
   TODO
-  add services
+  add services:
   publish pois version without DE services
+  add services legend
+  change services layer checkbox text in panel and legend according to selection
+
+  services as icon ?
   add legend circles ?
   test interpolate ? bof
   */
@@ -133,7 +137,7 @@ const datasetServices = { "healthcare": {}, "education": {} }
 for (let service of ["healthcare", "education"])
     for (let year of ["2020", "2023"]) {
         datasetServices[service][year] = new gridviz.MultiResolutionDataset(
-            [200, 500, 1000, 2000, 5000, 10000],
+            [100, 200, 500, 1000, 2000, 5000, 10000],
             r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_" + service + "_" + year + "/" + r + "/"),
         )
     }
