@@ -2,6 +2,7 @@
   TODO
   add services:
   publish pois version without DE services
+  adjust school style
   add services legend
   change services layer checkbox text in panel and legend according to selection
 
