@@ -1,11 +1,10 @@
 /*
   TODO
-2025 to 2024
-"Eco-movement, Eurostat (GISCO)"
-exclude non TT countries
+  2025 to 2024
+  include TR, UA ?
   add legend circles ?
   test interpolate ? bof
-  */
+*/
 
 const DEFAULTMAPOSITION = { x: 4030000, y: 2950000, z: 1500 };
 const map = new gridviz.Map(document.getElementById('map'), {
