@@ -126,6 +126,27 @@ const dataset = {
     ),
 }
 
+// define pois datasets
+const dataset_pois = {"healthcare":{}, "education":{}}
+for (let service of ["healthcare", "education"])
+    for (let year of ["2020", "2023"]) {
+    dataset_pois[service][year] = new gridviz.MultiResolutionDataset(
+        [200, 500, 1000, 2000, 5000, 10000],
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_"+service+"_"+year+"/" + r + "/"),
+        //{ preprocess: preprocess }
+    )
+    }
+
+//define pois layer
+const poisStyle = new gridviz.ShapeColorSizeStyle({
+    size: (c, r, z) => 2*r,
+    shape: 'diamond',
+    color: 'red',
+})
+const poisLayer = new gridviz.GridLayer(dataset_pois.healthcare[2023], [poisStyle])
+
+
+
 let service = document.querySelector('input[name="service"]:checked').value;
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
@@ -313,6 +334,9 @@ function update() {
                     sop && !c.POP_2021 ? undefined :
                         (c[field] == undefined ? "Not available" : (c[field] / 60).toFixed(1) + " min") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
     }
+
+    //add pois layer
+    layers.push(poisLayer)
 
     //add top layers
     if (bn) layers.push(boundariesLayer)
