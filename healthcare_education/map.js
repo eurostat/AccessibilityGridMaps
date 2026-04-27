@@ -1,5 +1,7 @@
 /*
   TODO
+add services
+remove DE services
   add legend circles ?
   test interpolate ? bof
   */
