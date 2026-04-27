@@ -1,5 +1,8 @@
 /*
   TODO
+2025 to 2024
+"Eco-movement, Eurostat (GISCO)"
+exclude non TT countries
   add legend circles ?
   test interpolate ? bof
   */
