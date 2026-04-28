@@ -1,8 +1,5 @@
 /*
   TODO
-  add services legend
-  change services layer checkbox text in panel and legend according to selection
-
   services as icon ?
   add legend circles ?
   test interpolate ? bof
