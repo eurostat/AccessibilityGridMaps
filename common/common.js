@@ -26,7 +26,7 @@ const boundariesLayer = new gridviz.GeoJSONLayer(gridviz_eurostat.getEurostatBou
 //make labels layer
 const labelLayer = new gridviz.LabelLayer(gridviz_eurostat.getEuronymeLabelLayer('EUR', '20', { baseURL: euronymURL, ccIn: ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "PL", "PT", "MT", "NL", "RO", "SE", "SK", "SI", "CH", "NO", "LI", "AL",], }))
 
-const strokeStyle = new gridviz.StrokeStyle({ visible: (z) => z < 4 })
+const strokeStyle = new gridviz.StrokeStyle({ strokeColor: () => '#ccc', strokeWidth: (c, r, z) => 0.3*z, visible: (z) => z < 4 })
 
 const naColor = "#d6bad5" //"#ccc"
 
