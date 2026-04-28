@@ -1,7 +1,6 @@
 /*
   TODO
   add services:
-  publish pois version without DE services
   adjust school style
   add services legend
   change services layer checkbox text in panel and legend according to selection
@@ -146,8 +145,6 @@ for (let service of ["healthcare", "education"])
 
 //define services layer
 const servStyle = new gridviz.ShapeColorSizeStyle({
-    size: (c, r, z) => z > 200 ? 0 : z < 35 ? Math.max(z * 12, 150) : 4.5 * z,
-    shape: (c, r, z) => z < 50 ? 'diamond' : 'circle',
     color: 'purple',
 })
 const servLayer = new gridviz.GridLayer(
@@ -350,6 +347,13 @@ function update() {
     //add pois layer
     if (serv) {
         servLayer.dataset = datasetServices[service][year]
+        if (service == "education") {
+            servStyle.size = (c, r, z) => z > 25 ? 0 : z < 5 ? Math.max(z * 6, 50) : 4 * z
+            servStyle.shape = (c, r, z) => z < 5 ? 'diamond' : 'circle'
+        } else {
+            servStyle.size = (c, r, z) => z > 200 ? 0 : z < 35 ? Math.max(z * 12, 100) : 4.5 * z
+            servStyle.shape = (c, r, z) => z < 35 ? 'diamond' : 'circle'
+        }
         layers.push(servLayer)
     }
 
