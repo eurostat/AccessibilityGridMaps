@@ -135,7 +135,7 @@ const datasetServices = { "healthcare": {}, "education": {} }
 for (let service of ["healthcare", "education"])
     for (let year of ["2020", "2023"]) {
         datasetServices[service][year] = new gridviz.MultiResolutionDataset(
-            [100, 200, 500, 1000, 2000, 5000, 10000],
+            [20, 50, 100, 200, 500, 1000, 2000],
             r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_" + service + "_" + year + "/" + r + "/"),
         )
     }
