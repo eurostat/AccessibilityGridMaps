@@ -162,6 +162,7 @@ let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
 let slider = document.getElementById('sliderisoc_' + service)
+const serv_cp_text = document.getElementById('cp_service_text');
 
 function update() {
 
@@ -346,11 +347,17 @@ function update() {
                         (c[field] == undefined ? "Not available" : (c[field] / 60).toFixed(1) + " min") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
     }
 
-    //add pois layer
+    //add service points layer
     if (serv) {
+        // set service dataset
         servLayer.dataset = datasetServices[service][year]
-        servStyle.legends[0].colorLabel = [['purple', (service[0].toUpperCase() + service.slice(1)) + ' service']]
 
+        // set title
+        const title = (service[0].toUpperCase() + service.slice(1)) + ' service'
+        servStyle.legends[0].colorLabel = [['purple', title]]
+        serv_cp_text.textContent = title
+
+        // adjust style depending on service type
         if (service == "education") {
             servStyle.visible = z => z <= 25
             servStyle.size = (c, r, z) => z < 5 ? Math.max(z * 5, 30) : 4 * z
