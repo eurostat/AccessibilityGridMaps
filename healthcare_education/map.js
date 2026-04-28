@@ -1,6 +1,6 @@
 /*
   TODO
-  services as icon ?
+  services as icon ? mouseover on services layer ?
   add legend circles ?
   test interpolate ? bof
   */
