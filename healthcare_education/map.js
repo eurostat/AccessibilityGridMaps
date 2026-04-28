@@ -355,7 +355,7 @@ function update() {
         // set title
         const title = (service[0].toUpperCase() + service.slice(1)) + ' service'
         servStyle.legends[0].colorLabel = [['purple', title]]
-        serv_cp_text.textContent = title
+        serv_cp_text.textContent = title + 's'
 
         // adjust style depending on service type
         if (service == "education") {
