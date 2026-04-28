@@ -1,7 +1,5 @@
 /*
   TODO
-  add services:
-  adjust school style
   add services legend
   change services layer checkbox text in panel and legend according to selection
 
@@ -144,9 +142,13 @@ for (let service of ["healthcare", "education"])
 
 
 //define services layer
-const servStyle = new gridviz.ShapeColorSizeStyle({
-    color: 'purple',
-})
+const servStyle = new gridviz.ShapeColorSizeStyle({ color: 'purple', shape: 'circle' })
+servStyle.legends = [new gridviz.ColorCategoryLegend({
+    shape: 'circle',
+    strokeWidth: 0,
+    dimension: { r: 5 }
+})]
+
 const servLayer = new gridviz.GridLayer(
     undefined,
     [servStyle],
@@ -347,12 +349,16 @@ function update() {
     //add pois layer
     if (serv) {
         servLayer.dataset = datasetServices[service][year]
+        servStyle.legends[0].colorLabel = [['purple', (service[0].toUpperCase() + service.slice(1)) + ' service']]
+
         if (service == "education") {
-            servStyle.size = (c, r, z) => z > 25 ? 0 : z < 5 ? Math.max(z * 6, 50) : 4 * z
-            servStyle.shape = (c, r, z) => z < 5 ? 'diamond' : 'circle'
+            servStyle.visible = z => z <= 25
+            servStyle.size = (c, r, z) => z < 5 ? Math.max(z * 5, 30) : 4 * z
+            //servStyle.shape = (c, r, z) => z < 5 ? 'diamond' : 'circle'
         } else {
-            servStyle.size = (c, r, z) => z > 200 ? 0 : z < 35 ? Math.max(z * 12, 100) : 4.5 * z
-            servStyle.shape = (c, r, z) => z < 35 ? 'diamond' : 'circle'
+            servStyle.visible = z => z <= 200
+            servStyle.size = (c, r, z) => z < 35 ? Math.max(z * 8, 60) : 4.5 * z
+            //servStyle.shape = (c, r, z) => z < 35 ? 'diamond' : 'circle'
         }
         layers.push(servLayer)
     }
