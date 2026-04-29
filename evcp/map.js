@@ -1,6 +1,5 @@
 /*
   TODO
-  2025 to 2024
   include TR, UA ?
   add legend circles ?
   test interpolate ? bof
@@ -92,8 +91,8 @@ noUiSlider.create(document.getElementById('sliderisoc_evcp'),
 
 // compute changes
 const preprocess = (c) => {
-    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2025 == undefined ? undefined : c.dt_1_2025 - c.dt_1_2023
-    c.dt_a5_change = c.dt_a5_2023 == undefined || c.dt_a5_2025 == undefined ? undefined : c.dt_a5_2025 - c.dt_a5_2023
+    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2024 == undefined ? undefined : c.dt_1_2024 - c.dt_1_2023
+    c.dt_a5_change = c.dt_a5_2023 == undefined || c.dt_a5_2024 == undefined ? undefined : c.dt_a5_2024 - c.dt_a5_2023
 }
 
 
@@ -209,9 +208,9 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Change in driving distance to nearest EV charging points from 2023 to 2025"
+            legend.title = "Change in driving distance to nearest EV charging points from 2023 to 2024"
         else
-            legend.title = "Change in average driving distance to 5 nearest EV charging points from 2023 to 2025"
+            legend.title = "Change in average driving distance to 5 nearest EV charging points from 2023 to 2024"
 
     }
 
@@ -305,7 +304,7 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-    ['change', '2025', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['change', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
