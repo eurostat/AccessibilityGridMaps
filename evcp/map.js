@@ -1,6 +1,7 @@
 /*
   TODO
   include TR, UA ?
+  show points ?
   add legend circles ?
   test interpolate ? bof
 */
