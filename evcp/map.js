@@ -4,6 +4,7 @@
   show points ?
   add legend circles ?
   test interpolate ? bof
+
 */
 
 const DEFAULTMAPOSITION = { x: 4030000, y: 2950000, z: 1500 };
