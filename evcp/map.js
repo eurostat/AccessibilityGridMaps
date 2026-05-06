@@ -4,7 +4,6 @@
   show points ?
   add legend circles ?
   test interpolate ? bof
-
 */
 
 const DEFAULTMAPOSITION = { x: 4030000, y: 2950000, z: 1500 };
@@ -98,7 +97,7 @@ const preprocess = (c) => {
 }
 
 
-const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/tiles_evcp_v2026_03/"
+const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evcp/"
 
 
 const dataset = new gridviz.MultiResolutionDataset(

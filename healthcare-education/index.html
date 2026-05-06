@@ -3,7 +3,7 @@
   <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-    <title>Accessibility - EV charging points</title>
+    <title>Accessibility - basic services</title>
     <link rel="stylesheet" href="../common/nouislider/nouislider.min.css" />
 
     <!-- ECL -->
@@ -136,13 +136,39 @@
           <!-- To hide add hidden: <div id="expandable-content" class="ecl-expandable__content" hidden>  -->
           <div id="expandable-content" class="ecl-expandable__content" hidden>
             <div id="gridviz-interface" class="gridviz-interface">
+              <!-- SERVICE -->
               <div class="service-container">
                 <fieldset
                   class="ecl-form-group"
                   aria-describedby="radio-default-helper"
                   role="radiogroup"
                   aria-required="true">
-                  <legend id="radio-default-label" class="ecl-form-label">Access to EV charging points</legend>
+                  <legend id="radio-default-label" class="ecl-form-label">Access to basic services</legend>
+
+                  <div class="ecl-help-block first-block" id="radio-default-helper">Select type of service:</div>
+
+                  <!-- Healthcare -->
+                  <div id="healthcare-radio-container" class="ecl-radio ecl-radio--binary">
+                    <input
+                      id="healthcare"
+                      name="service"
+                      class="ecl-radio__input"
+                      type="radio"
+                      value="healthcare"
+                      checked />
+                    <label class="ecl-radio__label" for="healthcare">
+                      <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
+                      <span class="ecl-radio__text">Healthcare</span>
+                    </label>
+                  </div>
+                  <!-- Education (primary) -->
+                  <div id="education-radio-container" class="ecl-radio ecl-radio--binary">
+                    <input id="education" name="service" class="ecl-radio__input" type="radio" value="education" />
+                    <label class="ecl-radio__label" for="education">
+                      <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
+                      <span class="ecl-radio__text">Education (primary)</span>
+                    </label>
+                  </div>
                 </fieldset>
               </div>
 
@@ -154,20 +180,20 @@
                   role="radiogroup"
                   aria-required="true">
                   <div class="ecl-help-block" id="radio-default-helper">Select year:</div>
-                  <!-- 2024 -->
-                  <div class="ecl-radio ecl-radio--binary">
-                    <input id="2024" name="year" class="ecl-radio__input" type="radio" value="2024" checked />
-                    <label class="ecl-radio__label" for="2024">
-                      <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
-                      <span class="ecl-radio__text">2024</span>
-                    </label>
-                  </div>
                   <!-- 2023 -->
                   <div class="ecl-radio ecl-radio--binary">
-                    <input id="2023" name="year" class="ecl-radio__input" type="radio" value="2023" />
+                    <input id="2023" name="year" class="ecl-radio__input" type="radio" value="2023" checked />
                     <label class="ecl-radio__label" for="2023">
                       <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
                       <span class="ecl-radio__text">2023</span>
+                    </label>
+                  </div>
+                  <!-- 2020 -->
+                  <div class="ecl-radio ecl-radio--binary">
+                    <input id="2020" name="year" class="ecl-radio__input" type="radio" value="2020" />
+                    <label class="ecl-radio__label" for="2020">
+                      <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
+                      <span class="ecl-radio__text">2020</span>
                     </label>
                   </div>
                   <!-- Change -->
@@ -181,12 +207,18 @@
                 </fieldset>
               </div>
 
-              <!-- DISTANCE THRESHOLDS SLIDER -->
+              <!-- TIME THRESHOLDS SLIDER -->
               <div>
-                <div id="sliE">
-                  <div class="ecl-help-block">Travel distance thresholds, in km:</div>
+                <div id="sliH">
+                  <div class="ecl-help-block">Travel time thresholds, in minutes:</div>
                   <div style="padding-bottom: 40px">
-                    <div class="sliisoc" id="sliderisoc_evcp"></div>
+                    <div class="sliisoc" id="sliderisoc_healthcare"></div>
+                  </div>
+                </div>
+                <div id="sliE">
+                  <div class="ecl-help-block">Travel time thresholds, in minutes:</div>
+                  <div style="padding-bottom: 40px">
+                    <div class="sliisoc" id="sliderisoc_education"></div>
                   </div>
                 </div>
               </div>
@@ -198,21 +230,21 @@
                   aria-describedby="radio-default-helper"
                   role="radiogroup"
                   aria-required="true">
-                  <div class="ecl-help-block" id="radio-default-helper">Select amount of EV charging points:</div>
+                  <div class="ecl-help-block" id="radio-default-helper">Select amount of services:</div>
                   <!-- 1 -->
                   <div id="1-radio-container" class="ecl-radio ecl-radio--binary">
                     <input id="1" name="nearest" class="ecl-radio__input" type="radio" value="1" checked />
                     <label class="ecl-radio__label" for="1">
                       <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
-                      <span class="ecl-radio__text">1</span>
+                      <span class="ecl-radio__text">1 service</span>
                     </label>
                   </div>
-                  <!-- 5 -->
-                  <div id="5-radio-container" class="ecl-radio ecl-radio--binary">
-                    <input id="5" name="nearest" class="ecl-radio__input" type="radio" value="a5" />
-                    <label class="ecl-radio__label" for="5">
+                  <!-- 3 -->
+                  <div id="3-radio-container" class="ecl-radio ecl-radio--binary">
+                    <input id="3" name="nearest" class="ecl-radio__input" type="radio" value="a3" />
+                    <label class="ecl-radio__label" for="3">
                       <span class="ecl-radio__box"><span class="ecl-radio__box-inner"></span></span>
-                      <span class="ecl-radio__text">5</span>
+                      <span class="ecl-radio__text">3 services</span>
                     </label>
                   </div>
                 </fieldset>
@@ -249,6 +281,19 @@
                 </div>
 
                 <hr />
+
+                <!-- SERVICE POINTS -->
+                <div class="ecl-checkbox ecl-checkbox--single">
+                  <input name="checkbox-default" class="ecl-checkbox__input" type="checkbox" id="serv" checked />
+                  <label for="serv" class="ecl-checkbox__label">
+                    <span class="ecl-checkbox__box">
+                      <svg class="ecl-icon ecl-icon--m ecl-checkbox__icon" focusable="false" aria-hidden="true">
+                        <use xlink:href="../common/ECL/icons/icons.svg#check"></use>
+                      </svg>
+                    </span>
+                    <span class="ecl-checkbox__text" id="cp_service_text">Points</span>
+                  </label>
+                </div>
 
                 <!-- CITY NAMES-->
                 <div class="ecl-checkbox ecl-checkbox--single">
@@ -360,11 +405,6 @@
                   target="_blank"
                   rel="noopener noreferrer">
                   Eurostat GISCO
-                </a>, <a
-                  href="https://www.eco-movement.com"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  Eco-Movement
                 </a>
               </div>
             </div>
