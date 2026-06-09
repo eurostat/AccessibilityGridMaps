@@ -106,6 +106,35 @@ const dataset = new gridviz.MultiResolutionDataset(
     { preprocess: preprocess }
 )
 
+
+// define services datasets
+const urlTilesPOIs = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/pois/evrp/"
+const datasetServices = {}
+for (let year of ["2025", "2024", "2023"]) {
+    datasetServices[year] = new gridviz.MultiResolutionDataset(
+        [20, 50, 100, 200, 500, 1000, 2000],
+        r => new gviz_par.TiledParquetGrid(map, urlTilesPOIs + year + "/" + r + "/"),
+    )
+}
+
+
+//define services layer
+const servStyle = new gridviz.ShapeColorSizeStyle({ color: 'purple', shape: 'circle' })
+servStyle.legends = [new gridviz.ColorCategoryLegend({
+    shape: 'circle',
+    strokeWidth: 0,
+    dimension: { r: 5 }
+})]
+
+const servLayer = new gridviz.GridLayer(
+    undefined,
+    [servStyle],
+    { minPixelsPerCell: 5 })
+servLayer.cellInfoHTML = c=> "EV recharging point" //undefined //c => c.name
+
+
+
+
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
@@ -126,6 +155,7 @@ function update() {
     const bn = document.getElementById('bnd').checked;
     const ag = document.getElementById('ag').checked;
     const bk = document.getElementById('road').checked;
+    const serv = document.getElementById('serv').checked;
 
     // show/hide slider
     document.getElementById("sliE").style.display = year != "change" ? 'inline' : 'none'
@@ -286,6 +316,18 @@ function update() {
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
                         (c[field] == undefined ? "Not available" : (c[field]/1000).toFixed(1) + " km") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+    }
+
+    //add service points layer
+    if (serv) {
+        // set service dataset
+        servLayer.dataset = datasetServices[year]
+        // set title
+        servStyle.legends[0].colorLabel = [['purple', "EV recharging points"]]
+        // adjust style
+        servStyle.visible = z => z <= 25
+        servStyle.size = (c, r, z) => z < 5 ? Math.max(z * 5, 30) : 4 * z
+        layers.push(servLayer)
     }
 
     //add top layers
