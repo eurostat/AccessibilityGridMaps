@@ -13,6 +13,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
     z: DEFAULTMAPOSITION.z,
     zoomExtent: [1, 10000],
     onZoomFun: (e) => { updateURL(map) },
+	digForTooltip: true,
 }).addZoomButtons().setViewFromURL()
 
 //set selected layer from URL param
@@ -347,7 +348,7 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-    ['change', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop'].forEach((id) => {
+    ['change', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
