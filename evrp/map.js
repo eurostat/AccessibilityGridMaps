@@ -97,11 +97,7 @@ const preprocess = (c) => {
 }
 
 
-<<<<<<< HEAD:evrp/map.js
 const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evrp/"
-=======
-const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evcp/"
->>>>>>> d2420fb0b087f9171214273ae9b386e8d793a033:evcp/map.js
 
 
 const dataset = new gridviz.MultiResolutionDataset(
