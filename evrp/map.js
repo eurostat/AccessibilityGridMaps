@@ -4,7 +4,6 @@
   show points ?
   add legend circles ?
   test interpolate ? bof
-
 */
 
 const DEFAULTMAPOSITION = { x: 4030000, y: 2950000, z: 1500 };
@@ -55,7 +54,7 @@ const updateURL = (map) => {
         p.set(cb, document.getElementById(cb).checked ? "1" : "");
 
     // sliders
-    [min, max] = document.getElementById('sliderisoc_evcp').noUiSlider.get(true);
+    [min, max] = document.getElementById('sliderisoc_evrp').noUiSlider.get(true);
     p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
 
     //interpolate
@@ -87,7 +86,7 @@ const interpFun = interpolate ? (styles, field) => {
 const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 10
 
 //initialise sliders
-noUiSlider.create(document.getElementById('sliderisoc_evcp'),
+noUiSlider.create(document.getElementById('sliderisoc_evrp'),
     { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
@@ -98,7 +97,7 @@ const preprocess = (c) => {
 }
 
 
-const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/tiles_evcp_v2026_03/"
+const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evrp/"
 
 
 const dataset = new gridviz.MultiResolutionDataset(
@@ -110,7 +109,7 @@ const dataset = new gridviz.MultiResolutionDataset(
 let indic = document.querySelector('input[name="nearest"]:checked').value;
 let year = document.querySelector('input[name="year"]:checked').value;
 let field = "dt_" + indic + "_" + year
-let slider = document.getElementById('sliderisoc_evcp')
+let slider = document.getElementById('sliderisoc_evrp')
 
 function update() {
 
@@ -142,7 +141,7 @@ function update() {
     if (tomtomCopyright) tomtomCopyright.style.display = bk ? 'inline-block' : 'none';
 
     //
-    slider = document.getElementById('sliderisoc_evcp')
+    slider = document.getElementById('sliderisoc_evrp')
 
     // the grid style
     let style = undefined
@@ -174,9 +173,9 @@ function update() {
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Driving distance to nearest EV charging point, in " + year
+            legend.title = "Driving distance to nearest EV recharging point, in " + year
         else
-            legend.title = "Average driving distance to 5 nearest EV charging points, in " + year
+            legend.title = "Average driving distance to 5 nearest EV recharging points, in " + year
 
     } else {
         //define breaks by hand
@@ -210,9 +209,9 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Change in driving distance to nearest EV charging points from 2023 to 2024"
+            legend.title = "Change in driving distance to nearest EV recharging points from 2023 to 2024"
         else
-            legend.title = "Change in average driving distance to 5 nearest EV charging points from 2023 to 2024"
+            legend.title = "Change in average driving distance to 5 nearest EV recharging points from 2023 to 2024"
 
     }
 
@@ -314,7 +313,7 @@ function addInterfaceEventListeners() {
     })
 
     //slider
-    document.getElementById('sliderisoc_evcp').noUiSlider.on("update", update);
+    document.getElementById('sliderisoc_evrp').noUiSlider.on("update", update);
 
     //home button
     document.getElementById("home-button").addEventListener("click", (event) => {

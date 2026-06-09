@@ -12,6 +12,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
     z: DEFAULTMAPOSITION.z,
     zoomExtent: [1, 10000],
     onZoomFun: (e) => { updateURL(map) },
+	digForTooltip: true,
 }).addZoomButtons().setViewFromURL()
 
 
@@ -108,32 +109,29 @@ const preprocess = (c) => {
 }
 
 
-const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/"
-const versionTag = "v2026_04"
-//const urlTiles = "https://ec.europa.eu/assets/estat/E/E4/gisco/accessibility_maps/healthcare_education/tiles/"
-//const versionTag = "v2026_01"
-//const urlTiles = "http://127.0.0.1:5500/tmp/"
+const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/"
 
 const dataset = {
     education: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_education_" + versionTag + "/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "education/" + r + "/"),
         { preprocess: preprocess }
     ),
     healthcare: new gridviz.MultiResolutionDataset(
         [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "tiles_healthcare_" + versionTag + "/" + r + "/"),
+        r => new gviz_par.TiledParquetGrid(map, urlTiles + "healthcare/" + r + "/"),
         { preprocess: preprocess }
     ),
 }
 
 // define services datasets
+const urlTilesPOIs = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/pois/"
 const datasetServices = { "healthcare": {}, "education": {} }
 for (let service of ["healthcare", "education"])
     for (let year of ["2020", "2023"]) {
         datasetServices[service][year] = new gridviz.MultiResolutionDataset(
             [20, 50, 100, 200, 500, 1000, 2000],
-            r => new gviz_par.TiledParquetGrid(map, urlTiles + "pois/tiles_" + service + "_" + year + "/" + r + "/"),
+            r => new gviz_par.TiledParquetGrid(map, urlTilesPOIs + service + "/" + year + "/" + r + "/"),
         )
     }
 
@@ -149,8 +147,8 @@ servStyle.legends = [new gridviz.ColorCategoryLegend({
 const servLayer = new gridviz.GridLayer(
     undefined,
     [servStyle],
-    { minPixelsPerCell: 1.5 })
-servLayer.cellInfoHTML = undefined
+    { minPixelsPerCell: 5 })
+servLayer.cellInfoHTML = c => c.name
 
 
 

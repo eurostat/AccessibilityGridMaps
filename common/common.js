@@ -1,6 +1,6 @@
 const urlBackground1 = 'https://ec.europa.eu/eurostat/cache/GISCO/mbkg/road/'
-const nuts2jsonURL = "https://ec.europa.eu/assets/estat/E/E4/gisco/pub/nuts2json/v2/";
-const euronymURL = "https://ec.europa.eu/assets/estat/E/E4/gisco/pub/euronym/v3/UTF_LATIN/";
+const nuts2jsonURL = "https://ec.europa.eu/eurostat/cache/GISCO/pub/nuts2json/v2/";
+const euronymURL = "https://ec.europa.eu/eurostat/cache/GISCO/pub/euronym/v3/UTF_LATIN/";
 
 
 //define background layers
