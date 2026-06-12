@@ -96,10 +96,15 @@ noUiSlider.create(document.getElementById('sliderisoc_evrp'),
     { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
-// compute changes
+// pre-compute changes
 const preprocess = (c) => {
-    c.dt_1_change_2023_2024 = c.dt_1_2023 == undefined || c.dt_1_2024 == undefined ? undefined : c.dt_1_2024 - c.dt_1_2023
-    c.dt_a5_change_2023_2024 = c.dt_a5_2023 == undefined || c.dt_a5_2024 == undefined ? undefined : c.dt_a5_2024 - c.dt_a5_2023
+    for (let change of changes) {
+        const parts = change.split("_")
+        const y1 = parts[1]
+        const y2 = parts[2]
+        for(let i of ["1", "a5"])
+            c["dt_"+i+"_"+change] = c["dt_"+i+"_"+y1] == undefined || c["dt_"+i+"_"+y2] == undefined ? undefined : c["dt_"+i+"_"+y2] - c["dt_"+i+"_"+y1]
+    }
 }
 
 
@@ -150,7 +155,13 @@ function update() {
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
+
     change = year.includes("change")
+    if(change) {
+        const parts = year.split("_")
+        year1 = parts[1]
+        year2 = parts[2]
+    }
 
     const sop = document.getElementById('sop').checked;
     const sbp = document.getElementById('sbp').checked;
@@ -244,9 +255,9 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         if (indic == "1")
-            legend.title = "Change in driving distance to nearest EV recharging points from 2023 to 2024"
+            legend.title = "Change in driving distance to nearest EV recharging points from " + year1 + " to " + year2
         else
-            legend.title = "Change in average driving distance to 5 nearest EV recharging points from 2023 to 2024"
+            legend.title = "Change in average driving distance to 5 nearest EV recharging points from " + year1 + " to " + year2
 
     }
 
@@ -354,7 +365,7 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-    ['change_2023_2024', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
+    [...years, ...changes, '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
