@@ -1,7 +1,8 @@
 /*
   TODO
+  year radio to list
+  dynamic years addition
   include TR, UA ?
-  show points ?
   add legend circles ?
   test interpolate ? bof
 */
@@ -93,8 +94,8 @@ noUiSlider.create(document.getElementById('sliderisoc_evrp'),
 
 // compute changes
 const preprocess = (c) => {
-    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2024 == undefined ? undefined : c.dt_1_2024 - c.dt_1_2023
-    c.dt_a5_change = c.dt_a5_2023 == undefined || c.dt_a5_2024 == undefined ? undefined : c.dt_a5_2024 - c.dt_a5_2023
+    c.dt_1_change_2023_2024 = c.dt_1_2023 == undefined || c.dt_1_2024 == undefined ? undefined : c.dt_1_2024 - c.dt_1_2023
+    c.dt_a5_change_2023_2024 = c.dt_a5_2023 == undefined || c.dt_a5_2024 == undefined ? undefined : c.dt_a5_2024 - c.dt_a5_2023
 }
 
 
@@ -157,7 +158,7 @@ function update() {
     const serv = document.getElementById('serv').checked;
 
     // show/hide slider
-    document.getElementById("sliE").style.display = year != "change" ? 'inline' : 'none'
+    document.getElementById("sliE").style.display = year != "change_2023_2024" ? 'inline' : 'none'
 
     // show/hide options
     //document.getElementById("contours_").style.display = !sbp ? 'inline' : 'none'
@@ -177,7 +178,7 @@ function update() {
     let shadingStyle = undefined
     let tanakaStyle = undefined
 
-    if (year != "change") {
+    if (year != "change_2023_2024") {
         let [min, max] = slider.noUiSlider.get(true);
         const breaks = [...Array(nbClasses - 1).keys()].map(i => (1000 * (min + (max - min) * i / (nbClasses - 2)) / 1000).toFixed(1))
 
@@ -303,7 +304,7 @@ function update() {
     //set tooltip on top layer
     if (layers.length >= 1) {
         const topLayer = layers[layers.length - 1]
-        if (year == "change")
+        if (year == "change_2023_2024")
             topLayer.cellInfoHTML = (c, r) =>
                 (!style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
@@ -320,7 +321,7 @@ function update() {
     }
 
     //add service points layer
-    if (serv && year != "change") {
+    if (serv && year != "change_2023_2024") {
         // set service dataset
         servLayer.dataset = datasetServices[year]
         // set title
@@ -348,7 +349,7 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-    ['change', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
+    ['change_2023_2024', '2024', '2023', '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
