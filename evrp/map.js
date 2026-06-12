@@ -13,7 +13,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
     z: DEFAULTMAPOSITION.z,
     zoomExtent: [1, 10000],
     onZoomFun: (e) => { updateURL(map) },
-	digForTooltip: true,
+    digForTooltip: true,
 }).addZoomButtons().setViewFromURL()
 
 //set selected layer from URL param
@@ -99,8 +99,6 @@ const preprocess = (c) => {
 
 
 const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evrp/"
-
-
 const dataset = new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
     r => new gviz_par.TiledParquetGrid(map, urlTiles + r + "/"),
@@ -131,7 +129,7 @@ const servLayer = new gridviz.GridLayer(
     undefined,
     [servStyle],
     { minPixelsPerCell: 5 })
-servLayer.cellInfoHTML = c=> "EV recharging point" //undefined //c => c.name
+servLayer.cellInfoHTML = c => "EV recharging point" //undefined //c => c.name
 
 
 
@@ -306,17 +304,19 @@ function update() {
     if (layers.length >= 1) {
         const topLayer = layers[layers.length - 1]
         if (year == "change")
-            topLayer.cellInfoHTML = (c) =>
+            topLayer.cellInfoHTML = (c, r) =>
                 (!style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
                         sop && !c.POP_2021 ? undefined :
-                            Math.abs(c[field]/1000).toFixed(1) + " km " + (c[field] > 0 ? "further" : "closer") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            Math.abs(c[field] / 1000).toFixed(1) + " km " + (c[field] > 0 ? "further" : "closer") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            + "<br>Cell size: " + r + "m"
         else
-            topLayer.cellInfoHTML = (c) =>
+            topLayer.cellInfoHTML = (c, r) =>
                 (style.filter && !style.filter(c)) ? undefined :
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
-                        (c[field] == undefined ? "Not available" : (c[field]/1000).toFixed(1) + " km") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                        (c[field] == undefined ? "Not available" : (c[field] / 1000).toFixed(1) + " km") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            + "<br>Cell size: " + r + "m"
     }
 
     //add service points layer
