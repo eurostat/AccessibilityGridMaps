@@ -1,7 +1,6 @@
 /*
   TODO
-  year radio to list
-  dynamic years addition
+  year radio to list - dynamic years addition
   include TR, UA ?
   add legend circles ?
   test interpolate ? bof
