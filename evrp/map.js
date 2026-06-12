@@ -20,6 +20,10 @@ const map = new gridviz.Map(document.getElementById('map'), {
 //set selected layer from URL param
 const urlParams = new URLSearchParams(window.location.search);
 
+//
+years = ["2023", "2024"]
+changes = ["change_2023_2024"]
+
 // time selection
 let r_ = urlParams.get("t")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
@@ -110,7 +114,7 @@ const dataset = new gridviz.MultiResolutionDataset(
 // define services datasets
 const urlTilesPOIs = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/pois/evrp/"
 const datasetServices = {}
-for (let year of ["2025", "2024", "2023"]) {
+for (let year of years) {
     datasetServices[year] = new gridviz.MultiResolutionDataset(
         [20, 50, 100, 200, 500, 1000, 2000],
         r => new gviz_par.TiledParquetGrid(map, urlTilesPOIs + year + "/" + r + "/"),
@@ -159,7 +163,7 @@ function update() {
     const serv = document.getElementById('serv').checked;
 
     // show/hide slider
-    document.getElementById("sliE").style.display = year != "change_2023_2024" ? 'inline' : 'none'
+    document.getElementById("sliE").style.display = years.includes(year) ? 'inline' : 'none'
 
     // show/hide options
     //document.getElementById("contours_").style.display = !sbp ? 'inline' : 'none'
