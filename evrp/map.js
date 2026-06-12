@@ -146,6 +146,7 @@ function update() {
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
+    change = year.includes("change")
 
     const sop = document.getElementById('sop').checked;
     const sbp = document.getElementById('sbp').checked;
@@ -178,7 +179,7 @@ function update() {
     let shadingStyle = undefined
     let tanakaStyle = undefined
 
-    if (year != "change_2023_2024") {
+    if (!change) {
         let [min, max] = slider.noUiSlider.get(true);
         const breaks = [...Array(nbClasses - 1).keys()].map(i => (1000 * (min + (max - min) * i / (nbClasses - 2)) / 1000).toFixed(1))
 
@@ -304,7 +305,7 @@ function update() {
     //set tooltip on top layer
     if (layers.length >= 1) {
         const topLayer = layers[layers.length - 1]
-        if (year == "change_2023_2024")
+        if (change)
             topLayer.cellInfoHTML = (c, r) =>
                 (!style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
@@ -321,7 +322,7 @@ function update() {
     }
 
     //add service points layer
-    if (serv && year != "change_2023_2024") {
+    if (serv && !change) {
         // set service dataset
         servLayer.dataset = datasetServices[year]
         // set title
