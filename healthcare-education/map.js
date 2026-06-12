@@ -343,7 +343,7 @@ function update() {
     }
 
     //add service points layer
-    if (serv) {
+    if (serv && year != "change") {
         // set service dataset
         servLayer.dataset = datasetServices[service][year]
 
