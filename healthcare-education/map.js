@@ -329,17 +329,19 @@ function update() {
     if (layers.length >= 1) {
         const topLayer = layers[layers.length - 1]
         if (year == "change")
-            topLayer.cellInfoHTML = (c) =>
+            topLayer.cellInfoHTML = (c, r) =>
                 (!style.filter(c)) ? undefined :
                     c[field] == undefined ? undefined :
                         sop && !c.POP_2021 ? undefined :
                             Math.abs(c[field] / 60).toFixed(1) + " min " + (c[field] > 0 ? "slower" : "faster") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            + "<br>Cell size: " + r + "m"
         else
-            topLayer.cellInfoHTML = (c) =>
+            topLayer.cellInfoHTML = (c, r) =>
                 (style.filter && !style.filter(c)) ? undefined :
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
                         (c[field] == undefined ? "Not available" : (c[field] / 60).toFixed(1) + " min") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
+                            + "<br>Cell size: " + r + "m"
     }
 
     //add service points layer
