@@ -157,7 +157,7 @@ function update() {
     year = document.getElementById("year").value;
     field = "dt_" + indic + "_" + year
 
-    change = year.includes("change")
+    change = year.includes("_")
     if (change) {
         const parts = year.split("_")
         year1 = parts[1]
