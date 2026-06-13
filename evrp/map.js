@@ -100,8 +100,8 @@ noUiSlider.create(document.getElementById('sliderisoc_evrp'),
 const preprocess = (c) => {
     for (let change of changes) {
         const parts = change.split("_")
-        const y1 = parts[1]
-        const y2 = parts[2]
+        const y1 = parts[0]
+        const y2 = parts[1]
         for (let i of ["1", "a5"])
             c["dt_" + i + "_" + change] = c["dt_" + i + "_" + y1] == undefined || c["dt_" + i + "_" + y2] == undefined ? undefined : c["dt_" + i + "_" + y2] - c["dt_" + i + "_" + y1]
     }
