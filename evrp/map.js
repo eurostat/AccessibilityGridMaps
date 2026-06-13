@@ -25,7 +25,8 @@ changes = ["change_2023_2024"]
 
 // time selection
 let r_ = urlParams.get("t")
-if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
+if (r_ != undefined) document.getElementById("year").value = r_
+
 // nb points selection
 r_ = urlParams.get("nb")
 if (r_ != undefined && document.getElementById(r_)) document.getElementById(r_).checked = true
@@ -51,7 +52,7 @@ const updateURL = (map) => {
     p.set("x", v.x.toFixed(0)); p.set("y", v.y.toFixed(0)); p.set("z", v.z.toFixed(0));
 
     // handle selection
-    p.set("t", document.querySelector('input[name="year"]:checked').value);
+    p.set("t", document.getElementById("year").value);
     p.set("nb", document.querySelector('input[name="nearest"]:checked').value);
 
     // handle checkboxes
@@ -101,8 +102,8 @@ const preprocess = (c) => {
         const parts = change.split("_")
         const y1 = parts[1]
         const y2 = parts[2]
-        for(let i of ["1", "a5"])
-            c["dt_"+i+"_"+change] = c["dt_"+i+"_"+y1] == undefined || c["dt_"+i+"_"+y2] == undefined ? undefined : c["dt_"+i+"_"+y2] - c["dt_"+i+"_"+y1]
+        for (let i of ["1", "a5"])
+            c["dt_" + i + "_" + change] = c["dt_" + i + "_" + y1] == undefined || c["dt_" + i + "_" + y2] == undefined ? undefined : c["dt_" + i + "_" + y2] - c["dt_" + i + "_" + y1]
     }
 }
 
@@ -144,7 +145,8 @@ servLayer.cellInfoHTML = c => "EV recharging point" //undefined //c => c.name
 
 
 let indic = document.querySelector('input[name="nearest"]:checked').value;
-let year = document.querySelector('input[name="year"]:checked').value;
+let year = document.getElementById("year").value;
+
 let field = "dt_" + indic + "_" + year
 let slider = document.getElementById('sliderisoc_evrp')
 
@@ -152,11 +154,11 @@ function update() {
 
     // read GUI information
     indic = document.querySelector('input[name="nearest"]:checked').value;
-    year = document.querySelector('input[name="year"]:checked').value;
+    year = document.getElementById("year").value;
     field = "dt_" + indic + "_" + year
 
     change = year.includes("change")
-    if(change) {
+    if (change) {
         const parts = year.split("_")
         year1 = parts[1]
         year2 = parts[2]
@@ -332,7 +334,7 @@ function update() {
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
                         (c[field] == undefined ? "Not available" : (c[field] / 1000).toFixed(1) + " km") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
-                            + "<br>Cell size: " + r + "m"
+                        + "<br>Cell size: " + r + "m"
     }
 
     //add service points layer
@@ -364,19 +366,27 @@ function update() {
 // INTERFACE EVENT LISTENERS
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
-    [...years, ...changes, '1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
-        document.getElementById(id).addEventListener("click", (event) => {
-            event.stopPropagation();
+
+    // year selection
+    document.getElementById('year').addEventListener("change", (e) => {
+        e.stopPropagation();
+        update();
+    });
+
+    // others
+    ['1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
+        document.getElementById(id).addEventListener("click", (e) => {
+            e.stopPropagation();
             update()
-        })
-    })
+        });
+    });
 
     //slider
     document.getElementById('sliderisoc_evrp').noUiSlider.on("update", update);
 
     //home button
-    document.getElementById("home-button").addEventListener("click", (event) => {
-        event.stopPropagation();
+    document.getElementById("home-button").addEventListener("click", (e) => {
+        e.stopPropagation();
         map.setView(DEFAULTMAPOSITION.x, DEFAULTMAPOSITION.y);
         map.setZoom(DEFAULTMAPOSITION.z);
         map.redraw();
