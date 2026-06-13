@@ -21,7 +21,7 @@ const urlParams = new URLSearchParams(window.location.search);
 
 //
 years = ["2023", "2024"]
-changes = ["change_2023_2024"]
+changes = ["2023_2024"]
 
 // time selection
 let r_ = urlParams.get("t")
@@ -160,8 +160,8 @@ function update() {
     change = year.includes("_")
     if (change) {
         const parts = year.split("_")
-        year1 = parts[1]
-        year2 = parts[2]
+        year1 = parts[0]
+        year2 = parts[1]
     }
 
     const sop = document.getElementById('sop').checked;
