@@ -102,7 +102,7 @@ const computeChange = (c, f, f1, f2) => {
     c[f] = v1 == undefined || v2 == undefined ? undefined : v2 - v1
 }
 const preprocess = (c) => {
-    for (let change of changes)
+    for (let change of changes) {
         const parts = change.split("_")
         const y1 = parts[0]
         const y2 = parts[1]
@@ -112,6 +112,7 @@ const preprocess = (c) => {
             const f2 = "dt_" + i + "_" + y2
             computeChange(c, f, f1, f2)
         }
+    }
 }
 
 
