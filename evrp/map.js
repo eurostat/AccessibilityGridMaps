@@ -19,8 +19,8 @@ const map = new gridviz.Map(document.getElementById('map'), {
 const urlParams = new URLSearchParams(window.location.search);
 
 //
-years = ["2023", "2024"]
-changes = ["2023_2024"]
+years = ["2023", "2024", "2025"]
+changes = ["2023_2024", "2024_2025", "2023_2025"]
 
 // time selection
 let r_ = urlParams.get("t")
