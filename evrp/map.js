@@ -99,9 +99,10 @@ noUiSlider.create(document.getElementById('sliderisoc_evrp'),
 const computeChange = (c, f, f1, f2) => {
     const v1 = c[f1]
     const v2 = c[f2]
-    c[f] = v1 == undefined || v2 == undefined ? undefined : v2 - v1
+    c[f] = v1 == undefined || v2 == undefined ? 0 : v2 - v1
+    return c[f]
 }
-const preprocess = (c) => {
+/*const preprocess = (c) => {
     for (let change of changes) {
         const parts = change.split("_")
         const y1 = parts[0]
@@ -113,14 +114,14 @@ const preprocess = (c) => {
             computeChange(c, f, f1, f2)
         }
     }
-}
+}*/
 
 
 const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evrp/"
 const dataset = new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
     r => new gviz_par.TiledParquetGrid(map, urlTiles + r + "/"),
-    { preprocess: preprocess }
+    //{ preprocess: preprocess }
 )
 
 
@@ -238,12 +239,20 @@ function update() {
         //central class to hide
         const thr = breaks[4] * 1000
 
+        //prepare field names
+        const f1 = "dt_" + indic + "_" + year1
+        const f2 = "dt_" + indic + "_" + year2
+
         if (!sbp) {
             // style for change
             const classifier = gridviz.classifier(breaks)
             defaultChangeStyle.code = (c) => c[field] == undefined ? "na" : classifier(+c[field] / 1000)
             defaultChangeStyle.cellsNb = -1
-            defaultChangeStyle.filter = c => (!sop || +c.POP_2021 > 0) && c[field] != undefined && Math.abs(c[field]) >= thr
+            defaultChangeStyle.filter = c => {
+                let v = c[field]
+                if (v == undefined) v = computeChange(c, field, f1, f2)
+                return (!sop || +c.POP_2021 > 0) && Math.abs(v) >= thr
+            }
             style = defaultChangeStyle
             if (shading) shadingStyle = new gridviz.ShadingStyle({ elevation: field, scale: gridviz.exponentialScale(shadingCoeff), revert: true })
             if (contours) tanakaStyle = new gridviz.SideTanakaStyle({ classifier: (() => c => nbClasses - 1 - classifier(c[field] / 1000)), revert: false, limit: 'steep' })
@@ -256,7 +265,11 @@ function update() {
                 if (v == undefined || isNaN(v)) return "grey"
                 return classifier(v / 1000)
             }
-            defaultStyleSize.filter = c => +c.POP_2021 > 0 && Math.abs(c[field]) >= thr
+            defaultStyleSize.filter = c => {
+                let v = c[field]
+                if (v == undefined) v = computeChange(c, field, f1, f2)
+                return +c.POP_2021 > 0 && Math.abs(v) >= thr
+            }
             style = defaultStyleSize
         }
 
