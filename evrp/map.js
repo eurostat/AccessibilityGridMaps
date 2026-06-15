@@ -96,19 +96,22 @@ noUiSlider.create(document.getElementById('sliderisoc_evrp'),
 
 
 // pre-compute changes
-const computeChange = (c, change) => {
-    const parts = change.split("_")
-    const y1 = parts[0]
-    const y2 = parts[1]
-    for (let i of ["1", "a5"]) {
-        const v1 = c["dt_" + i + "_" + y1]
-        const v2 = c["dt_" + i + "_" + y2]
-        c["dt_" + i + "_" + change] = v1 == undefined || v2 == undefined ? undefined : v2 - v1
-    }
+const computeChange = (c, f, f1, f2) => {
+    const v1 = c[f1]
+    const v2 = c[f2]
+    c[f] = v1 == undefined || v2 == undefined ? undefined : v2 - v1
 }
 const preprocess = (c) => {
     for (let change of changes)
-        computeChange(c, change)
+        const parts = change.split("_")
+        const y1 = parts[0]
+        const y2 = parts[1]
+        for (let i of ["1", "a5"]) {
+            const f = "dt_" + i + "_" + change
+            const f1 = "dt_" + i + "_" + y1
+            const f2 = "dt_" + i + "_" + y2
+            computeChange(c, f, f1, f2)
+        }
 }
 
 
