@@ -100,10 +100,11 @@ const computeChange = (c, change) => {
     const parts = change.split("_")
     const y1 = parts[0]
     const y2 = parts[1]
-    for (let i of ["1", "a5"])
+    for (let i of ["1", "a5"]) {
         const v1 = c["dt_" + i + "_" + y1]
         const v2 = c["dt_" + i + "_" + y2]
         c["dt_" + i + "_" + change] = v1 == undefined || v2 == undefined ? undefined : v2 - v1
+    }
 }
 const preprocess = (c) => {
     for (let change of changes)
