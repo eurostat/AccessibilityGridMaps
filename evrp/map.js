@@ -60,7 +60,7 @@ const updateURL = (map) => {
 
     // sliders
     [min, max] = document.getElementById('sliderisoc_evrp').noUiSlider.get(true);
-    p.set("mine", Math.round(min)); p.set("maxe", Math.round(max));
+    p.set("mine", Math.round(min*10)/10); p.set("maxe", Math.round(max*10)/10);
 
     //interpolate
     //p.set("itrp", interpolate ? "1" : "");
@@ -92,7 +92,7 @@ const mine = urlParams.get("mine") || 2, maxe = urlParams.get("maxe") || 10
 
 //initialise sliders
 noUiSlider.create(document.getElementById('sliderisoc_evrp'),
-    { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.5, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
+    { start: [mine, maxe], range: { 'min': 0, 'max': 30 }, margin: 0.5, step: 0.1, behaviour: 'drag', connect: [false, true, false], pips: { mode: 'count', values: 7, density: 3.5 } });
 
 
 // pre-compute changes
