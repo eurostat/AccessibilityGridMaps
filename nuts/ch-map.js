@@ -9,10 +9,10 @@ export function renderMap() {
 
 
     const isMobile = window.innerWidth <= 768
-    const mapWidth = isMobile ? window.innerWidth : 1000
+    const mapWidth = isMobile ? window.innerWidth : 900
     const mapHeight = isMobile
         ? Math.round(window.innerHeight - 160) // 100% of viewport height - header etc
-        : 550 *10/7
+        : 550 *9/7
 
     const map = eurostatmap
         .map('ch')
@@ -22,7 +22,7 @@ export function renderMap() {
         .scale('60M')
         //.title('Manufacturing sector by region, 2023')
 
-        .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/10 })
+        .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/9 })
         .insetsButton(true)
 
         //classification
