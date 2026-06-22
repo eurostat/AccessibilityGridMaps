@@ -2,7 +2,7 @@
 const data = {
     service: "healthcare",
     time: 2023,
-    indic: "INDIC_LT_5_MIN",
+    indic: "LT_5_MIN",
     nuts_lvl: 3,
 }
 
@@ -56,7 +56,7 @@ export function renderMap() {
 
 
         .stat({
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__" + data.indic + ".csv",
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__INDIC_" + data.indic + ".csv",
             geoCol: "GEO",
             valueCol: data.time
         })
