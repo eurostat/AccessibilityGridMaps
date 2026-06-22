@@ -2,8 +2,8 @@
 const data = {
     service: "healthcare",
     time: 2023,
-    indic: "INDIC_LT_20_MIN",
-    nuts_lvl : 3,
+    indic: "INDIC_LT_5_MIN",
+    nuts_lvl: 3,
 }
 
 
@@ -28,9 +28,9 @@ export function renderMap() {
 
         //classification
         .colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
-        .thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
+        //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
         .numberOfClasses(7)
-        .classificationMethod(true ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
+        .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
         // .header(true)
@@ -56,7 +56,7 @@ export function renderMap() {
 
 
         .stat({
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_"+data.service+"_NUTS_2024__"+data.indic+".csv",
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__" + data.indic + ".csv",
             geoCol: "GEO",
             valueCol: data.time
         })
@@ -82,20 +82,36 @@ export function renderMap() {
 renderMap(data)
 
 
+const indicOptions = {
+    "healthcare": [ { "name": "LT_5_MIN", "code": "LT_5_MIN", "status": "active" }, { "name": "LT_20_MIN", "code":"LT_20_MIN", "status": "active" }, { "name": "LT_45_MIN", "code":"LT_45_MIN", "status": "active" }],
+    "education": [
+        { name: "LT_2_MIN", code: "LT_2_MIN", "status": "active" },
+        { name: "LT_10_MIN", code: "LT_10_MIN", "status": "active" },
+        { name: "LT_20_MIN", code: "LT_20_MIN", "status": "active" }
+    ],
+}
 
 
 // import the module that registers <ewc-select>
 import './dropdown/ewc-singleselect.js';
 
+
 // Wait for the custom element to be defined, then initialize
 (async () => {
     await customElements.whenDefined('ewc-singleselect');
 
-    document.getElementById('time').addEventListener('option-selected', e => {
-        console.log(e)
-        console.log(this)
-        const code = e.detail.option.code;
-        data.time = code
+    for (const ddl of ["time", "nuts_lvl", "indic"]) {
+        document.getElementById(ddl).addEventListener('option-selected', e => {
+            data[ddl] = e.detail.option.code
+            renderMap();
+        })
+    }
+
+    document.getElementById("service").addEventListener('option-selected', e => {
+        const s = e.detail.option.code
+        data["service"] = s
+        //document.getElementById('indic').options = indicOptions[s]
         renderMap();
-    });
+    })
+
 })();
