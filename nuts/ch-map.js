@@ -1,4 +1,5 @@
 export function renderMap(code) {
+    console.log(code)
     const isMobile = window.innerWidth <= 768
     const mapWidth = isMobile ? window.innerWidth : 700
     const mapHeight = isMobile
@@ -7,17 +8,17 @@ export function renderMap(code) {
 
     const configs = {
         EMP_PLOC_NR: {
-            legendTitle: 'Persons per unit',
+            legendTitle: 'Share',
             colors: ['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'],
-            thresholds: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+            thresholds: [10, 20, 30, 40, 50, 60, 70, 80, 90],
             nbClasses: 7,
         },
         LC_EMP_LOC_TEUR: {
-            legendTitle: 'Euro',
-            colors: ['#FFEB99', '#D7EAAC', '#A0DDB7', '#65CABC', '#47B9C3', '#257BAB', '#12438C', '#17256B'],
-            thresholds: [8000, 16000, 24000, 32000, 40000, 48000, 56000],
-            nbClasses: 9,
-            transform: (value) => Number((value * 1000).toFixed(0)), // convert from thousand euro to euro
+            legendTitle: 'Share',
+            colors: ['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'],
+            thresholds: [10, 20, 30, 40, 50, 60, 70, 80, 90],
+            nbClasses: 7,
+            //transform: (value) => Number((value * 1000).toFixed(0)), // convert from thousand euro to euro
         },
     }
     const map = eurostatmap
@@ -54,20 +55,16 @@ export function renderMap(code) {
         )
         .footnoteTooltipText(false)
 
-        .showZoomButtons(true)
+        .zoomButtons(true)
         .insets('default')
         //end SE settings
-        .nutsLevel(2)
+        .nutsLevel(3)
+
 
         .stat({
-            eurostatDatasetCode: 'sbs_r_nuts2021',
-            unitText: '',
-            filters: {
-                INDIC_SBS: code,
-                nace_r2: 'F',
-                TIME: '2023',
-            },
-            transform: configs[code].transform, // optional function to transform values (e.g. convert to thousands)
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_healthcare_NUTS_2024__INDIC_LT_20_MIN.csv",
+            geoCol: "GEO",
+            valueCol: "2023"
         })
         .legend({
             title: configs[code].legendTitle,
