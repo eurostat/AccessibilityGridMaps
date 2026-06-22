@@ -20,7 +20,7 @@ export function renderMap() {
         .height(mapHeight)
         .dorling(false)
         .scale('60M')
-        //.title('Manufacturing sector by region, 2023')
+        .title('Share of population within '+data.indic+' to the nearest ' + data.service + " service in "+data.time)
 
         .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/9 })
         .insetsButton(true)
@@ -57,7 +57,8 @@ export function renderMap() {
         .stat({
             csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__INDIC_" + data.indic + ".csv",
             geoCol: "GEO",
-            valueCol: data.time
+            valueCol: data.time,
+            unitText: '%'
         })
         .legend({
             title: "Share of TODO",
