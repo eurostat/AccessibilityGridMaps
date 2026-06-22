@@ -13,22 +13,26 @@
         <div class="map-title">Accessiblity to basic services</div>
         <div id="dropdown-container">
             <div id="dropdown-label">Select:</div>
-            <ewc-singleselect id="service"
-                options='[    [    { "name": "Healthcare", "code": "healthcare", "status": "active" }, { "name": "Education", "code":"education", "status": "active" }    ]  ]'
-                defaultOption="healthcare" activeOption="healthcare" dropdownHeight="200px" selectedLabel="Select below"
-                invertColors="false" searchMode=""></ewc-singleselect>
-            <ewc-singleselect id="time"
-                options='[    [    { "name": "2020", "code": "2020", "status": "active" }, { "name": "2023", "code":"2023", "status": "active" }]]'
-                defaultOption="2023" activeOption="2023" dropdownHeight="200px" selectedLabel="Select below"
-                invertColors="false" searchMode=""></ewc-singleselect>
-            <ewc-singleselect id="indic"
-                options='[    [ { "name": "LT_5_MIN", "code": "LT_5_MIN", "status": "active" }, { "name": "LT_20_MIN", "code":"LT_20_MIN", "status": "active" }, { "name": "LT_45_MIN", "code":"LT_45_MIN", "status": "active" }]]'
-                defaultOption="LT_5_MIN" activeOption="LT_5_MIN" dropdownHeight="200px" selectedLabel="Select below"
-                invertColors="false" searchMode=""></ewc-singleselect>
-            <ewc-singleselect id="nuts_lvl"
-                options='[    [    { "name": "0", "code": "0", "status": "active" }, { "name": "1", "code":"1", "status": "active" } , { "name": "2", "code":"2", "status": "active" }, { "name": "3", "code":"3", "status": "active" }   ]  ]'
-                defaultOption="3" activeOption="3" dropdownHeight="200px" selectedLabel="Select below"
-                invertColors="false" searchMode=""></ewc-singleselect>
+            <select class="select-map" id="service">
+                <option value="healthcare" selected>Healthcare</option>
+                <option value="education">Education</option>
+                <option value="evrp">Electric vehicle recharging points</option>
+            </select>
+            <select class="select-map" id="time">
+                <option value="2023" selected>2023</option>
+                <option value="2020">2020</option>
+            </select>
+            <select class="select-map" id="indic">
+                <option value="LT_5_MIN" selected>LT_5_MIN</option>
+                <option value="LT_20_MIN">LT_20_MIN</option>
+                <option value="LT_45_MIN">LT_45_MIN</option>
+            </select>
+            <select class="select-map" id="nuts_lvl">
+                <option value="3" selected>3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+                <option value="0">0</option>
+            </select>
         </div>
         <div id="map-container">
             <svg id="map" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>

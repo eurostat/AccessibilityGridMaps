@@ -1,13 +1,12 @@
 
-const data = {
-    service: "healthcare",
-    time: 2023,
-    indic: "LT_5_MIN",
-    nuts_lvl: 3,
-}
-
 
 export function renderMap() {
+
+    //read GUI selection
+    const data = {}
+    for (const ddl of ["service", "time", "indic", "nuts_lvl"])
+        data[ddl] = document.getElementById(ddl).value
+
 
     const isMobile = window.innerWidth <= 768
     const mapWidth = isMobile ? window.innerWidth : 700
@@ -79,39 +78,46 @@ export function renderMap() {
     //setTimeout(() => console.log(map.position()), 1000)
 }
 
-renderMap(data)
+renderMap()
 
 
 const indicOptions = {
-    "healthcare": [ { "name": "LT_5_MIN", "code": "LT_5_MIN", "status": "active" }, { "name": "LT_20_MIN", "code":"LT_20_MIN", "status": "active" }, { "name": "LT_45_MIN", "code":"LT_45_MIN", "status": "active" }],
-    "education": [
-        { name: "LT_2_MIN", code: "LT_2_MIN", "status": "active" },
-        { name: "LT_10_MIN", code: "LT_10_MIN", "status": "active" },
-        { name: "LT_20_MIN", code: "LT_20_MIN", "status": "active" }
-    ],
+    healthcare: [{ "name": "LT_5_MIN", "code": "LT_5_MIN" }, { "name": "LT_20_MIN", "code": "LT_20_MIN" }, { "name": "LT_45_MIN", "code": "LT_45_MIN" }],
+    education: [{ "name": "LT_2_MIN", "code": "LT_2_MIN" }, { "name": "LT_10_MIN", "code": "LT_10_MIN" }, { "name": "LT_20_MIN", "code": "LT_20_MIN" }],
+    evrp: [{ "name": "LT_500_M", "code": "LT_500_M" }, { "name": "LT_5000_M", "code": "LT_5000_M" }]
+}
+const timeOptions = {
+    healthcare: [2023,2020],
+    education: [2023,2020],
+    evrp: [2025,2024,2023]
 }
 
 
-// import the module that registers <ewc-select>
-import './dropdown/ewc-singleselect.js';
+// add events
+for (const ddl of ["time", "indic", "nuts_lvl"]) {
+    document.getElementById(ddl).addEventListener("change", renderMap);
+}
 
+document.getElementById("service").addEventListener("change", function () {
+    let dropdown
 
-// Wait for the custom element to be defined, then initialize
-(async () => {
-    await customElements.whenDefined('ewc-singleselect');
+    //update indic list
+    dropdown = document.getElementById('indic');
+    dropdown.innerHTML = '';
+    indicOptions[this.value].forEach((elt, i) => {
+        const option = new Option(elt.name, elt.code);
+        dropdown.add(option);
+    });
+    dropdown.selectedIndex = 1;
 
-    for (const ddl of ["time", "nuts_lvl", "indic"]) {
-        document.getElementById(ddl).addEventListener('option-selected', e => {
-            data[ddl] = e.detail.option.code
-            renderMap();
-        })
-    }
+    //update year list
+    dropdown = document.getElementById('time');
+    dropdown.innerHTML = '';
+    indicOptions[this.value].forEach((elt, i) => {
+        const option = new Option(elt, elt);
+        dropdown.add(option);
+    });
+    dropdown.selectedIndex = 1;
 
-    document.getElementById("service").addEventListener('option-selected', e => {
-        const s = e.detail.option.code
-        data["service"] = s
-        //document.getElementById('indic').options = indicOptions[s]
-        renderMap();
-    })
-
-})();
+    renderMap()
+});
