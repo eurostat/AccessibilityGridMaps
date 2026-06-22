@@ -82,9 +82,9 @@ renderMap()
 
 
 const indicOptions = {
-    healthcare: [{ "name": "LT_5_MIN", "code": "LT_5_MIN" }, { "name": "LT_20_MIN", "code": "LT_20_MIN" }, { "name": "LT_45_MIN", "code": "LT_45_MIN" }],
-    education: [{ "name": "LT_2_MIN", "code": "LT_2_MIN" }, { "name": "LT_10_MIN", "code": "LT_10_MIN" }, { "name": "LT_20_MIN", "code": "LT_20_MIN" }],
-    evrp: [{ "name": "LT_500_M", "code": "LT_500_M" }, { "name": "LT_5000_M", "code": "LT_5000_M" }]
+    healthcare: [{ "name": "Less than 5 min", "code": "LT_5_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }, { "name": "Less than 45 min", "code": "LT_45_MIN" }],
+    education: [{ "name": "Less than 2 min", "code": "LT_2_MIN" }, { "name": "Less than 10 min", "code": "LT_10_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }],
+    evrp: [{ "name": "Less than 500 m", "code": "LT_500_M" }, { "name": "Less than 5000 m", "code": "LT_5000_M" }]
 }
 const timeOptions = {
     healthcare: [2023,2020],
@@ -113,7 +113,7 @@ document.getElementById("service").addEventListener("change", function () {
     //update year list
     dropdown = document.getElementById('time');
     dropdown.innerHTML = '';
-    indicOptions[this.value].forEach((elt, i) => {
+    timeOptions[this.value].forEach((elt, i) => {
         const option = new Option(elt, elt);
         dropdown.add(option);
     });
