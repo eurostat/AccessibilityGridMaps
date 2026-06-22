@@ -1,32 +1,20 @@
 
-const mapData = {
-    TIME: "2013",
+const data = {
+    service: "healthcare",
+    time: 2023,
+    indic: "INDIC_LT_20_MIN",
+    nuts_lvl : 3,
 }
 
 
-export function renderMap(code) {
-    console.log(code)
+export function renderMap() {
+
     const isMobile = window.innerWidth <= 768
     const mapWidth = isMobile ? window.innerWidth : 700
     const mapHeight = isMobile
         ? Math.round(window.innerHeight - 160) // 100% of viewport height - header etc
         : 550
 
-    const configs = {
-        EMP_PLOC_NR: {
-            legendTitle: 'Share',
-            colors: ['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'],
-            thresholds: [10, 20, 30, 40, 50, 60, 70, 80, 90],
-            nbClasses: 7,
-        },
-        LC_EMP_LOC_TEUR: {
-            legendTitle: 'Share',
-            colors: ['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'],
-            thresholds: [10, 20, 30, 40, 50, 60, 70, 80, 90],
-            nbClasses: 7,
-            //transform: (value) => Number((value * 1000).toFixed(0)), // convert from thousand euro to euro
-        },
-    }
     const map = eurostatmap
         .map('ch')
         .width(mapWidth)
@@ -39,10 +27,10 @@ export function renderMap(code) {
         .insetsButton(true)
 
         //classification
-        .colors(configs[code].colors)
-        .thresholds(configs[code].thresholds)
-        .numberOfClasses(configs[code].nbClasses)
-        .classificationMethod(configs[code].thresholds ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
+        .colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
+        .thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
+        .numberOfClasses(7)
+        .classificationMethod(true ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
         // .header(true)
@@ -64,16 +52,16 @@ export function renderMap(code) {
         .zoomButtons(true)
         .insets('default')
         //end SE settings
-        .nutsLevel(3)
+        .nutsLevel(data.nuts_lvl)
 
 
         .stat({
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_healthcare_NUTS_2024__INDIC_LT_20_MIN.csv",
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_"+data.service+"_NUTS_2024__"+data.indic+".csv",
             geoCol: "GEO",
-            valueCol: "2023"
+            valueCol: data.time
         })
         .legend({
-            title: configs[code].legendTitle,
+            title: "Share of TODO",
             titlePadding: -10,
             x: 5,
             y: isMobile ? 10 : 100,
@@ -91,7 +79,7 @@ export function renderMap(code) {
     //setTimeout(() => console.log(map.position()), 1000)
 }
 
-//renderMap('EMP_PLOC_NR')
+renderMap(data)
 
 
 
@@ -102,15 +90,12 @@ import './dropdown/ewc-singleselect.js';
 // Wait for the custom element to be defined, then initialize
 (async () => {
     await customElements.whenDefined('ewc-singleselect');
-    // select the element that exists in the page
-    const sel = document.querySelector('#mySelect');
-    if (!sel) return console.warn('#mySelect not found');
 
-    // listen for selection events
-    sel.addEventListener('option-selected', e => {
-        //console.log('option-selected', e.detail);
+    document.getElementById('time').addEventListener('option-selected', e => {
+        console.log(e)
+        console.log(this)
         const code = e.detail.option.code;
-        // rebuild everything for the new city
-        renderMap(code);
+        data.time = code
+        renderMap();
     });
 })();

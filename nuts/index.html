@@ -1,40 +1,30 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title></title>
-        <link rel="stylesheet" href="styles.css" />
-    </head>
 
-    <body>
-        <div id="container">
-            <div class="map-title">Accessiblity to basic services</div>
-            <div id="dropdown-container">
-                <div id="dropdown-label">Select a variable:</div>
-                <ewc-singleselect
-                    id="mySelect"
-                    options='[
-    [
-    { "name": "Persons employed per local unit", "code": "EMP_PLOC_NR", "status": "active" },
-    { "name": "Labour costs per person employed in local unit", "code":"LC_EMP_LOC_TEUR", "status": "active" }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
 
-    ]
-  ]'
-                    defaultOption="EMP_PLOC_NR"
-                    activeOption="EMP_PLOC_NR"
-                    dropdownHeight="200px"
-                    selectedLabel="Select below"
-                    invertColors="false"
-                    searchMode=""
-                ></ewc-singleselect>
-            </div>
-            <div id="map-container">
-                <svg id="map" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>
-            </div>
+<body>
+    <div id="container">
+        <div class="map-title">Accessiblity to basic services</div>
+        <div id="dropdown-container">
+            <div id="dropdown-label">Select a year:</div>
+            <ewc-singleselect id="time"
+                options='[    [    { "name": "2020", "code": "2020", "status": "active" }, { "name": "2023", "code":"2023", "status": "active" }    ]  ]'
+                defaultOption="2023" activeOption="2023" dropdownHeight="200px" selectedLabel="Select below"
+                invertColors="false" searchMode=""></ewc-singleselect>
         </div>
+        <div id="map-container">
+            <svg id="map" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+    </div>
 
-        <script src="./eurostatmap.min.js"></script>
-        <script type="module" src="./ch-map.js"></script>
-    </body>
+    <script src="./eurostatmap.min.js"></script>
+    <script type="module" src="./ch-map.js"></script>
+</body>
+
 </html>
