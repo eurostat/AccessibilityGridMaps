@@ -29,7 +29,7 @@ export function renderMap() {
         //classification
         .colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
         //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
-        .numberOfClasses(7)
+        .numberOfClasses(10)
         .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
