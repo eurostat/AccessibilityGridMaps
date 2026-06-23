@@ -120,6 +120,9 @@ for (const ddl of ["time", "indic", "nuts_lvl"]) {
 document.getElementById("service").addEventListener("change", function () {
     let dropdown
 
+    //update driving type: driving time or driving distance
+    document.getElementById('divingType') = this.value == "evrp"? "distance" : "time"
+
     //update indic list
     dropdown = document.getElementById('indic');
     dropdown.innerHTML = '';
