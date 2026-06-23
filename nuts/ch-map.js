@@ -20,15 +20,16 @@ export function renderMap() {
         .height(mapHeight)
         .dorling(false)
         .scale('60M')
-        .title('Share of population within '+data.indic+' to the nearest ' + data.service + " service in "+data.time)
+        .title('Share of population within '+indicToText[data.indic]+' to the nearest ' + data.service + " service in "+data.time)
 
         .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/9 })
         .insetsButton(true)
 
         //classification
-        .colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
+        //.colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
+        .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
         //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
-        .numberOfClasses(10)
+        .numberOfClasses(6)
         .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
@@ -61,7 +62,7 @@ export function renderMap() {
             unitText: '%'
         })
         .legend({
-            title: "Share of TODO",
+            title: "Share, in %",
             titlePadding: -10,
             x: 5,
             y: isMobile ? 10 : 100,
@@ -87,6 +88,16 @@ const indicOptions = {
     education: [{ "name": "Less than 2 min", "code": "LT_2_MIN" }, { "name": "Less than 10 min", "code": "LT_10_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }],
     evrp: [{ "name": "Less than 500 m", "code": "LT_500_M" }, { "name": "Less than 5000 m", "code": "LT_5000_M" }]
 }
+const indicToText = {
+    LT_5_MIN : "less than 5 min",
+    LT_20_MIN : "less than 20 min",
+    LT_45_MIN : "less than 45 min",
+    LT_2_MIN : "less than 2 min",
+    LT_10_MIN : "less than 10 min",
+    LT_500_M : "less than 500 m",
+    LT_5000_M : "less than 5 km",
+}
+
 const timeOptions = {
     healthcare: [2023,2020],
     education: [2023,2020],
