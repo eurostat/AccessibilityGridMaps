@@ -1,4 +1,26 @@
 
+const indicOptions = {
+    healthcare: [{ "name": "Less than 5 min", "code": "LT_5_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }, { "name": "Less than 45 min", "code": "LT_45_MIN" }],
+    education: [{ "name": "Less than 2 min", "code": "LT_2_MIN" }, { "name": "Less than 10 min", "code": "LT_10_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }],
+    evrp: [{ "name": "Less than 500 m", "code": "LT_500_M" }, { "name": "Less than 5 km", "code": "LT_5000_M" }]
+}
+const indicToText = {
+    LT_5_MIN : "less than 5 min",
+    LT_20_MIN : "less than 20 min",
+    LT_45_MIN : "less than 45 min",
+    LT_2_MIN : "less than 2 min",
+    LT_10_MIN : "less than 10 min",
+    LT_500_M : "less than 500 m",
+    LT_5000_M : "less than 5 km",
+}
+
+const timeOptions = {
+    healthcare: [2023,2020],
+    education: [2023,2020],
+    evrp: [2025,2024,2023]
+}
+
+
 
 export function renderMap() {
 
@@ -83,26 +105,6 @@ export function renderMap() {
 renderMap()
 
 
-const indicOptions = {
-    healthcare: [{ "name": "Less than 5 min", "code": "LT_5_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }, { "name": "Less than 45 min", "code": "LT_45_MIN" }],
-    education: [{ "name": "Less than 2 min", "code": "LT_2_MIN" }, { "name": "Less than 10 min", "code": "LT_10_MIN" }, { "name": "Less than 20 min", "code": "LT_20_MIN" }],
-    evrp: [{ "name": "Less than 500 m", "code": "LT_500_M" }, { "name": "Less than 5000 m", "code": "LT_5000_M" }]
-}
-const indicToText = {
-    LT_5_MIN : "less than 5 min",
-    LT_20_MIN : "less than 20 min",
-    LT_45_MIN : "less than 45 min",
-    LT_2_MIN : "less than 2 min",
-    LT_10_MIN : "less than 10 min",
-    LT_500_M : "less than 500 m",
-    LT_5000_M : "less than 5 km",
-}
-
-const timeOptions = {
-    healthcare: [2023,2020],
-    education: [2023,2020],
-    evrp: [2025,2024,2023]
-}
 
 
 // add events
