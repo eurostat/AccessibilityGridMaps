@@ -13,6 +13,11 @@ const indicToText = {
     LT_500_M : "less than 500 m",
     LT_5000_M : "less than 5 km",
 }
+const serviceToText = {
+    healthcare: "healthcare",
+    education: "education",
+    evrp: "EV recharging point",
+}
 
 const timeOptions = {
     healthcare: [2023,2020],
@@ -42,7 +47,7 @@ export function renderMap() {
         .height(mapHeight)
         .dorling(false)
         .scale('60M')
-        .title('Share of population within '+indicToText[data.indic]+' to the nearest ' + data.service + " service in "+data.time)
+        .title('Share of population within '+indicToText[data.indic]+' to the nearest ' + serviceToText[data.service] + " service in "+data.time)
 
         .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/9 })
         .insetsButton(true)
