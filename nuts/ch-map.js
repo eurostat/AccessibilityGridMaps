@@ -72,7 +72,7 @@ export function renderMap() {
         .ribbonHeight(50)
         .showSourceLink(false)
         .footnote(
-            ' <tspan style="font-style: italic;">Source</tspan>: Eurostat <a href="https://ec.europa.eu/eurostat" target="_blank">(sbs_r_nuts2021)</a>'
+            ' <tspan style="font-style: italic;">Source</tspan>: <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/geographic-accessibility/" target="_blank">Eurostat, EuroAccess</a>'
         )
         .footnoteTooltipText(false)
 
