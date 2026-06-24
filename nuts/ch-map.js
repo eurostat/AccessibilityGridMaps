@@ -20,9 +20,9 @@ const serviceToText = {
 }*/
 
 const timeOptions = {
-    healthcare: [2023,2020],
-    education: [2023,2020],
-    evrp: [2025,2024,2023]
+    healthcare: [2023, 2020],
+    education: [2023, 2020],
+    evrp: [2025, 2024, 2023]
 }
 
 
@@ -39,7 +39,7 @@ export function renderMap() {
     const mapWidth = isMobile ? window.innerWidth : 900
     const mapHeight = isMobile
         ? Math.round(window.innerHeight - 160) // 100% of viewport height - header etc
-        : 550 *9/7
+        : 550 * 9 / 7
 
     const map = eurostatmap
         .map('ch')
@@ -49,7 +49,7 @@ export function renderMap() {
         .scale('60M')
         //.title('Share of population within '+indicToText[data.indic]+' to the nearest ' + serviceToText[data.service] + " in "+data.time)
 
-        .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400* 7/9 })
+        .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
         .insetsButton(true)
 
         //classification
@@ -71,9 +71,7 @@ export function renderMap() {
         .ribbonWidth(300)
         .ribbonHeight(50)
         .showSourceLink(false)
-        .footnote(
-            ' <tspan style="font-style: italic;">Source</tspan>: <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/geographic-accessibility/" target="_blank">Eurostat, EuroAccess</a>'
-        )
+        .footnote(' <tspan style="font-style: italic;">Source</tspan>: <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/geographic-accessibility/" target="_blank">Eurostat</a>')
         .footnoteTooltipText(false)
 
         .zoomButtons(true)
@@ -121,7 +119,7 @@ document.getElementById("service").addEventListener("change", function () {
     let dropdown
 
     //update driving type: driving time or driving distance
-    document.getElementById('divingType').innerHTML = this.value == "evrp"? "distance" : "time"
+    document.getElementById('divingType').innerHTML = this.value == "evrp" ? "distance" : "time"
 
     //update indic list
     dropdown = document.getElementById('indic');
