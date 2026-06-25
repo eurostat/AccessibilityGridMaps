@@ -57,7 +57,7 @@ export function renderMap() {
         .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
         //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
         .numberOfClasses(6)
-        .classificationMethod(false ? 'threshold' : 'quantile') //jenks, quantile, equal, threshold
+        .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
         // .header(true)
