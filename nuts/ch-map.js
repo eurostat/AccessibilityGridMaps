@@ -81,7 +81,8 @@ export function renderMap() {
 
 
         .stat({
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__INDIC_" + data.indic + ".csv",
+            //euro_access_education_URAU_2024__AGE_T__ACCESS_INDIC_LT_2_MIN__UNIT_PC
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_" + data.service + "_NUTS_2024__AGE_T__ACCESS_INDIC_" + data.indic + "__UNIT_PC.csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
