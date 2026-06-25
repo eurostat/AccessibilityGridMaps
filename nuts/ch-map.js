@@ -31,7 +31,7 @@ export function renderMap() {
 
     //read GUI selection
     const data = {}
-    for (const ddl of ["service", "time", "indic", "nuts_lvl"])
+    for (const ddl of ["service", "time", "indic", "age", "nuts_lvl"])
         data[ddl] = document.getElementById(ddl).value
 
 
@@ -82,7 +82,7 @@ export function renderMap() {
 
         .stat({
             //euro_access_education_URAU_2024__AGE_T__ACCESS_INDIC_LT_2_MIN__UNIT_PC
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_NUTS_2024_" + data.service + "__AGE_T__ACCESS_INDIC_" + data.indic + "__UNIT_PC.csv",
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__ACCESS_INDIC_" + data.indic + "__UNIT_PC.csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
@@ -112,7 +112,7 @@ renderMap()
 
 
 // add events
-for (const ddl of ["time", "indic", "nuts_lvl"]) {
+for (const ddl of ["time", "indic", "age", "nuts_lvl"]) {
     document.getElementById(ddl).addEventListener("change", renderMap);
 }
 
