@@ -31,7 +31,7 @@ export function renderMap() {
 
     //read GUI selection
     const data = {}
-    for (const ddl of ["service", "time", "indic", "age", "nuts_lvl"])
+    for (const ddl of ["service", "time", "indic", "age", "nuts_lvl", "unit"])
         data[ddl] = document.getElementById(ddl).value
 
 
@@ -57,7 +57,7 @@ export function renderMap() {
         .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
         //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
         .numberOfClasses(6)
-        .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
+        .classificationMethod(false ? 'threshold' : 'quantile') //jenks, quantile, equal, threshold
 
         //SE settings
         // .header(true)
@@ -82,7 +82,7 @@ export function renderMap() {
 
         .stat({
             //euro_access_education_URAU_2024__AGE_T__ACCESS_INDIC_LT_2_MIN__UNIT_PC
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__ACCESS_INDIC_" + data.indic + "__UNIT_PC.csv",
+            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__ACCESS_INDIC_" + data.indic + "__UNIT_"+data.unit+".csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
@@ -112,7 +112,7 @@ renderMap()
 
 
 // add events
-for (const ddl of ["time", "indic", "age", "nuts_lvl"]) {
+for (const ddl of ["time", "indic", "age", "nuts_lvl", "unit"]) {
     document.getElementById(ddl).addEventListener("change", renderMap);
 }
 
