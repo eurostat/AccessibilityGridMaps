@@ -1,10 +1,12 @@
 
-const indicOptions = {
+const urlBase = "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/"
+
+const thresholdOptions = {
     healthcare: [{ "name": "less than 5 min", "code": "LT_5_MIN" }, { "name": "less than 20 min", "code": "LT_20_MIN" }, { "name": "less than 45 min", "code": "LT_45_MIN" }],
     education: [{ "name": "less than 2 min", "code": "LT_2_MIN" }, { "name": "less than 10 min", "code": "LT_10_MIN" }, { "name": "less than 20 min", "code": "LT_20_MIN" }],
     evrp: [{ "name": "less than 500 m", "code": "LT_500_M" }, { "name": "less than 5 km", "code": "LT_5000_M" }]
 }
-/*const indicToText = {
+/*const thresholdToText = {
     LT_5_MIN : "less than 5 min",
     LT_20_MIN : "less than 20 min",
     LT_45_MIN : "less than 45 min",
@@ -25,13 +27,11 @@ const timeOptions = {
     evrp: [2025, 2024, 2023]
 }
 
-
-
 export function renderMap() {
 
     //read GUI selection
     const data = {}
-    for (const ddl of ["service", "time", "indic", "age", "degurba", "nuts_lvl", "unit"])
+    for (const ddl of ["service", "time", "threshold", "age", "degurba", "nuts_lvl", "unit"])
         data[ddl] = document.getElementById(ddl).value
 
 
@@ -47,7 +47,7 @@ export function renderMap() {
         .height(mapHeight)
         .dorling(false)
         .scale('60M')
-        //.title('Share of population within '+indicToText[data.indic]+' to the nearest ' + serviceToText[data.service] + " in "+data.time)
+        .transitionDuration(0)
 
         .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
         .insetsButton(true)
@@ -80,8 +80,7 @@ export function renderMap() {
         .nutsLevel(data.nuts_lvl)
 
         .stat({
-            //euro_access_education_URAU_2024__AGE_T__ACCESS_INDIC_LT_2_MIN__UNIT_PC
-            csvURL: "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__UNIT_"+data.unit+".csv",
+            csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__DEG_URB_" + data.degurba + "__ACCESS_INDIC_N1__THRESHOLD_" + data.threshold + "__UNIT_"+data.unit+".csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
@@ -111,7 +110,7 @@ renderMap()
 
 
 // add events
-for (const ddl of ["time", "indic", "age", "degurba", "nuts_lvl", "unit"]) {
+for (const ddl of ["time", "threshold", "age", "degurba", "nuts_lvl", "unit"]) {
     document.getElementById(ddl).addEventListener("change", renderMap);
 }
 
@@ -121,10 +120,10 @@ document.getElementById("service").addEventListener("change", function () {
     //update driving type: driving time or driving distance
     document.getElementById('divingType').innerHTML = this.value == "evrp" ? "distance" : "time"
 
-    //update indic list
-    dropdown = document.getElementById('indic');
+    //update threshold list
+    dropdown = document.getElementById('threshold');
     dropdown.innerHTML = '';
-    indicOptions[this.value].forEach((elt, i) => {
+    thresholdOptions[this.value].forEach((elt, i) => {
         const option = new Option(elt.name, elt.code);
         dropdown.add(option);
     });
