@@ -6,6 +6,12 @@ const thresholdOptions = {
     education: [{ "name": "less than 2 min", "code": "LT_2_MIN" }, { "name": "less than 10 min", "code": "LT_10_MIN" }, { "name": "less than 20 min", "code": "LT_20_MIN" }],
     evrp: [{ "name": "less than 500 m", "code": "LT_500_M" }, { "name": "less than 5 km", "code": "LT_5000_M" }]
 }
+const indicOptions = {
+    healthcare: [{ "name": "driving time to the nearest healthcare service", "code": "N1" },{ "name": "average driving time to the 3 nearest healthcare services", "code": "AN3" }],
+    education: [{ "name": "driving time to the nearest education service", "code": "N1" },{ "name": "average driving time to the 3 nearest education services", "code": "AN3" }],
+    evrp: [{ "name": "driving distance to the nearest recharging point", "code": "N1" },{ "name": "average distance to the 5 nearest EV recharging points", "code": "AN5" }],
+}
+
 /*const thresholdToText = {
     LT_5_MIN : "less than 5 min",
     LT_20_MIN : "less than 20 min",
@@ -31,7 +37,7 @@ export function renderMap() {
 
     //read GUI selection
     const data = {}
-    for (const ddl of ["service", "time", "threshold", "age", "degurba", "nuts_lvl", "unit"])
+    for (const ddl of ["service", "time", "threshold", "indic", "age", "degurba", "nuts_lvl", "unit"])
         data[ddl] = document.getElementById(ddl).value
 
 
@@ -80,7 +86,7 @@ export function renderMap() {
         .nutsLevel(data.nuts_lvl)
 
         .stat({
-            csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__DEG_URB_" + data.degurba + "__ACCESS_INDIC_N1__THRESHOLD_" + data.threshold + "__UNIT_"+data.unit+".csv",
+            csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__DEG_URB_" + data.degurba + "__ACCESS_INDIC_"+data.indic+"__THRESHOLD_" + data.threshold + "__UNIT_"+data.unit+".csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
@@ -110,15 +116,12 @@ renderMap()
 
 
 // add events
-for (const ddl of ["time", "threshold", "age", "degurba", "nuts_lvl", "unit"]) {
+for (const ddl of ["time", "threshold", "indic", "age", "degurba", "nuts_lvl", "unit"]) {
     document.getElementById(ddl).addEventListener("change", renderMap);
 }
 
 document.getElementById("service").addEventListener("change", function () {
     let dropdown
-
-    //update driving type: driving time or driving distance
-    document.getElementById('divingType').innerHTML = this.value == "evrp" ? "distance" : "time"
 
     //update threshold list
     dropdown = document.getElementById('threshold');
@@ -133,6 +136,15 @@ document.getElementById("service").addEventListener("change", function () {
     dropdown = document.getElementById('time');
     dropdown.innerHTML = '';
     timeOptions[this.value].forEach((elt, i) => {
+        const option = new Option(elt, elt);
+        dropdown.add(option);
+    });
+    dropdown.selectedIndex = 1;
+
+    //update indic list
+    dropdown = document.getElementById('indic');
+    dropdown.innerHTML = '';
+    indicOptions[this.value].forEach((elt, i) => {
         const option = new Option(elt, elt);
         dropdown.add(option);
     });
