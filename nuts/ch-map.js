@@ -7,9 +7,9 @@ const thresholdOptions = {
     evrp: [{ "name": "less than 500 m", "code": "LT_500_M" }, { "name": "less than 5 km", "code": "LT_5000_M" }]
 }
 const indicOptions = {
-    healthcare: [{ "name": "driving time to the nearest healthcare service", "code": "N1" },{ "name": "average driving time to the 3 nearest healthcare services", "code": "AN3" }],
-    education: [{ "name": "driving time to the nearest education service", "code": "N1" },{ "name": "average driving time to the 3 nearest education services", "code": "AN3" }],
-    evrp: [{ "name": "driving distance to the nearest recharging point", "code": "N1" },{ "name": "average distance to the 5 nearest EV recharging points", "code": "AN5" }],
+    healthcare: [{ "name": "driving time to the nearest healthcare service", "code": "N1" }, { "name": "average driving time to the 3 nearest healthcare services", "code": "AN3" }],
+    education: [{ "name": "driving time to the nearest education service", "code": "N1" }, { "name": "average driving time to the 3 nearest education services", "code": "AN3" }],
+    evrp: [{ "name": "driving distance to the nearest recharging point", "code": "N1" }, { "name": "average distance to the 5 nearest EV recharging points", "code": "AN5" }],
 }
 const timeOptions = {
     healthcare: [2023, 2020],
@@ -70,7 +70,7 @@ export function renderMap() {
         .nutsLevel(data.nuts_lvl)
 
         .stat({
-            csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_"+data.age+"__DEG_URB_" + data.degurba + "__ACCESS_INDIC_"+data.indic+"__THRESHOLD_" + data.threshold + "__UNIT_"+data.unit+".csv",
+            csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_" + data.age + "__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__THRESHOLD_" + data.threshold + "__UNIT_" + data.unit + ".csv",
             geoCol: "GEO",
             valueCol: data.time,
             unitText: '%'
@@ -114,7 +114,7 @@ document.getElementById("service").addEventListener("change", function () {
         const option = new Option(elt.name, elt.code);
         dropdown.add(option);
     });
-    dropdown.selectedIndex = 1;
+    dropdown.selectedIndex = 0;
 
     //update year list
     dropdown = document.getElementById('time');
@@ -123,7 +123,7 @@ document.getElementById("service").addEventListener("change", function () {
         const option = new Option(elt, elt);
         dropdown.add(option);
     });
-    dropdown.selectedIndex = 1;
+    dropdown.selectedIndex = 0;
 
     //update indic list
     dropdown = document.getElementById('indic');
@@ -132,7 +132,10 @@ document.getElementById("service").addEventListener("change", function () {
         const option = new Option(elt.name, elt.code);
         dropdown.add(option);
     });
-    dropdown.selectedIndex = 1;
+    dropdown.selectedIndex = 0;
 
     renderMap()
 });
+
+//trigger event to load the lists
+document.getElementById("service").dispatchEvent(new Event("change", { bubbles: true, cancelable: true }));
