@@ -11,22 +11,6 @@ const indicOptions = {
     education: [{ "name": "driving time to the nearest education service", "code": "N1" },{ "name": "average driving time to the 3 nearest education services", "code": "AN3" }],
     evrp: [{ "name": "driving distance to the nearest recharging point", "code": "N1" },{ "name": "average distance to the 5 nearest EV recharging points", "code": "AN5" }],
 }
-
-/*const thresholdToText = {
-    LT_5_MIN : "less than 5 min",
-    LT_20_MIN : "less than 20 min",
-    LT_45_MIN : "less than 45 min",
-    LT_2_MIN : "less than 2 min",
-    LT_10_MIN : "less than 10 min",
-    LT_500_M : "less than 500 m",
-    LT_5000_M : "less than 5 km",
-}
-const serviceToText = {
-    healthcare: "healthcare service",
-    education: "education service",
-    evrp: "EV recharging point",
-}*/
-
 const timeOptions = {
     healthcare: [2023, 2020],
     education: [2023, 2020],
@@ -145,7 +129,7 @@ document.getElementById("service").addEventListener("change", function () {
     dropdown = document.getElementById('indic');
     dropdown.innerHTML = '';
     indicOptions[this.value].forEach((elt, i) => {
-        const option = new Option(elt, elt);
+        const option = new Option(elt.name, elt.code);
         dropdown.add(option);
     });
     dropdown.selectedIndex = 1;
