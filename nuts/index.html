@@ -12,25 +12,29 @@
     <div id="container">
         <div class="map-title">Accessiblity to basic services</div>
         <div id="dropdown-container">
-            Share of population in <select class="select-map" id="degurba">
-                <option value="TOTAL" selected>all</option>
+            Service type: <select class="select-map" id="service">
+                <option value="healthcare" selected>healthcare service</option>
+                <option value="education">education service</option>
+                <option value="evrp">electric vehicle recharging points</option>
+            </select>
+        </div>
+        <div id="dropdown-container">
+            Share of population of <select class="select-map" id="degurba">
+                <option value="TOTAL" selected>both urban and rural areas</option>
                 <option value="DEG1">cities</option>
                 <option value="DEG2">towns and suburbs</option>
                 <option value="DEG3">rural areas</option>
-            </select> with <select class="select-map" id="age">
+            </select> and <select class="select-map" id="age">
                 <option value="T" selected>all ages</option>
                 <option value="Y_LT15">age less than 15</option>
                 <option value="Y_1564">age from 15 to 64</option>
                 <option value="Y_GE65">age greater than 65</option>
-            </select> within <select class="select-map" id="indic">
+            </select> living within <select class="select-map" id="indic">
                 <option value="LT_5_MIN" selected>less than 5 min</option>
                 <option value="LT_20_MIN">less than 20 min</option>
                 <option value="LT_45_MIN">less than 45 min</option>
-            </select> driving <span id="divingType">time</span> to the nearest <select class="select-map" id="service">
-                <option value="healthcare" selected>healthcare service</option>
-                <option value="education">education service</option>
-                <option value="evrp">electric vehicle recharging points</option>
-            </select> in <select class="select-map" id="time">
+            </select> driving <span id="divingType">time</span> to the nearest service in <select class="select-map"
+                id="time">
                 <option value="2023" selected>2023</option>
                 <option value="2020">2020</option>
             </select>
@@ -43,10 +47,10 @@
                 <option value="0">0</option>
             </select> regions
         </div>
-        <div>
-            To debug: <select class="select-map" id="unit">
-                <option value="PC" selected>percentage</option>
-                <option value="NR">number</option>
+        <div id="dropdown-container">
+            Debug: <select class="select-map" id="unit">
+                <option value="PC" selected>Share of</option>
+                <option value="NR">total</option>
             </select>
         </div>
 
