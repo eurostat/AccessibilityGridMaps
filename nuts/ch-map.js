@@ -73,10 +73,10 @@ export function renderMap() {
             csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_" + data.age + "__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__THRESHOLD_" + data.threshold + "__UNIT_" + data.unit + ".csv",
             geoCol: "GEO",
             valueCol: data.time,
-            unitText: '%'
+            unitText: data.unit =="PC"? '%' : ''
         })
         .legend({
-            title: "Share, in %",
+            title: data.unit =="PC"? "Share, in %" : "Population",
             titlePadding: -10,
             x: 5,
             y: isMobile ? 10 : 100,
