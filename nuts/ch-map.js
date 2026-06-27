@@ -35,19 +35,11 @@ export function renderMap() {
         .map('ch')
         .width(mapWidth)
         .height(mapHeight)
-        .dorling(false)
         .scale('60M')
         .transitionDuration(0)
 
         .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
         .insetsButton(true)
-
-        //classification
-        //.colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
-        .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
-        //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
-        .numberOfClasses(6)
-        .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
 
         //SE settings
         // .header(true)
@@ -73,21 +65,51 @@ export function renderMap() {
             csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_" + data.age + "__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__THRESHOLD_" + data.threshold + "__UNIT_" + data.unit + ".csv",
             geoCol: "GEO",
             valueCol: data.time,
-            unitText: data.unit =="PC"? '%' : ''
+            unitText: data.unit == "PC" ? '%' : ''
         })
-        .legend({
-            title: data.unit =="PC"? "Share, in %" : "Population",
-            titlePadding: -10,
-            x: 5,
-            y: isMobile ? 10 : 100,
-            boxPadding: 4,
-            boxOpacity: 0.9,
-            tickLength: 8,
-            maxMin: true,
-            maxMinTickLength: 15,
-            maxMinRegionLabels: false,
-            maxMinLabels: ['', ''],
-        })
+
+
+    if (data.unit == "PC") {
+
+        map.colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
+            //.colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
+            //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
+            .numberOfClasses(6)
+            .classificationMethod(false ? 'threshold' : 'jenks') //jenks, quantile, equal, threshold
+            .dorling(false)
+            .legend({
+                title: "Share, in %",
+                titlePadding: -10,
+                x: 5,
+                y: isMobile ? 10 : 100,
+                boxPadding: 4,
+                boxOpacity: 0.9,
+                tickLength: 8,
+                maxMin: true,
+                maxMinTickLength: 15,
+                maxMinRegionLabels: false,
+                maxMinLabels: ['', ''],
+            })
+
+    } else {
+        /* .stat('symbolSize', {
+             eurostatDatasetCode: 'nama_10r_3gdp',
+             unitText: 'Million EUR',
+             filters: { unit: 'MIO_EUR', time: '2018' },
+         })*/
+        //.encoding('size', { stat: 'symbolSize' })
+
+        map
+            .psMaxSize(10)
+            .psFill('red')
+        //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
+        //.psSettings({ fill: 'red' })
+
+        //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
+        //.dorling(true)
+        //.psSettings({ maxSize: 5 })
+        //.legend({ title: 'Population', x: 500, y: 130, boxOpacity: 0, sizeLegend: { values: [3000000, 1000000, 100000] } })
+    }
 
     map.build()
 
