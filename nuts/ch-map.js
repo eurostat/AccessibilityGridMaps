@@ -2,9 +2,9 @@
 const urlBase = "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/"
 
 const thresholdOptions = {
-    healthcare: [{ "name": "less than 5 min", "code": "LT_5_MIN" }, { "name": "less than 20 min", "code": "LT_20_MIN" }, { "name": "less than 45 min", "code": "LT_45_MIN" }],
-    education: [{ "name": "less than 2 min", "code": "LT_2_MIN" }, { "name": "less than 10 min", "code": "LT_10_MIN" }, { "name": "less than 20 min", "code": "LT_20_MIN" }],
-    evrp: [{ "name": "less than 500 m", "code": "LT_500_M" }, { "name": "less than 5 km", "code": "LT_5000_M" }]
+    healthcare: [{ "name": "less than 5 min", "code": "GT_5_MIN" }, { "name": "less than 20 min", "code": "GT_20_MIN" }, { "name": "less than 45 min", "code": "GT_45_MIN" }],
+    education: [{ "name": "less than 2 min", "code": "GT_2_MIN" }, { "name": "less than 10 min", "code": "GT_10_MIN" }, { "name": "less than 20 min", "code": "GT_20_MIN" }],
+    evrp: [{ "name": "less than 500 m", "code": "GT_500_M" }, { "name": "less than 5 km", "code": "GT_5000_M" }]
 }
 const indicOptions = {
     healthcare: [{ "name": "driving time to the nearest healthcare service", "code": "N1" }, { "name": "average driving time to the 3 nearest healthcare services", "code": "AN3" }],

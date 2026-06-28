@@ -19,7 +19,10 @@
             </select>
         </div>
         <div id="dropdown-container">
-            Share of population of <select class="select-map" id="degurba">
+            <select class="select-map" id="unit">
+                <option value="PC" selected>Share of</option>
+                <option value="NR">Total</option>
+            </select> population of <select class="select-map" id="degurba">
                 <option value="TOTAL" selected>both urban and rural areas</option>
                 <option value="DEG1">cities</option>
                 <option value="DEG2">towns and suburbs</option>
@@ -39,12 +42,6 @@
                 <option value="1">1</option>
                 <option value="0">0</option>
             </select> regions
-        </div>
-        <div id="dropdown-container">
-            Debug: <select class="select-map" id="unit">
-                <option value="PC" selected>Share of</option>
-                <option value="NR">Total</option>
-            </select>
         </div>
 
         <div id="map-container">
