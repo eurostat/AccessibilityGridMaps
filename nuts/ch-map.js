@@ -31,8 +31,8 @@ export function renderMap() {
         ? Math.round(window.innerHeight - 160) // 100% of viewport height - header etc
         : 550 * 9 / 7
 
+
     const map = eurostatmap
-        .map('ch')
         .width(mapWidth)
         .height(mapHeight)
         .scale('60M')
@@ -70,8 +70,9 @@ export function renderMap() {
 
 
     if (data.unit == "PC") {
-
-        map.colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
+        map
+            .map('choropleth')
+            .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
             //.colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
             //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
             .numberOfClasses(6)
@@ -100,6 +101,7 @@ export function renderMap() {
         //.encoding('size', { stat: 'symbolSize' })
 
         map
+            .map("proportionalSymbol")
             .psMaxSize(10)
             .psFill('red')
         //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
