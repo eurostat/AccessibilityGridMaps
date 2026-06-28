@@ -128,8 +128,6 @@ export function renderMap() {
     //setTimeout(() => console.log(map.position()), 1000)
 }
 
-renderMap()
-
 
 
 
@@ -173,3 +171,7 @@ document.getElementById("service").addEventListener("change", function () {
 
 //trigger event to load the lists
 document.getElementById("service").dispatchEvent(new Event("change", { bubbles: true, cancelable: true }));
+
+//initial map redraw
+renderMap()
+
