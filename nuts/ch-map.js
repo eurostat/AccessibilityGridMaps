@@ -24,15 +24,14 @@ export function renderMap() {
     for (const ddl of ["service", "time", "threshold", "indic", "age", "degurba", "nuts_lvl", "unit"])
         data[ddl] = document.getElementById(ddl).value
 
-
     const isMobile = window.innerWidth <= 768
     const mapWidth = isMobile ? window.innerWidth : 900
     const mapHeight = isMobile
         ? Math.round(window.innerHeight - 160) // 100% of viewport height - header etc
         : 550 * 9 / 7
 
-
     const map = eurostatmap
+        .map(data.unit == "PC" ? "choropleth" : "proportionalSymbol")
         .width(mapWidth)
         .height(mapHeight)
         .scale('60M')
@@ -60,6 +59,18 @@ export function renderMap() {
         .insets('default')
         //end SE settings
         .nutsLevel(data.nuts_lvl)
+        .filterGeometriesFunction(fs => {
+            fs[0].objects.cntrg = []
+            fs[0].objects.cntbn = []
+            /*/ keep only relevant nuts level
+            for (let f of fs[0].objects.nutsrg.geometries) {
+                //console.log(f)
+                const id = f.properties.id
+                if(id.length != 5) console.log(id)
+            }*/
+            //console.log(fs[0].objects.nutsrg.geometries)
+            return fs
+        })
 
         .stat({
             csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_" + data.age + "__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__THRESHOLD_" + data.threshold + "__UNIT_" + data.unit + ".csv",
@@ -71,7 +82,6 @@ export function renderMap() {
 
     if (data.unit == "PC") {
         map
-            .map('choropleth')
             .colors(['#E0EAA8', '#BDE6B5', '#62C8BD', '#4ABBC2', '#155A9E', '#133C85'])
             //.colors(['#FFEB99', '#E0EAA8', '#BDE6B5', '#8AD6B9', '#62C8BD', '#4ABBC2', '#3194B6', '#155A9E', '#133C85', '#17256B'])
             //.thresholds([10, 20, 30, 40, 50, 60, 70, 80, 90])
@@ -101,14 +111,14 @@ export function renderMap() {
         //.encoding('size', { stat: 'symbolSize' })
 
         map
-            .map("proportionalSymbol")
-            .psMaxSize(10)
-            .psFill('red')
+            .psMaxSize(30)
+            .psMinSize(0.8)
+            .psFill('blue')
+            .dorling(true)
         //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
         //.psSettings({ fill: 'red' })
 
         //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
-        //.dorling(true)
         //.psSettings({ maxSize: 5 })
         //.legend({ title: 'Population', x: 500, y: 130, boxOpacity: 0, sizeLegend: { values: [3000000, 1000000, 100000] } })
     }
