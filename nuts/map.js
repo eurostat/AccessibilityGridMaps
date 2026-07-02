@@ -60,7 +60,7 @@ export function renderMap() {
         //end SE settings
         .nutsLevel(data.nuts_lvl)
         .filterGeometriesFunction(fs => {
-            //fs[0].objects.cntrg = []
+            fs[0].objects.cntrg = []
             //fs[0].objects.cntbn = []
             /*/ keep only relevant nuts level
             for (let f of fs[0].objects.nutsrg.geometries) {
@@ -115,12 +115,20 @@ export function renderMap() {
             .psMinSize(0.8)
             .psFill('blue')
             .dorling(true)
-        //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
-        //.psSettings({ fill: 'red' })
+            //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
+            //.psSettings({ fill: 'red' })
 
-        //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
-        //.psSettings({ maxSize: 5 })
-        //.legend({ title: 'Population', x: 500, y: 130, boxOpacity: 0, sizeLegend: { values: [3000000, 1000000, 100000] } })
+            //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
+            //.psSettings({ maxSize: 5 })
+            //.legend({ x: 530, y: 130, title: 'People', boxOpacity: 0, sizeLegend: { values: [85000000, 40000000, 5000000] } })
+            .legend({
+                title: 'People',
+                x: 5,
+                y: isMobile ? 10 : 100,
+                sizeLegend: { values: [100000, 5000000, 20000000] }
+                //cellNb: 3,
+                //boxOpacity: 0,
+            })
     }
 
     map.build()
