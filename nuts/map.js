@@ -60,7 +60,7 @@ export function renderMap() {
         //end SE settings
         .nutsLevel(data.nuts_lvl)
         .filterGeometriesFunction(fs => {
-            fs[0].objects.cntrg = []
+            //fs[0].objects.cntrg = []
             //fs[0].objects.cntbn = []
             /*/ keep only relevant nuts level
             for (let f of fs[0].objects.nutsrg.geometries) {
