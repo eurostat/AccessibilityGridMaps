@@ -112,7 +112,7 @@ export function renderMap() {
 
         map
             .psMaxSize(30)
-            .psMinSize(0.8)
+            .psMinSize(0)
             .psFill('blue')
             .dorling(true)
             //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
