@@ -138,7 +138,6 @@ export function renderMap() {
 
 
 
-
 // add events
 for (const ddl of ["time", "threshold", "indic", "age", "degurba", "nuts_lvl", "unit"]) {
     document.getElementById(ddl).addEventListener("change", renderMap);
