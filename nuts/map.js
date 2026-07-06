@@ -37,14 +37,13 @@ export function renderMap() {
         .scale('60M')
         .transitionDuration(0)
 
-        .position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
+        //.position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
         .insetsButton(true)
 
         //SE settings
-        // .header(true)
+        .header(true)
         .footer(true)
         //.headerPadding(headerPadding)
-        .zoomButtons(false)
         .showEstatLogo(true)
         .showEstatRibbon(true)
         .logoPosition([2, mapHeight - 30])
@@ -56,27 +55,15 @@ export function renderMap() {
         .footnoteTooltipText(false)
 
         .zoomButtons(true)
-        .insets('default')
-        //end SE settings
+        //.insets('default')
         .nutsLevel(data.nuts_lvl)
-        .filterGeometriesFunction(fs => {
-            fs[0].objects.cntrg = []
-            //fs[0].objects.cntbn = []
-            /*/ keep only relevant nuts level
-            for (let f of fs[0].objects.nutsrg.geometries) {
-                //console.log(f)
-                const id = f.properties.id
-                if(id.length != 5) console.log(id)
-            }*/
-            //console.log(fs[0].objects.nutsrg.geometries)
-            return fs
-        })
 
         .stat({
             csvURL: urlBase + "euro_access_NUTS_2024_" + data.service + "__AGE_" + data.age + "__DEG_URB_" + data.degurba + "__ACCESS_INDIC_" + data.indic + "__THRESHOLD_" + data.threshold + "__UNIT_" + data.unit + ".csv",
             geoCol: "GEO",
             valueCol: data.time,
-            unitText: data.unit == "PC" ? '%' : ''
+            unitText: data.unit == "PC" ? '%' : '',
+            preprocess: (id,v) => id.length-2 == data.nuts_lvl ? v : null
         })
 
 
@@ -111,12 +98,13 @@ export function renderMap() {
         //.encoding('size', { stat: 'symbolSize' })
 
         map
-            .psMaxSize(30)
-            .psMinSize(0)
-            .psFill('blue')
-            .dorling(true)
-            //.psSettings({ maxSize: 25, stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear' })
+            //.psMaxSize(30)
+            //.psMinSize(0)
+            //.psFill('blue')
+            .psSettings({ maxSize: 15, minSize:0, fill:'blue' })
+            //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
             //.psSettings({ fill: 'red' })
+            .dorling(true)
 
             //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
             //.psSettings({ maxSize: 5 })
