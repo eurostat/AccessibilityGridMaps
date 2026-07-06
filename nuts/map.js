@@ -101,7 +101,7 @@ export function renderMap() {
             //.psMaxSize(30)
             //.psMinSize(0)
             //.psFill('blue')
-            .psSettings({ maxSize: 15, minSize:0, fill:'blue' })
+            .psSettings({ maxSize: 20, minSize:0, fill:'blue' })
             //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
             //.psSettings({ fill: 'red' })
             .dorling(true)
