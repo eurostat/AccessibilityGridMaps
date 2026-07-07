@@ -90,7 +90,7 @@ export function renderMap() {
 
     } else {
         map
-            .psSettings({ maxSize: 30, minSize:0, fill:'#155A9E' })
+            .psSettings({ maxSize: 20, minSize:0, fill:'#155A9E' })
             //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
             .dorling(true)
             //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
