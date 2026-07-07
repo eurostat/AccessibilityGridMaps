@@ -40,7 +40,6 @@ export function renderMap() {
         //.position({ x: 4300000, y: 3420000, z: isMobile ? 9000 : 7400 * 7 / 9 })
         .insetsButton(true)
 
-        //SE settings
         .header(true)
         .footer(true)
         //.headerPadding(headerPadding)
@@ -90,32 +89,16 @@ export function renderMap() {
             })
 
     } else {
-        /* .stat('symbolSize', {
-             eurostatDatasetCode: 'nama_10r_3gdp',
-             unitText: 'Million EUR',
-             filters: { unit: 'MIO_EUR', time: '2018' },
-         })*/
-        //.encoding('size', { stat: 'symbolSize' })
-
         map
-            //.psMaxSize(30)
-            //.psMinSize(0)
-            //.psFill('blue')
-            .psSettings({ maxSize: 20, minSize:0, fill:'blue' })
+            .psSettings({ maxSize: 20, minSize:0, fill:'#155A9E' })
             //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
-            //.psSettings({ fill: 'red' })
             .dorling(true)
-
             //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
-            //.psSettings({ maxSize: 5 })
-            //.legend({ x: 530, y: 130, title: 'People', boxOpacity: 0, sizeLegend: { values: [85000000, 40000000, 5000000] } })
             .legend({
                 title: 'People',
                 x: 5,
                 y: isMobile ? 10 : 100,
                 sizeLegend: { values: [100000, 5000000, 20000000] }
-                //cellNb: 3,
-                //boxOpacity: 0,
             })
     }
 
