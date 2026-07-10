@@ -14,6 +14,7 @@ const thresholdOptions = {
   ],
   evrp: [
     { name: "more than 500 m", code: "GT_500_M" },
+    { name: "more than 2 km", code: "GT_2000_M" },
     { name: "more than 5 km", code: "GT_5000_M" },
   ],
 };
