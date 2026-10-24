@@ -160,6 +160,7 @@ for (const ddl of [
   "threshold",
   "indic",
   "age",
+  "mode",
   "degurba",
   "nuts_lvl",
   "unit",
