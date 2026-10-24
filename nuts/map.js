@@ -4,12 +4,14 @@ const urlBase =
 const thresholdOptions = {
   healthcare: [
     { name: "more than 5 min", code: "GT_5_MN" },
+    { name: "more than 10 min", code: "GT_10_MN" },
     { name: "more than 20 min", code: "GT_20_MN" },
     { name: "more than 45 min", code: "GT_45_MN" },
   ],
   education: [
     { name: "more than 2 min", code: "GT_2_MN" },
     { name: "more than 10 min", code: "GT_10_MN" },
+    { name: "more than 15 min", code: "GT_15_MN" },
     { name: "more than 20 min", code: "GT_20_MN" },
   ],
   evrp: [
