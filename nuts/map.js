@@ -1,7 +1,7 @@
 const urlBase =
   "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/";
 
-const thresholdOptions = {
+const statinfoOptions = {
   healthcare: [
     { name: "more than 5 min", code: "GT_5_MN" },
     { name: "more than 10 min", code: "GT_10_MN" },
@@ -55,7 +55,7 @@ export function renderMap() {
   for (const ddl of [
     "service",
     "time",
-    "threshold",
+    "statinfo",
     "indic",
     "age",
     "mode",
@@ -97,7 +97,7 @@ export function renderMap() {
         "__ACCESS_INDIC_" +
         data.indic +
         "__STATINFO_" +
-        data.threshold +
+        data.statinfo +
         "__UNIT_" +
         data.unit +
         ".csv",
@@ -157,7 +157,7 @@ export function renderMap() {
 // add events
 for (const ddl of [
   "time",
-  "threshold",
+  "statinfo",
   "indic",
   "age",
   "mode",
@@ -171,10 +171,10 @@ for (const ddl of [
 document.getElementById("service").addEventListener("change", function () {
   let dropdown;
 
-  //update threshold list
-  dropdown = document.getElementById("threshold");
+  //update statinfo list
+  dropdown = document.getElementById("statinfo");
   dropdown.innerHTML = "";
-  thresholdOptions[this.value].forEach((elt, i) => {
+  statinfoOptions[this.value].forEach((elt, i) => {
     const option = new Option(elt.name, elt.code);
     dropdown.add(option);
   });

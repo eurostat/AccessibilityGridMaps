@@ -21,10 +21,20 @@
       <div class="dropdown-container sentence-controls">
         This map shows the
         <select class="select-map" id="unit">
+          <option value="MED">median travel time of</option>
+          <option value="AVG">average travel time of</option>
           <option value="PC" selected>share of</option>
           <option value="NR">total</option>
         </select>
-        population with
+        <select class="select-map" id="statinfo"></select>
+        <select class="select-map" id="indic"></select>
+        <select class="select-map" id="mode">
+          <option value="CAR">car</option>
+          <option value="FOOT">foot</option>
+          <option value="BIKE">bike</option>
+        </select>
+
+        for population with
         <select class="select-map" id="age">
           <option value="T" selected>all ages</option>
           <option value="Y_LT15">age less than 15</option>
@@ -45,15 +55,6 @@
           <option value="DEG313">rural cluster</option>
           <option value="DEG312">low density rural grid cell</option>
           <option value="DEG311">very low density rural grid cell</option>
-        </select>
-        and within
-        <select class="select-map" id="threshold"></select>
-        <select class="select-map" id="indic"></select>
-        by
-        <select class="select-map" id="mode">
-          <option value="CAR">car</option>
-          <option value="FOOT">foot</option>
-          <option value="BIKE">bike</option>
         </select>
         in
         <select class="select-map" id="time"></select>
