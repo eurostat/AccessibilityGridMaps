@@ -90,7 +90,7 @@ export function renderMap() {
   const maptype = ["MN", "M", "PC"].includes(unit) ? "choropleth" : "proportionalSymbol"
 
   const map = eurostatmap
-    .map(data.unit == maptype)
+    .map(maptype)
     .scale("60M")
     .transitionDuration(0)
     .insets("default")
