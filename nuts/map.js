@@ -69,14 +69,14 @@ export function renderMap() {
     .insets("default")
     .insetsButton(true)
     .zoomButtons(true)
-    .header(true)
-    .footer(true)
+    .header(false)
+    .footer(false)
     // .showEstatLogo(true)
     // .showEstatRibbon(true)
     .showSourceLink(false)
-    .footnote(
-      ' <tspan style="font-style: italic;">Source</tspan>: <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/geographic-accessibility/" target="_blank">Eurostat</a>',
-    )
+    //.footnote(
+    //  ' <tspan style="font-style: italic;">Source</tspan>: <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/geographic-accessibility/" target="_blank">Eurostat</a>',
+    //)
     .footnoteTooltipText(false)
 
     .nutsLevel(data.nuts_lvl)
