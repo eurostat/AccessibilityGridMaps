@@ -58,6 +58,7 @@ export function renderMap() {
     "threshold",
     "indic",
     "age",
+    "mode",
     "degurba",
     "nuts_lvl",
     "unit",
@@ -88,7 +89,7 @@ export function renderMap() {
         "euro_access_NUTS_2024_" +
         data.service +
         "__TRA_MODE_" +
-        "CAR" +
+        data.mode +
         "__AGE_" +
         data.age +
         "__DEG_URB_" +
