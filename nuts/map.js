@@ -3,21 +3,38 @@ const urlBase =
 
 const statinfoOptions = {
   healthcare: [
-    { name: "more than 5 min", code: "GT_5_MN" },
-    { name: "more than 10 min", code: "GT_10_MN" },
-    { name: "more than 20 min", code: "GT_20_MN" },
-    { name: "more than 45 min", code: "GT_45_MN" },
+    { name: "average travel time in minutes", code: "AVG-MN" },
+    { name: "median travel time in minutes", code: "MED-MN" },
+    { name: "share of population more than 5 min", code: "GT_5_MN-PC" },
+    { name: "share of population more than 10 min", code: "GT_10_MN-PC" },
+    { name: "share of population more than 20 min", code: "GT_20_MN-PC" },
+    { name: "share of population more than 45 min", code: "GT_45_MN-PC" },
+    { name: "population more than 5 min", code: "GT_5_MN-NR" },
+    { name: "population more than 10 min", code: "GT_10_MN-NR" },
+    { name: "population more than 20 min", code: "GT_20_MN-NR" },
+    { name: "population more than 45 min", code: "GT_45_MN-NR" },
   ],
   education: [
-    { name: "more than 2 min", code: "GT_2_MN" },
-    { name: "more than 10 min", code: "GT_10_MN" },
-    { name: "more than 15 min", code: "GT_15_MN" },
-    { name: "more than 20 min", code: "GT_20_MN" },
+    { name: "average travel time in minutes", code: "AVG-MN" },
+    { name: "median travel time in minutes", code: "MED-MN" },
+    { name: "share of population more than 2 min", code: "GT_2_MN-PC" },
+    { name: "share of population more than 10 min", code: "GT_10_MN-PC" },
+    { name: "share of population more than 15 min", code: "GT_15_MN-PC" },
+    { name: "share of population more than 20 min", code: "GT_20_MN-PC" },
+    { name: "population more than 2 min", code: "GT_2_MN-NR" },
+    { name: "population more than 10 min", code: "GT_10_MN-NR" },
+    { name: "population more than 15 min", code: "GT_15_MN-NR" },
+    { name: "population more than 20 min", code: "GT_20_MN-NR" },
   ],
   evrp: [
-    { name: "more than 500 m", code: "GT_500_M" },
-    { name: "more than 2 km", code: "GT_2000_M" },
-    { name: "more than 5 km", code: "GT_5000_M" },
+    { name: "average travel distance in meters", code: "AVG-M" },
+    { name: "median travel distance in meters", code: "MED-M" },
+    { name: "share of population more than 500 m", code: "GT_500_M-PC" },
+    { name: "share of population more than 2 km", code: "GT_2000_M-PC" },
+    { name: "share of population more than 5 km", code: "GT_5000_M-PC" },
+    { name: "population more than 500 m", code: "GT_500_M-NR" },
+    { name: "population more than 2 km", code: "GT_2000_M-NR" },
+    { name: "population more than 5 km", code: "GT_5000_M-NR" },
   ],
 };
 const indicOptions = {
@@ -55,15 +72,19 @@ export function renderMap() {
   for (const ddl of [
     "service",
     "time",
-    "statinfo",
+    "statinfo-unit",
     "indic",
     "age",
     "mode",
     "degurba",
     "nuts_lvl",
-    "unit",
   ])
     data[ddl] = document.getElementById(ddl).value;
+
+  const a = data["statinfo-unit"].split("-")
+  const statinfo = a[0]
+  const unit = a[1]
+
 
   const map = eurostatmap
     .map(data.unit == "PC" ? "choropleth" : "proportionalSymbol")
@@ -97,9 +118,9 @@ export function renderMap() {
         "__ACCESS_INDIC_" +
         data.indic +
         "__STATINFO_" +
-        data.statinfo +
+        statinfo +
         "__UNIT_" +
-        data.unit +
+        unit +
         ".csv",
       geoCol: "GEO",
       valueCol: data.time,
@@ -157,13 +178,12 @@ export function renderMap() {
 // add events
 for (const ddl of [
   "time",
-  "statinfo",
+  "statinfo-unit",
   "indic",
   "age",
   "mode",
   "degurba",
   "nuts_lvl",
-  "unit",
 ]) {
   document.getElementById(ddl).addEventListener("change", renderMap);
 }
@@ -171,8 +191,8 @@ for (const ddl of [
 document.getElementById("service").addEventListener("change", function () {
   let dropdown;
 
-  //update statinfo list
-  dropdown = document.getElementById("statinfo");
+  //update statinfo-unit list
+  dropdown = document.getElementById("statinfo-unit");
   dropdown.innerHTML = "";
   statinfoOptions[this.value].forEach((elt, i) => {
     const option = new Option(elt.name, elt.code);
