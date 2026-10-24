@@ -3,8 +3,8 @@ const urlBase =
 
 const statinfoOptions = {
   healthcare: [
-    { name: "average travel time in minutes", code: "AVG-MN" },
-    { name: "median travel time in minutes", code: "MED-MN" },
+    { name: "average", code: "AVG-MN" },
+    { name: "median", code: "MED-MN" },
     { name: "share of population more than 5 min", code: "GT_5_MN-PC" },
     { name: "share of population more than 10 min", code: "GT_10_MN-PC" },
     { name: "share of population more than 20 min", code: "GT_20_MN-PC" },
@@ -15,8 +15,8 @@ const statinfoOptions = {
     { name: "population more than 45 min", code: "GT_45_MN-NR" },
   ],
   education: [
-    { name: "average travel time in minutes", code: "AVG-MN" },
-    { name: "median travel time in minutes", code: "MED-MN" },
+    { name: "average", code: "AVG-MN" },
+    { name: "median", code: "MED-MN" },
     { name: "share of population more than 2 min", code: "GT_2_MN-PC" },
     { name: "share of population more than 10 min", code: "GT_10_MN-PC" },
     { name: "share of population more than 15 min", code: "GT_15_MN-PC" },
@@ -27,8 +27,8 @@ const statinfoOptions = {
     { name: "population more than 20 min", code: "GT_20_MN-NR" },
   ],
   evrp: [
-    { name: "average travel distance in meters", code: "AVG-M" },
-    { name: "median travel distance in meters", code: "MED-M" },
+    { name: "average", code: "AVG-M" },
+    { name: "median", code: "MED-M" },
     { name: "share of population more than 500 m", code: "GT_500_M-PC" },
     { name: "share of population more than 2 km", code: "GT_2000_M-PC" },
     { name: "share of population more than 5 km", code: "GT_5000_M-PC" },
@@ -46,16 +46,16 @@ const indicOptions = {
     },
   ],
   education: [
-    { name: "driving time to the nearest education service", code: "N1" },
+    { name: "travel time to the nearest education service", code: "N1" },
     {
-      name: "average driving time to the 3 nearest education services",
+      name: "average travel time to the 3 nearest education services",
       code: "AN3",
     },
   ],
   evrp: [
     { name: "driving distance to the nearest recharging point", code: "N1" },
     {
-      name: "average distance to the 5 nearest EV recharging points",
+      name: "average driving distance to the 5 nearest EV recharging points",
       code: "AN5",
     },
   ],
@@ -65,6 +65,14 @@ const timeOptions = {
   education: [2026, 2023, 2020],
   evrp: [2025, 2024, 2023],
 };
+
+function getLegendTitle(statinfo, unit) {
+  if (unit == "NR") return "People"
+  if (unit == "PC") return "Share, in %"
+  if (unit == "MN") return "Minutes"
+  if (unit == "M") return "Meters"
+  return "???"
+}
 
 export function renderMap() {
   //read GUI selection
@@ -147,7 +155,7 @@ export function renderMap() {
       .classificationMethod(false ? "threshold" : "jenks") //jenks, quantile, equal, threshold
       .dorling(false)
       .legend({
-        title: "Share, in %",
+        title: getLegendTitle(statinfo, unit),
         titlePadding: -10,
         x: 5,
         y: 120,
@@ -166,7 +174,7 @@ export function renderMap() {
       .dorling(true)
       //.psSettings({ shape: 'circle' }) // try: cross, diamond, star, square, wye, circle, triangle, rectangle https://github.com/d3/d3-shape#symbols
       .legend({
-        title: "People",
+        title: getLegendTitle(statinfo, unit),
         x: 5,
         y: 120,
         sizeLegend: { values: [100000, 5000000, 20000000] },
