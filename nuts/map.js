@@ -85,7 +85,6 @@ export function renderMap() {
   const statinfo = a[0]
   const unit = a[1]
 
-
   const map = eurostatmap
     .map(data.unit == "PC" ? "choropleth" : "proportionalSymbol")
     .scale("60M")
@@ -124,11 +123,11 @@ export function renderMap() {
         ".csv",
       geoCol: "GEO",
       valueCol: data.time,
-      unitText: data.unit == "PC" ? "%" : "",
+      unitText: unit == "PC" ? "%" : unit == "MN" ? "min" : unit == "M" ? "m" : "",
       preprocess: (id, v) => (id.length - 2 == data.nuts_lvl ? v : null),
     });
 
-  if (data.unit == "PC") {
+  if (unit in ["MN", "M", "PC"]) {
     map
       .colors([
         "#E0EAA8",
@@ -156,7 +155,7 @@ export function renderMap() {
         maxMinRegionLabels: false,
         maxMinLabels: ["", ""],
       });
-  } else {
+  } else if (unit in ["NR"]) {
     map
       .psSettings({ maxSize: 20, minSize: 0, fill: "#155A9E" })
       //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
@@ -168,6 +167,8 @@ export function renderMap() {
         y: 120,
         sizeLegend: { values: [100000, 5000000, 20000000] },
       });
+  } else {
+    console.log("unsuported unit: " + unit)
   }
 
   map.build();
