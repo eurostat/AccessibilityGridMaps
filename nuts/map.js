@@ -3,14 +3,14 @@ const urlBase =
 
 const thresholdOptions = {
   healthcare: [
-    { name: "more than 5 min", code: "GT_5_MIN" },
-    { name: "more than 20 min", code: "GT_20_MIN" },
-    { name: "more than 45 min", code: "GT_45_MIN" },
+    { name: "more than 5 min", code: "GT_5_MN" },
+    { name: "more than 20 min", code: "GT_20_MN" },
+    { name: "more than 45 min", code: "GT_45_MN" },
   ],
   education: [
-    { name: "more than 2 min", code: "GT_2_MIN" },
-    { name: "more than 10 min", code: "GT_10_MIN" },
-    { name: "more than 20 min", code: "GT_20_MIN" },
+    { name: "more than 2 min", code: "GT_2_MN" },
+    { name: "more than 10 min", code: "GT_10_MN" },
+    { name: "more than 20 min", code: "GT_20_MN" },
   ],
   evrp: [
     { name: "more than 500 m", code: "GT_500_M" },
@@ -42,8 +42,8 @@ const indicOptions = {
   ],
 };
 const timeOptions = {
-  healthcare: [2023, 2020],
-  education: [2023, 2020],
+  healthcare: [2026, 2023, 2020],
+  education: [2026, 2023, 2020],
   evrp: [2025, 2024, 2023],
 };
 
@@ -80,19 +80,20 @@ export function renderMap() {
     .footnoteTooltipText(false)
 
     .nutsLevel(data.nuts_lvl)
-
     .stat({
       csvURL:
         urlBase +
         "euro_access_NUTS_2024_" +
         data.service +
+        "__TRA_MODE_" +
+        "CAR" +
         "__AGE_" +
         data.age +
         "__DEG_URB_" +
         data.degurba +
         "__ACCESS_INDIC_" +
         data.indic +
-        "__THRESHOLD_" +
+        "__STATINFO_" +
         data.threshold +
         "__UNIT_" +
         data.unit +
