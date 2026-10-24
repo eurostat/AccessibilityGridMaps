@@ -84,9 +84,13 @@ export function renderMap() {
   const a = data["statinfo-unit"].split("-")
   const statinfo = a[0]
   const unit = a[1]
+  //console.log(statinfo, unit)
+
+  // map type
+  const maptype = ["MN", "M", "PC"].includes(unit) ? "choropleth" : "proportionalSymbol"
 
   const map = eurostatmap
-    .map(data.unit == "PC" ? "choropleth" : "proportionalSymbol")
+    .map(data.unit == maptype)
     .scale("60M")
     .transitionDuration(0)
     .insets("default")
@@ -127,7 +131,7 @@ export function renderMap() {
       preprocess: (id, v) => (id.length - 2 == data.nuts_lvl ? v : null),
     });
 
-  if (unit in ["MN", "M", "PC"]) {
+  if (maptype == "choropleth") {
     map
       .colors([
         "#E0EAA8",
@@ -155,7 +159,7 @@ export function renderMap() {
         maxMinRegionLabels: false,
         maxMinLabels: ["", ""],
       });
-  } else if (unit in ["NR"]) {
+  } else if (maptype == "proportionalSymbol") {
     map
       .psSettings({ maxSize: 20, minSize: 0, fill: "#155A9E" })
       //stroke: '#fff', strokeWidth: 0.2, sizeScale: 'linear'
@@ -168,7 +172,7 @@ export function renderMap() {
         sizeLegend: { values: [100000, 5000000, 20000000] },
       });
   } else {
-    console.log("unsuported unit: " + unit)
+    console.log("unsupported map type: " + maptype)
   }
 
   map.build();
