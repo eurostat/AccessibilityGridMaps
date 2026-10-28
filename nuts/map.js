@@ -1,5 +1,5 @@
 const urlBase =
-  "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/";
+  "https://raw.githubusercontent.com/eurostat/AccessibilityGridMaps/refs/heads/main/nuts/csv/NUTS_2024_";
 
 const statinfoOptions = {
   healthcare: [
@@ -118,16 +118,15 @@ export function renderMap() {
     .stat({
       csvURL:
         urlBase +
-        "euro_access_NUTS_2024_" +
-        data.service +
+        data.service + "/" +
+        "ACCESS_INDIC_" +
+        data.indic +
         "__TRA_MODE_" +
         data.mode +
         "__AGE_" +
         data.age +
         "__DEG_URB_" +
         data.degurba +
-        "__ACCESS_INDIC_" +
-        data.indic +
         "__STATINFO_" +
         statinfo +
         "__UNIT_" +
