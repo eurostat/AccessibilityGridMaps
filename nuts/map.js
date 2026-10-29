@@ -114,6 +114,7 @@ export function renderMap() {
     //)
     .footnoteTooltipText(false)
 
+
     .nutsLevel(data.nuts_lvl)
     .stat({
       csvURL:
