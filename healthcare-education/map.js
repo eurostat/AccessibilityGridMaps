@@ -401,7 +401,7 @@ function update() {
 addInterfaceEventListeners();
 function addInterfaceEventListeners() {
 
-    ['healthcare', 'education', 'change', '2020', '2023', '1', '3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
+    ['healthcare', 'education', 'change', '2020', '2023', 'N1', 'AN3', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (event) => {
             event.stopPropagation();
             update()
