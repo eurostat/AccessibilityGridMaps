@@ -104,8 +104,8 @@ noUiSlider.create(document.getElementById('sliderisoc_education'),
 
 // compute changes
 const preprocess = (c) => {
-    c.dt_1_change = c.dt_1_2023 == undefined || c.dt_1_2020 == undefined ? undefined : c.dt_1_2023 - c.dt_1_2020
-    c.dt_a3_change = c.dt_a3_2023 == undefined || c.dt_a3_2020 == undefined ? undefined : c.dt_a3_2023 - c.dt_a3_2020
+    c.dt_N1_change = c.dt_N1_2023 == undefined || c.dt_N1_2020 == undefined ? undefined : c.dt_N1_2023 - c.dt_N1_2020
+    c.dt_AN3_change = c.dt_AN3_2023 == undefined || c.dt_AN3_2020 == undefined ? undefined : c.dt_AN3_2023 - c.dt_AN3_2020
 }
 
 
