@@ -12,7 +12,7 @@ const map = new gridviz.Map(document.getElementById('map'), {
     z: DEFAULTMAPOSITION.z,
     zoomExtent: [1, 10000],
     onZoomFun: (e) => { updateURL(map) },
-	digForTooltip: true,
+    digForTooltip: true,
 }).addZoomButtons().setViewFromURL()
 
 
@@ -111,17 +111,31 @@ const preprocess = (c) => {
 
 const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/"
 
-const dataset = {
-    education: new gridviz.MultiResolutionDataset(
-        [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "education/" + r + "/"),
-        { preprocess: preprocess }
-    ),
-    healthcare: new gridviz.MultiResolutionDataset(
-        [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-        r => new gviz_par.TiledParquetGrid(map, urlTiles + "healthcare/" + r + "/"),
-        { preprocess: preprocess }
-    ),
+const datasetsDict = {
+    education: {
+        N1: new gridviz.MultiResolutionDataset(
+            [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+            r => new gviz_par.TiledParquetGrid(map, urlTiles + "education/CAR_S_N1/" + r + "/"),
+            { preprocess: preprocess }
+        ),
+        AN3: new gridviz.MultiResolutionDataset(
+            [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+            r => new gviz_par.TiledParquetGrid(map, urlTiles + "education/CAR_S_AN3/" + r + "/"),
+            { preprocess: preprocess }
+        )
+    },
+    healthcare: {
+        N1: new gridviz.MultiResolutionDataset(
+            [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+            r => new gviz_par.TiledParquetGrid(map, urlTiles + "healthcare/CAR_S_N1/" + r + "/"),
+            { preprocess: preprocess }
+        ),
+        AN3: new gridviz.MultiResolutionDataset(
+            [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+            r => new gviz_par.TiledParquetGrid(map, urlTiles + "healthcare/CAR_S_AN3/" + r + "/"),
+            { preprocess: preprocess }
+        )
+    }
 }
 
 // define services datasets
@@ -166,6 +180,8 @@ function update() {
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.querySelector('input[name="year"]:checked').value;
     field = "dt_" + indic + "_" + year
+
+    const dataset = datasetsDict[service][indic]
 
     const sop = document.getElementById('sop').checked;
     const sbp = document.getElementById('sbp').checked;
@@ -224,7 +240,7 @@ function update() {
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
         legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
-        if (indic == "1")
+        if (indic == "N1")
             legend.title = "Driving time to nearest " + service + " service, in " + year
         else
             legend.title = "Average driving time to 3 nearest " + service + " services, in " + year
@@ -262,7 +278,7 @@ function update() {
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
         legend.labelFormat = (text, i) => (+text).toFixed(Number.isInteger(+text) ? 0 : 1) + (i == 1 || i == nbClasses - 1 ? " min" : "")
-        if (indic == "1")
+        if (indic == "N1")
             legend.title = "Change in driving time to nearest " + service + " service from 2020 to 2023"
         else
             legend.title = "Change in average driving time to 3 nearest " + service + " service from 2020 to 2023"
@@ -283,7 +299,7 @@ function update() {
 
         // make grid layer
         const glayer = new gridviz.GridLayer(
-            dataset[service],
+            dataset,
             sbp || contours || shading ? [style] : [style, strokeStyle],
             { minPixelsPerCell: (sbp ? 6 : 1.6) * resFactor }
         )
@@ -301,7 +317,7 @@ function update() {
 
         // make shading layer
         const glayerShading = new gridviz.GridLayer(
-            dataset[service], [shadingStyle], { minPixelsPerCell: 1.6 * resFactor }
+            dataset, [shadingStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
 
         //apply interpolator
@@ -316,7 +332,7 @@ function update() {
         tanakaStyle.filter = style.filter
         // make tanaka layer
         const glayerTanaka = new gridviz.GridLayer(
-            dataset[service], [tanakaStyle], { minPixelsPerCell: 1.6 * resFactor }
+            dataset, [tanakaStyle], { minPixelsPerCell: 1.6 * resFactor }
         )
 
         //apply interpolator
@@ -341,7 +357,7 @@ function update() {
                     //c[field] == undefined ? undefined :
                     sop && !c.POP_2021 ? undefined :
                         (c[field] == undefined ? "Not available" : (c[field] / 60).toFixed(1) + " min") + "<br>Population in 2021: " + formatPopulation(+c.POP_2021)
-                            + "<br>Cell size: " + r + "m"
+                        + "<br>Cell size: " + r + "m"
     }
 
     //add service points layer
