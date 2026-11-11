@@ -118,11 +118,18 @@ const computeChange = (c, f, f1, f2) => {
 
 
 const urlTiles = "https://ec.europa.eu/eurostat/cache/GISCO/tiled-grids/accessibility/evrp/"
-const dataset = new gridviz.MultiResolutionDataset(
+const datasetsDict = {
+    N1: new gridviz.MultiResolutionDataset(
     [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
-    r => new gviz_par.TiledParquetGrid(map, urlTiles + r + "/"),
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + "CAR_M_N1/" + r + "/"),
+    //{ preprocess: preprocess }
+),
+    AN5: new gridviz.MultiResolutionDataset(
+    [100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000],
+    r => new gviz_par.TiledParquetGrid(map, urlTiles + "CAR_M_AN5/" + r + "/"),
     //{ preprocess: preprocess }
 )
+}
 
 
 // define services datasets
@@ -165,6 +172,7 @@ function update() {
     indic = document.querySelector('input[name="nearest"]:checked').value;
     year = document.getElementById("year").value;
     field = "dt_" + indic + "_" + year
+    const dataset = datasetsDict[indic]
 
     change = year.includes("_")
     if (change) {
@@ -228,7 +236,7 @@ function update() {
         //legend
         legend.colors = () => colorRamp
         legend.breaks = () => breaks
-        if (indic == "1")
+        if (indic == "N1")
             legend.title = "Driving distance to nearest EV recharging point, in " + year
         else
             legend.title = "Average driving distance to 5 nearest EV recharging points, in " + year
@@ -276,7 +284,7 @@ function update() {
         //legend
         legend.colors = () => colorRampChange
         legend.breaks = () => breaks
-        if (indic == "1")
+        if (indic == "N1")
             legend.title = "Change in driving distance to nearest EV recharging points from " + year1 + " to " + year2
         else
             legend.title = "Change in average driving distance to 5 nearest EV recharging points from " + year1 + " to " + year2
@@ -395,7 +403,7 @@ function addInterfaceEventListeners() {
     });
 
     // others
-    ['1', '5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
+    ['N1', 'AN5', 'label', 'bnd', 'ag', 'road', 'shading', 'contours', 'sbp', 'sop', 'serv'].forEach((id) => {
         document.getElementById(id).addEventListener("click", (e) => {
             e.stopPropagation();
             update()
